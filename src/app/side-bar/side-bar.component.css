@@ -1,0 +1,12 @@
+/* 
+  #sidebar {
+    min-height: 100vh;
+    width: 150px;
+    margin-left: -150px !important;
+    transition: margin 0.25s ease-out;
+  }
+
+  #sidebar.toggled #sidebar-inside {
+    margin-left: 0 !important;
+  }
+   */
