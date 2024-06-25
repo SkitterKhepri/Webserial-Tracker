@@ -11618,11 +11618,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Idegen\\Coding\\WT_API\\WT_API\\WT_API.csproj",
+      "projectUniqueName": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\WT_API.csproj",
       "projectName": "WT_API",
-      "projectPath": "E:\\Idegen\\Coding\\WT_API\\WT_API\\WT_API.csproj",
+      "projectPath": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\WT_API.csproj",
       "packagesPath": "C:\\Users\\Idegen\\.nuget\\packages\\",
-      "outputPath": "E:\\Idegen\\Coding\\WT_API\\WT_API\\obj\\",
+      "outputPath": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Idegen\\AppData\\Roaming\\NuGet\\NuGet.Config",

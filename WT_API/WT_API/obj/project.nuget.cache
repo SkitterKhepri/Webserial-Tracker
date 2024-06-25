@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5zZkBsRTQ5twQmd76C7r47QsDQMbN/6XQCDngdTWBXGLm+iBg/1k35m54QGz5NClhNZvXln4MMRernsFOy3o/A==",
+  "dgSpecHash": "iI+SvWPAAOCGA2zR3GJUV8q4dLB3DDWL3tuvVPdbmGCnMOqqoOukB9M3o2UA6EnujnXO9zMPh+s8zupyqtfnfA==",
   "success": true,
-  "projectFilePath": "E:\\Idegen\\Coding\\WT_API\\WT_API\\WT_API.csproj",
+  "projectFilePath": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\WT_API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Idegen\\.nuget\\packages\\htmlagilitypack\\1.11.61\\htmlagilitypack.1.11.61.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
