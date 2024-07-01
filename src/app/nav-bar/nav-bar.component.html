@@ -1,10 +1,35 @@
-<div class="row mx-1 my-1 text-center">
-    <div class="btn btn-secondary col-1 " data-bs-toggle="collapse" data-bs-target="#navBar">
-      <i class="bi bi-list"></i>
-    </div>
-    <div class="col-6">
-      <h1>Webserial-Tracker</h1>
-    </div>
-</div>
-
-<!--fix left margin-->
+<nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+      <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand fs-4 me-auto" href="#">Webserial-Tracker</a>
+      <div class="nav-item flex-grow-1">
+          <form class="d-flex" role="search">
+            <input class="form-control ms-2 me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success mx-2" type="submit">Search</button>
+          </form>
+      </div>
+      <div class="nav-item">
+          <a class="nav-link me-4" href="#">Advanced Search</a>
+      </div>
+      <div class="nav-item">
+          <a class="nav-link mx-2" href="#">Log In</a>
+      </div>
+      <div class="nav-item">
+          <a class="nav-link mx-2" href="#">Register</a>
+      </div>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="sideBar" aria-labelledby="sideBarLB">
+          <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="sideBarLB">Webserial-Tracker</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+              <div class="nav-item navbar-text">Followed Works:</div>
+              <div class="nav-item me-auto">
+                 <a class="nav-link" href="#">Log Out</a>
+              </div>
+          </div>
+      </div>
+  </div>
+</nav>
