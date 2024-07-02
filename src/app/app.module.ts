@@ -8,15 +8,13 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { SideBarComponent } from './side-bar/side-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchComponent,
-    NavBarComponent,
-    SideBarComponent
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
