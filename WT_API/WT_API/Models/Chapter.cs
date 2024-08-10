@@ -1,9 +1,15 @@
-﻿namespace WT_API.Models
+namespace WT_API.Models
 {
-    public class Chapter
+  public class Chapter
+  {
+    public int id { get; set; }
+    public int serialId { get; set; }
+    public string title { get; set; }
+
+    public Chapter (int serialId, string title)
     {
-        public int id { get; set; }
-        public int bookId { get; set; }
-        public string title { get; set; }
+      this.serialId = serialId;
+      this.title = title;
     }
+  }
 }

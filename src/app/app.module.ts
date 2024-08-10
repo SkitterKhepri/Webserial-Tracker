@@ -8,13 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { LogInComponent } from './log-in/log-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchComponent,
-    NavBarComponent
+    NavBarComponent,
+    LogInComponent
   ],
   imports: [
     BrowserModule,

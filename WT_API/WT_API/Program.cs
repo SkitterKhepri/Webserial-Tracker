@@ -7,7 +7,7 @@ using WT_API.Models.WT_API.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString") ?? throw new InvalidOperationException("Connection string 'ApiContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString") ?? throw new InvalidOperationException("Connection string 'ConnString' not found.")));
 
 
 // Add services to the container.
@@ -42,7 +42,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-///html/body/div[2]/div/div/div/article/div/p[1]/strong/a[2]
-///html/body/div[2]/div/div/div/article/div/p[1]/a
-///html/body/div[2]/div/div/div/article/div/p[1]/strong/a[1]

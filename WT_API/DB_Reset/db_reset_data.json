@@ -1,0 +1,22 @@
+//{"Serials":{
+//			"id" : 1,
+//			"title" : "Worm",
+//			"status" : "COMPLETE",
+//			"author" : "Wildbow",
+//			"link" : "https://parahumans.wordpress.com/2011/06/11/1-1/",
+//			"nextChLinkXPath" : "/html/body/div[2]/div/div/div/article/div/p[1]/a",
+//			"secondaryNextChLinkXPath" : "/html/body/div[2]/div/div/div/nav/span[2]/a",
+//			"otherNextChLinkXPaths" : "/html/body/div[2]/div/div/div/article/div/p[1]/a[2]"
+//	}
+//}
+
+{
+    "id": "1",
+    "title": "Worm",
+    "status": "COMPLETE",
+    "author": "Wildbow",
+    "link": "https://parahumans.wordpress.com/2011/06/11/1-1/",
+    "nextChLinkXPath": "/html/body/div[2]/div/div/div/article/div/p[1]/a",
+    "secondaryNextChLinkXPath": "/html/body/div[2]/div/div/div/nav/span[2]/a",
+    "otherNextChLinkXPaths": "/html/body/div[2]/div/div/div/article/div/p[1]/a[2]"
+}
