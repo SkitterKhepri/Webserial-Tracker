@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -53,7 +53,7 @@ namespace WT_API.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, User user)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.id)
             {
@@ -130,7 +130,7 @@ namespace WT_API.Controllers
             return NoContent();
         }
 
-        private bool UserExists(string id)
+        private bool UserExists(int id)
         {
             return (_context.Users?.Any(e => e.id == id)).GetValueOrDefault();
         }

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WT_API.Data;
-using WT_API.Migrations;
 using WT_API.Models;
 using System.Text;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Dependency;
@@ -93,11 +92,11 @@ namespace WT_API.Controllers
     {
       if (_context.Serials == null)
       {
-        return Problem("Entity set 'Context.Serials'  is null.");
+        return Problem("Entity set 'Context.Serials'  is null. korte");
       }
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
-      //serial.id is the new id
+      //serial.id is the new id here
       await GetSerialDataHAP(serial);
       return CreatedAtAction("GetSerial", new { id = serial.id }, serial);
     }
@@ -143,37 +142,7 @@ namespace WT_API.Controllers
       htmlDoc.LoadHtml(pageContent);
       HtmlNode nextCH;
       string nextCHURL;
-      
 
-      //this i know works, and the while loop part is put together from this TODO: delete this
-      //nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
-      //HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
-      //if (nextCH == null)
-      //{
-      //  nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
-      //  if (nextCH == null)
-      //  {
-      //    nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
-      //    if (nextCH == null)
-      //    {
-      //      //TODO notify admin shits wrong
-      //      Console.WriteLine("none of the next chapter links work");
-      //    }
-      //  }
-      //}
-      //else
-      //{
-      //  nextCHURL = nextCH.Attributes["href"].Value;
-      //  response = await client.GetAsync(nextCHURL);
-      //  response.EnsureSuccessStatusCode();
-      //  string pageContentTwo = await response.Content.ReadAsStringAsync();
-      //  htmlDoc.LoadHtml(pageContentTwo);
-      //  string chTitle = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath).InnerText;
-
-      //  _context.Chapters.Add(new Chapter(serial.id, chTitle));
-      //  _context.SaveChanges();
-      //}
-      //-----------
       while (true)
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);

@@ -15,7 +15,7 @@ namespace WT_API.Models
     public string otherNextChLinkXPaths { get; set; }
     public string titleXPath { get; set; }
 
-    //public bool reviewStatus { get; set; }
+    public bool reviewStatus { get; set; }
 
     public Serial() { }
     public Serial(Serial newSer)

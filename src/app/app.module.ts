@@ -9,6 +9,7 @@ import { SearchComponent } from './search/search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LogInComponent } from './log-in/log-in.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LogInComponent } from './log-in/log-in.component';
     HomeComponent,
     SearchComponent,
     NavBarComponent,
-    LogInComponent
+    LogInComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

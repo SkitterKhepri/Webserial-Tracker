@@ -84,6 +84,9 @@ namespace WT_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("reviewStatus")
+                        .HasColumnType("bit");
+
                     b.Property<string>("secondaryNextChLinkXPath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -107,10 +110,17 @@ namespace WT_API.Migrations
 
             modelBuilder.Entity("WT_API.Models.User", b =>
                 {
-                    b.Property<string>("id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
                     b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
