@@ -6,7 +6,19 @@
         <h4 class="ms-5">New Releases</h4>
         <div class="newReleases ms-5 me-5 border border-secondary-subtle border-3 rounded-4 p-2">
             <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col">
+                <div class="col" *ngFor="let serial of serials">
+                    <div class="card p-1 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{serial.title}}</h5>
+                            <h6 class="card-title">by {{serial.author}}</h6>
+                            <p></p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-body-secondary">Last upload 3 mins ago</small>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col">
                     <div class="card p-1 h-100">
                         <img src="..." class="card-img-top" alt="Banner(optional)">
                         <div class="card-body">
@@ -41,7 +53,7 @@
                             <small class="text-body-secondary">Last upload 3 mins ago</small>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <h4 class="ms-5">Recently Added</h4>
@@ -87,4 +99,3 @@
         </div>
     </div>
 </div>
-<button class="btn btn-danger" (click)="kiirUsers()">Kiír</button>

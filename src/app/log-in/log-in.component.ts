@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { BaseService } from '../base.service';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-log-in',
@@ -12,18 +13,18 @@ export class LogInComponent {
   users:any = []
   newUser:any
 
-  constructor(private base:BaseService, private http:HttpClient){
+  constructor(private userServ:UsersService, private http:HttpClient){
     this.getUsers()
   }
 
-  async getUsers(){
-    (await this.base.getUsers()).subscribe(
+  getUsers(){
+    this.userServ.getUsers().subscribe(
       (users:any)=> this.users = users
       )
   }
 
   //this for register component
   postNewUser(){
-    this.base.postUser(this.newUser)
+    this.userServ.postUser(this.newUser)
   }
 }

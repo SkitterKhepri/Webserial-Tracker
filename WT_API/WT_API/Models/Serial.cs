@@ -9,11 +9,13 @@ namespace WT_API.Models
     public string title { get; set; }
     public string status { get; set; }
     public string author { get; set; }
-    public string link { get; set; }
+    public string firstCh { get; set; }
+    public string home {  get; set; }
     public string nextChLinkXPath { get; set; }
     public string secondaryNextChLinkXPath { get; set; }
     public string otherNextChLinkXPaths { get; set; }
     public string titleXPath { get; set; }
+
 
     public bool reviewStatus { get; set; }
 
@@ -23,7 +25,8 @@ namespace WT_API.Models
       this.title = newSer.title;
       this.status = newSer.status;
       this.author = newSer.author;
-      this.link = newSer.link;
+      this.firstCh = newSer.firstCh;
+      this.home = newSer.home;
       this.nextChLinkXPath = newSer.nextChLinkXPath;
       this.secondaryNextChLinkXPath = newSer.secondaryNextChLinkXPath;
       this.otherNextChLinkXPaths = newSer.otherNextChLinkXPaths;

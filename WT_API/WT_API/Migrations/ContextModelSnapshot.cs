@@ -29,6 +29,10 @@ namespace WT_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<string>("link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("serialId")
                         .HasColumnType("int");
 
@@ -72,7 +76,11 @@ namespace WT_API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("link")
+                    b.Property<string>("firstCh")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("home")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

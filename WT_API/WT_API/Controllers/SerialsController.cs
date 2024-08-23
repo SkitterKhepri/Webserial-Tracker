@@ -95,6 +95,11 @@ namespace WT_API.Controllers
         return Problem("Entity set 'Context.Serials'  is null. korte");
       }
       _context.Serials.Add(serial);
+      if(_context.Serials.Where(ser => ser.title == serial.title).Any())
+      {
+        Console.WriteLine("Serial with same title already in DB");
+        return NoContent();
+      }
       await _context.SaveChangesAsync();
       //serial.id is the new id here
       await GetSerialDataHAP(serial);
@@ -134,10 +139,10 @@ namespace WT_API.Controllers
       
       HttpClient client = new HttpClient();
       //had to add this bc of Ward -- docs
-      Uri fullUri = new Uri(serial.link);
+      Uri fullUri = new Uri(serial.firstCh);
       client.BaseAddress = new Uri(fullUri.AbsoluteUri);
-      HttpResponseMessage response = await client.GetAsync(serial.link);
-      string pageContent = await CheckUrl(response, serial.link);
+      HttpResponseMessage response = await client.GetAsync(serial.firstCh);
+      string pageContent = await CheckUrl(response, serial.firstCh);
       HtmlDocument htmlDoc = new HtmlDocument();
       htmlDoc.LoadHtml(pageContent);
       HtmlNode nextCH;
@@ -147,13 +152,17 @@ namespace WT_API.Controllers
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
         //debug
-        Console.WriteLine(nextCH.InnerText);
+        //Console.WriteLine(nextCH.InnerText);
 
         HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
+        //probably dont need this if?
         if (chTitleNode != null)
         {
           string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
-          _context.Chapters.Add(new Chapter(serial.id, chTitle));
+          //can probably solve this, and nextChURL with 1 variable -- does same thing as tbCheckedUrl
+          string tempChURL = nextCH.Attributes["href"].Value;
+          string chLink = tempChURL[0] != '/' ? tempChURL : client.BaseAddress + tempChURL;
+          _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
         }
         if (nextCH == null)
         {
@@ -164,7 +173,7 @@ namespace WT_API.Controllers
             if (nextCH == null)
             {
               //TODO notify admin shits wrong
-              Console.WriteLine("none of the next chapter links work");
+              Console.WriteLine("none of the next chapter links work, maybe its over");
               _context.SaveChanges();
               break;
             }

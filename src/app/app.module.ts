@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { RegistrationComponent } from './registration/registration.component';
     SearchComponent,
     NavBarComponent,
     LogInComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    AdminSerialsComponent,
+    AdminUsersComponent
   ],
   imports: [
     BrowserModule,

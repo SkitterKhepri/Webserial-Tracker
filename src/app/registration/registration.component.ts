@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../base.service';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-registration',
@@ -17,12 +18,12 @@ export class RegistrationComponent {
     "password" : ""
   }
 
-  constructor(private base:BaseService){
+  constructor(private userServ:UsersService){
     this.getUsers()
   }
 
-  async getUsers(){
-    (await this.base.getUsers()).subscribe(
+  getUsers(){
+    this.userServ.getUsers().subscribe(
       (users:any)=> this.users = users
       )
   }
@@ -35,7 +36,7 @@ export class RegistrationComponent {
         this.newUser.email = email
         this.newUser.password = pass1
         console.log(this.newUser)
-        this.base.postUser(this.newUser).subscribe();
+        this.userServ.postUser(this.newUser).subscribe();
         console.log("User added")
       }
       else{
@@ -55,12 +56,12 @@ export class RegistrationComponent {
   }
 
   kiir(){
-    this.base.postUser({
+    this.userServ.postUser({
       "id": 0,
       "userName": "idegen",
       "email": "idegen@gmail.com",
       "password": "ass1"
-    })
+    }).subscribe()
   }
 
 }

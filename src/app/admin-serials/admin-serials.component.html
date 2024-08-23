@@ -1,0 +1,17 @@
+<div class="conatiner main">
+    <div class="navBar">
+        <app-nav-bar></app-nav-bar>
+    </div>
+    <div class="container serials">
+        <div class="col">
+            <div class="row" *ngFor="let serial of serials">
+                <input type="text" id="title" [value]="serial.title">
+                <button class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="" type="button">
+                    <i class="bi bi-chevron-down"></i>
+                    <!-- details of the serial come here, prpbably inside a container, that somehow has dínamic id, so data-bs-target can collapse it
+                    maybe: [id]="serial.id"  -->
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
