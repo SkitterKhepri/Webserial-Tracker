@@ -18,6 +18,7 @@ namespace WT_API.Data
         public DbSet<Models.User> Users { get; set; }
         public DbSet<Models.Serial> Serials { get; set; }
         public DbSet<Models.Chapter> Chapters { get; set; }
+        public DbSet<Models.Author> Authors { get; set; }
         public DbSet<Models.LikedSerial> LikedSerials { get; set; }
-    }
+  }
 }

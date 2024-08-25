@@ -9,7 +9,9 @@
                 <div class="col" *ngFor="let serial of serials">
                     <div class="card p-1 h-100">
                         <div class="card-body">
-                            <h5 class="card-title">{{serial.title}}</h5>
+                            <h5 class="card-title">
+                                <a href="{{serial.link}}">{{serial.title}}</a>
+                            </h5>
                             <h6 class="card-title">by {{serial.author}}</h6>
                             <p></p>
                         </div>

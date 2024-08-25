@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DB_Reset")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9edb121ea0501e53f0008a08773559bb7342acc6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b79f2dcb253b703ad00fe5d8d99bf5acfa7c8478")]
 [assembly: System.Reflection.AssemblyProductAttribute("DB_Reset")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DB_Reset")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

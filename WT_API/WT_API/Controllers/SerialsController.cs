@@ -36,6 +36,18 @@ namespace WT_API.Controllers
       return await _context.Serials.ToListAsync();
     }
 
+    //Same as above, but adds all the new chapters of all serials first, probably takes really fucking long TODO: only admin
+    [HttpGet("/update")]
+    public async Task<ActionResult<IEnumerable<Serial>>> UpdatedSerials()
+    {
+      if (_context.Serials == null)
+      {
+        return NotFound();
+      }
+      await UpdateSerials();
+      return await _context.Serials.ToListAsync();
+    }
+
     // GET: api/Serials/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Serial>> GetSerial(int id)
@@ -50,6 +62,25 @@ namespace WT_API.Controllers
       {
         return NotFound();
       }
+
+      return serial;
+    }
+
+    //Same as above, but adds the new chapters of the serial first
+    [HttpGet("/update/{id}")]
+    public async Task<ActionResult<Serial>> UpdatedSerial(int id)
+    {
+      if (_context.Serials == null)
+      {
+        return NotFound();
+      }
+      var serial = await _context.Serials.FindAsync(id);
+
+      if (serial == null)
+      {
+        return NotFound();
+      }
+      await UpdateSerial(id);
 
       return serial;
     }
@@ -88,21 +119,37 @@ namespace WT_API.Controllers
     // POST: api/Serials
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
-    public async Task<ActionResult<Serial>> PostSerial(Serial serial)
+    public async Task<ActionResult<Serial>> PostSerial(Serial serial, string authorName)
     {
       if (_context.Serials == null)
       {
         return Problem("Entity set 'Context.Serials'  is null. korte");
       }
-      _context.Serials.Add(serial);
-      if(_context.Serials.Where(ser => ser.title == serial.title).Any())
+
+      if (_context.Serials.Where(ser => ser.title == serial.title).Any())
       {
         Console.WriteLine("Serial with same title already in DB");
         return NoContent();
       }
+      var author = _context.Authors.FirstOrDefault(au => au.name == authorName);
+      if (author != null)
+      {
+        serial.authorId = author.id;
+      }
+      else
+      {
+        author = new Author();
+        author.name = authorName;
+        _context.Authors.Add(author);
+        await _context.SaveChangesAsync();
+        Console.WriteLine(author.id);
+        serial.authorId = author.id;
+      }
+      _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
       //serial.id is the new id here
-      await GetSerialDataHAP(serial);
+      await AddSerialChapters(serial);
+      
       return CreatedAtAction("GetSerial", new { id = serial.id }, serial);
     }
 
@@ -132,9 +179,9 @@ namespace WT_API.Controllers
     }
 
 
-    //Get serial data using Html Agility Pack
+    //Add chapters of a serial, using Html Agility Pack
     [NonAction]
-    public async Task GetSerialDataHAP(Serial serial)
+    public async Task AddSerialChapters(Serial serial)
     {
       
       HttpClient client = new HttpClient();
@@ -147,10 +194,12 @@ namespace WT_API.Controllers
       htmlDoc.LoadHtml(pageContent);
       HtmlNode nextCH;
       string nextCHURL;
+      string currentUrl = serial.firstCh;
 
       while (true)
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
+        
         //debug
         //Console.WriteLine(nextCH.InnerText);
 
@@ -159,10 +208,12 @@ namespace WT_API.Controllers
         if (chTitleNode != null)
         {
           string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
-          //can probably solve this, and nextChURL with 1 variable -- does same thing as tbCheckedUrl
-          string tempChURL = nextCH.Attributes["href"].Value;
-          string chLink = tempChURL[0] != '/' ? tempChURL : client.BaseAddress + tempChURL;
-          _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
+          string chLink = currentUrl;
+          //TODO maybe this doesnt need to happen every time, just first maybe?
+          if(!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
+          {
+            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
+          }
         }
         if (nextCH == null)
         {
@@ -172,7 +223,7 @@ namespace WT_API.Controllers
             nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
             if (nextCH == null)
             {
-              //TODO notify admin shits wrong
+              //TODO notify admin shits wrong -- but maybe nothings wrong????
               Console.WriteLine("none of the next chapter links work, maybe its over");
               _context.SaveChanges();
               break;
@@ -190,6 +241,7 @@ namespace WT_API.Controllers
             tbCheckedUrl = client.BaseAddress + nextCHURL;
           }
           pageContent = await CheckUrl(response, tbCheckedUrl);
+          currentUrl = tbCheckedUrl;
           htmlDoc.LoadHtml(pageContent);
         }
       }
@@ -202,6 +254,7 @@ namespace WT_API.Controllers
       string pageContent = "";
       HttpClient client2 = new HttpClient();
       Uri fullUri = new Uri(link);
+      
       client2.BaseAddress = new Uri(fullUri.AbsoluteUri);
 
       if (response.IsSuccessStatusCode)
@@ -221,17 +274,57 @@ namespace WT_API.Controllers
       }
       //this one is handling 429 "too many requests" rate limiting issues, probably imperfectly, for Katalepsis -- docs
       else if (response.StatusCode == HttpStatusCode.TooManyRequests)
+        {
+          while (response.StatusCode == HttpStatusCode.TooManyRequests)
           {
-            while (response.StatusCode == HttpStatusCode.TooManyRequests)
-            {
-              Thread.Sleep(50);
-            }
-            response.EnsureSuccessStatusCode();
-            pageContent = await response.Content.ReadAsStringAsync();
+            Thread.Sleep(50);
           }
+          response.EnsureSuccessStatusCode();
+          pageContent = await response.Content.ReadAsStringAsync();
+        }
 
       client2.Dispose();
       return pageContent;
+    }
+
+    //Update all serials
+    private async Task UpdateSerials()
+    {
+      List<Serial> serials = await _context.Serials.ToListAsync();
+      foreach (Serial serial in serials)
+      {
+        Chapter? lastChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+        string lastLink;
+        if (lastChapter == null)
+        {
+          lastLink = serial.firstCh;
+        }
+        else
+        {
+          lastLink = lastChapter.link;
+        }
+        serial.firstCh = lastLink;
+        await AddSerialChapters(serial);
+      }
+    }
+
+    //Update one specififc serial
+    private async Task UpdateSerial(int id)
+    {
+      Serial serial = await _context.Serials.FindAsync(id);
+
+      Chapter? lastChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+      string lastLink;
+      if (lastChapter == null)
+      {
+        lastLink = serial.firstCh;
+      }
+      else
+      {
+        lastLink = lastChapter.link;
+      }
+      serial.firstCh = lastLink;
+      await AddSerialChapters(serial);
     }
   }
 }
