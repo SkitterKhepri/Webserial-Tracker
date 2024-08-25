@@ -179,7 +179,7 @@ namespace WT_API.Controllers
     }
 
 
-    //Add chapters of a serial, using Html Agility Pack
+    //Add chapters of a serial, using Html Agility Pack -- overload 1
     [NonAction]
     public async Task AddSerialChapters(Serial serial)
     {
@@ -187,7 +187,7 @@ namespace WT_API.Controllers
       HttpClient client = new HttpClient();
       //had to add this bc of Ward -- docs
       Uri fullUri = new Uri(serial.firstCh);
-      client.BaseAddress = new Uri(fullUri.AbsoluteUri);
+      client.BaseAddress = new Uri("http://" + fullUri.Host);
       HttpResponseMessage response = await client.GetAsync(serial.firstCh);
       string pageContent = await CheckUrl(response, serial.firstCh);
       HtmlDocument htmlDoc = new HtmlDocument();
@@ -199,18 +199,18 @@ namespace WT_API.Controllers
       while (true)
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
-        
+
         //debug
         //Console.WriteLine(nextCH.InnerText);
-
+        string chLink = "";
         HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
         //probably dont need this if?
         if (chTitleNode != null)
         {
           string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
-          string chLink = currentUrl;
+          chLink = currentUrl;
           //TODO maybe this doesnt need to happen every time, just first maybe?
-          if(!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
+          if (!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
           {
             _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
           }
@@ -238,7 +238,7 @@ namespace WT_API.Controllers
           string tbCheckedUrl = nextCHURL;
           if (nextCHURL[0] == '/')
           {
-            tbCheckedUrl = client.BaseAddress + nextCHURL;
+            tbCheckedUrl = client.BaseAddress.ToString().TrimEnd(new Char[] { '/' }) + nextCHURL;
           }
           pageContent = await CheckUrl(response, tbCheckedUrl);
           currentUrl = tbCheckedUrl;
@@ -248,6 +248,74 @@ namespace WT_API.Controllers
     }
 
 
+    //Overload 2
+    [NonAction]
+    public async Task AddSerialChapters(Serial serial, string startUrl)
+    {
+      Console.WriteLine(startUrl);
+      HttpClient client = new HttpClient();
+      //had to add this bc of Ward -- docs
+      Uri fullUri = new Uri(startUrl);
+      client.BaseAddress = new Uri("https://" + fullUri.Host);
+      HttpResponseMessage response = await client.GetAsync(startUrl);
+      string pageContent = await CheckUrl(response, startUrl);
+      HtmlDocument htmlDoc = new HtmlDocument();
+      htmlDoc.LoadHtml(pageContent);
+      HtmlNode nextCH;
+      string nextCHURL;
+      string currentUrl = startUrl;
+
+      while (true)
+      {
+        nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
+
+        //debug
+        //Console.WriteLine(nextCH.InnerText);
+
+        HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
+        //probably dont need this if?
+        if (chTitleNode != null)
+        {
+          string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
+          string chLink = currentUrl;
+          //TODO maybe this doesnt need to happen every time, just first maybe?
+          if (!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
+          {
+            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
+          }
+        }
+        if (nextCH == null)
+        {
+          nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+          if (nextCH == null)
+          {
+            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
+            if (nextCH == null)
+            {
+              //TODO notify admin shits wrong -- but maybe nothings wrong????
+              Console.WriteLine("none of the next chapter links work, maybe its over");
+              _context.SaveChanges();
+              break;
+            }
+          }
+        }
+        else
+        {
+          nextCHURL = nextCH.Attributes["href"].Value;
+          Console.WriteLine(nextCHURL);
+          response = await client.GetAsync(nextCHURL);
+          string tbCheckedUrl = nextCHURL;
+          if (nextCHURL[0] == '/')
+          {
+            tbCheckedUrl = client.BaseAddress.ToString().TrimEnd(new Char[] { '/' }) + nextCHURL;
+          }
+          pageContent = await CheckUrl(response, tbCheckedUrl);
+          currentUrl = tbCheckedUrl;
+          htmlDoc.LoadHtml(pageContent);
+        }
+      }
+    }
+
 
     private static async Task<string> CheckUrl(HttpResponseMessage response, string link) {
 
@@ -255,7 +323,7 @@ namespace WT_API.Controllers
       HttpClient client2 = new HttpClient();
       Uri fullUri = new Uri(link);
       
-      client2.BaseAddress = new Uri(fullUri.AbsoluteUri);
+      //client2.BaseAddress = new Uri("https://" + fullUri.Host);
 
       if (response.IsSuccessStatusCode)
       {
@@ -303,8 +371,7 @@ namespace WT_API.Controllers
         {
           lastLink = lastChapter.link;
         }
-        serial.firstCh = lastLink;
-        await AddSerialChapters(serial);
+        await AddSerialChapters(serial, lastLink);
       }
     }
 
@@ -323,8 +390,7 @@ namespace WT_API.Controllers
       {
         lastLink = lastChapter.link;
       }
-      serial.firstCh = lastLink;
-      await AddSerialChapters(serial);
+      await AddSerialChapters(serial, lastLink);
     }
   }
 }
