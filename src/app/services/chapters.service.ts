@@ -17,10 +17,6 @@ export class ChaptersService {
     return this.http.get(this.apiUrl)
   }
 
-  getSerialChapters(serialId:any){
-    return this.http.get(this.apiUrl + "sl/" + serialId)
-  }
-
   postChapter(chapter: any): Observable<any> {
     return this.http.post(this.apiUrl, chapter);
   }

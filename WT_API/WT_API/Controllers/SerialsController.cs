@@ -88,7 +88,7 @@ namespace WT_API.Controllers
     // PUT: api/Serials/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutSerial(int id, Serial serial)
+    public async Task<IActionResult> PutSerial(int id, Serial serial, string authorName)
     {
       if (id != serial.id)
       {
@@ -96,6 +96,21 @@ namespace WT_API.Controllers
       }
 
       _context.Entry(serial).State = EntityState.Modified;
+
+      var author = _context.Authors.FirstOrDefault(au => au.name == authorName);
+      if (author != null)
+      {
+        serial.authorId = author.id;
+      }
+      else
+      {
+        author = new Author();
+        author.name = authorName;
+        _context.Authors.Add(author);
+        await _context.SaveChangesAsync();
+        Console.WriteLine(author.id);
+        serial.authorId = author.id;
+      }
 
       try
       {
@@ -149,6 +164,7 @@ namespace WT_API.Controllers
       await _context.SaveChangesAsync();
       //serial.id is the new id here
       await AddSerialChapters(serial);
+
       
       return CreatedAtAction("GetSerial", new { id = serial.id }, serial);
     }

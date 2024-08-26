@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { BaseService } from '../base.service';
+import { BaseService } from '../services/base.service';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UsersService } from '../users.service';
-import { SerialsService } from '../serials.service';
-import { ChaptersService } from '../chapters.service';
-import { AuthorsService } from '../authors.service';
+import { UsersService } from '../services/users.service';
+import { SerialsService } from '../services/serials.service';
+import { ChaptersService } from '../services/chapters.service';
+import { AuthorsService } from '../services/authors.service';
 
 @Component({
   selector: 'app-home',
@@ -51,6 +51,7 @@ export class HomeComponent {
       (authors:any) => this.authors = authors
     )
   }
+  
   getAuthor(id:any) : any{
     return this.authors.find((au:any)=> au.id == id)
   }
@@ -59,4 +60,7 @@ export class HomeComponent {
     return this.serials.find((ser:any) => ser.id ==id)
   }
 
+  getSerialChaptersCount(id:any){
+    return this.chapters.filter((ch:any) => ch.serialId == id).length
+  }
 }

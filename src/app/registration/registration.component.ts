@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseService } from '../base.service';
-import { UsersService } from '../users.service';
+import { BaseService } from '../services/base.service';
+import { UsersService } from '../services/users.service';
 
 @Component({
   selector: 'app-registration',

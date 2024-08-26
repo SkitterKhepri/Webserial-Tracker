@@ -51,16 +51,16 @@ namespace WT_API.Controllers
       return chapter;
     }
 
-    [HttpGet("sl/{serialId}")]
-    public async Task<ActionResult<IEnumerable<Chapter>>> GetSerialChapters(int serialId)
-    {
-      if (_context.Chapters == null)
-      {
-        return NotFound();
-      }
+    //[HttpGet("sl/{serialId}")]
+    //public async Task<ActionResult<IEnumerable<Chapter>>> GetSerialChapters(int serialId)
+    //{
+    //  if (_context.Chapters == null)
+    //  {
+    //    return NotFound();
+    //  }
 
-      return await _context.Chapters.Where(ch => ch.serialId == serialId).ToListAsync();
-    }
+    //  return await _context.Chapters.Where(ch => ch.serialId == serialId).ToListAsync();
+    //}
 
     // PUT: api/Chapters/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

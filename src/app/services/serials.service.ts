@@ -16,16 +16,15 @@ export class SerialsService {
     return this.http.get(this.apiUrl)
   }
 
-  postSerial(serial: any): Observable<any> {
-    return this.http.post(this.apiUrl, serial);
+  postSerial(serial: any, authorName:any): Observable<any> {
+    return this.http.post(this.apiUrl + "?authorName=" + authorName, serial);
   }
-  
 
-  putSerial(serial:any){
-    return this.http.put(this.apiUrl + serial.id, serial)
+  putSerial(id:any, serial:any, authorName:any){
+    return this.http.put(this.apiUrl + id + "?authorName=" + authorName, serial)
   }
 
   deleteSerial(id:any){
-    this.http.delete(this.apiUrl + id)
+    return this.http.delete(this.apiUrl + id)
   }
 }

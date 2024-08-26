@@ -12,6 +12,7 @@ import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { AdminUsersComponent } from './admin-users/admin-users.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,15 +2,212 @@
     <div class="navBar">
         <app-nav-bar></app-nav-bar>
     </div>
+    <div class="container newSerial my-2">
+        <div class="container border border-info-subtle border-3 rounded-2 ">
+            <div class="row align-items-center my-1 p-1">
+                <div class="col-auto">
+                    <label for="title">Title:</label>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" id="title" class="form-control" [(ngModel)]="newSerial.title">
+                </div>
+                <div class="col-auto">
+                    <p class="m-1">Author's Name:</p>
+                </div>
+                <div class="col-md-3 flex-grow-1">
+                    <input #authorName type="text" id="authorName" class="form-control" [(ngModel)]="newSerialAuthor">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="homePg">Home Page:</label>
+                </div>
+                <div class="col-md-10 flex-grow-1">
+                    <input type="text" class="form-control" id="homePg" [(ngModel)]="newSerial.home">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="titleXP">Title XPath:</label>
+                </div>
+                <div class="col-md-10 flex-grow-1">
+                    <input type="text" class="form-control" [(ngModel)]="newSerial.titleXPath">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="firstCh">First Chapter Link:</label>
+                </div>
+                <div class="col-md-8 flex-grow-1">
+                    <input type="text" id="firstCh" class="form-control" [(ngModel)]="newSerial.firstCh">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="XPath1">Next Chapter XPath:</label>
+                </div>
+                <div class="col-md-8 flex-grow-1">
+                    <input type="text" id="XPath1" class="form-control" [(ngModel)]="newSerial.nextChLinkXPath">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="XPath2">Secondary Next Chapter XPath:</label>
+                </div>
+                <div class="col-md-8 flex-grow-1">
+                    <input type="text" id="XPath2" class="form-control" [(ngModel)]="newSerial.secondaryNextChLinkXPath">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="XPath3">Other Next Chapter XPath:</label>
+                </div>
+                <div class="col-md-8 flex-grow-1">
+                    <input type="text" id="XPath3" class="form-control" [(ngModel)]="newSerial.otherNextChLinkXPaths">
+                </div>
+            </div>
+            <div class="row align-items-center my-1">
+                <div class="col-auto">
+                    <label for="XPath3">Status:</label>
+                </div>
+                <div class="col-md-8 flex-grow-1">
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="radiobtn" id="completed" autocomplete="off" #complete>
+                        <label class="btn btn-outline-primary" for="completed">Completed</label>
+                      
+                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" autocomplete="off" #ongoing>
+                        <label class="btn btn-outline-primary" for="ongoing">Ongoing</label>
+                      
+                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" autocomplete="off" #hiatus>
+                        <label class="btn btn-outline-primary" for="hiatus">Hiatus</label>
+
+                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" autocomplete="off" #abandoned>
+                        <label class="btn btn-outline-primary" for="abandoned">Abandoned</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-1 align-items-center">
+                <div class="col my-1">
+                    <button class="btn btn-primary form-control" (click)="addSerial(authorName.value, complete.checked, ongoing.checked, hiatus.checked, abandoned.checked)">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container serials">
-        <div class="col">
-            <div class="row" *ngFor="let serial of serials">
-                <input type="text" id="title" [value]="serial.title">
-                <button class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="" type="button">
+        <div class="row align-items-center" *ngFor="let serial of serials">
+            <div class="col mb-2">
+                <div id="title" class="form-control w-100">{{serial.title}}</div>
+            </div>
+            <div class="col-auto mb-2">
+                <button class="btn btn-secondary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + serial.id" type="button">
                     <i class="bi bi-chevron-down"></i>
-                    <!-- details of the serial come here, prpbably inside a container, that somehow has dínamic id, so data-bs-target can collapse it
-                    maybe: [id]="serial.id"  -->
                 </button>
+            </div>
+            <div    >
+                <!-- TODO shouldnt show, just in case -->
+                <div class="collapse" [id]="'collapse' + serial.id">
+                    <div class="container border border-info-subtle border-3 rounded-2 ">
+                        <div class="row align-items-center my-1 p-1">
+                            <div class="col-auto border border-2">
+                                <p class="m-1">{{serial.id}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <label for="title">Title:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="title" class="form-control" [(ngModel)]="serial.title">
+                            </div>
+                            <div class="col-auto">
+                                <label for="authorId">Author Id:</label>
+                            </div>
+                            <div class="col-auto border border-2">
+                                <p class="m-1">{{serial.authorId}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <p class="m-1">Author's Name:</p>
+                            </div>
+                            <div class="col-md-3 flex-grow-1">
+                                <input #authorName type="text" id="authorName" class="form-control" [value]="selectAuthor(serial.authorId)?.name">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="homePg">Home Page:</label>
+                            </div>
+                            <div class="col-md-10 flex-grow-1">
+                                <input type="text" class="form-control" id="homePg" [(ngModel)]="serial.home">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="titleXP">Title XPath:</label>
+                            </div>
+                            <div class="col-md-10 flex-grow-1">
+                                <input type="text" class="form-control" [(ngModel)]="serial.titleXPath">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="firstCh">First Chapter Link:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="firstCh" class="form-control" [(ngModel)]="serial.firstCh">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath1">Next Chapter XPath:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="XPath1" class="form-control" [(ngModel)]="serial.nextChLinkXPath">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath2">Secondary Next Chapter XPath:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="XPath2" class="form-control" [(ngModel)]="serial.secondaryNextChLinkXPath">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath3">Other Next Chapter XPath:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="XPath3" class="form-control" [(ngModel)]="serial.otherNextChLinkXPaths">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath3">Status:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" autocomplete="off" #complete [checked]="serial.status == 'COMPLETE'">
+                                    <label class="btn btn-outline-primary" for="completed-{{serial.id}}">Completed</label>
+                                  
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" autocomplete="off" #ongoing [checked]="serial.status == 'ONGOING'">
+                                    <label class="btn btn-outline-primary" for="ongoing-{{serial.id}}">Ongoing</label>
+                                  
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" autocomplete="off" #hiatus [checked]="serial.status == 'HIATUS'">
+                                    <label class="btn btn-outline-primary" for="hiatus-{{serial.id}}">Hiatus</label>
+
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" autocomplete="off" #abandoned [checked]="serial.status == 'ABANDONED'">
+                                    <label class="btn btn-outline-primary" for="abandoned-{{serial.id}}">Abandoned</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-1 align-items-center">
+                            <div class="col flex-grow-1 my-1">
+                                <button class="btn btn-success form-control" (click)="updateSerial(serial, authorName.value, complete.checked, ongoing.checked, hiatus.checked, abandoned.checked)">Update</button>
+                            </div>
+                            <div class="col flex-grow-1 my-1">
+                                <button class="btn btn-danger form-control" (click)="deleteSerial(serial.id)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
