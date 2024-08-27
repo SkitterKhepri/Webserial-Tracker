@@ -13,6 +13,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { FormsModule } from '@angular/forms';
+import { ResultsComponent } from './results/results.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
     LogInComponent,
     RegistrationComponent,
     AdminSerialsComponent,
-    AdminUsersComponent
+    AdminUsersComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,

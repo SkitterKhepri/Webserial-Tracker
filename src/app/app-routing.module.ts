@@ -5,6 +5,8 @@ import { LogInComponent } from './log-in/log-in.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { ResultsComponent } from './results/results.component';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -12,6 +14,8 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'adminSerials', component: AdminSerialsComponent},
   {path: 'adminUsers', component: AdminUsersComponent},
+  {path: 'results', component: ResultsComponent},
+  {path: 'search', component: SearchComponent},
   {path: '', component: HomeComponent}
 ];
 

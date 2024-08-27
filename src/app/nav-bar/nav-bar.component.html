@@ -5,13 +5,18 @@
       </button>
       <a class="navbar-brand fs-4 me-auto" href="#">Webserial-Tracker</a>
       <div class="nav-item flex-grow-1">
-          <form class="d-flex" role="search">
-            <input class="form-control ms-2 me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success mx-2" type="submit">Search</button>
-          </form>
+            <div class="d-flex" role="search">
+                <input #searchInput class="form-control ms-2 me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
+                <select [(ngModel)]="selectedSearch" class="form-select form-control w-25" aria-label="Default select example">
+                    <option value="ser">Serial</option>
+                    <option value="ch">Chapter</option>
+                    <option value="au">Author</option>
+                </select>
+                <button class="btn btn-outline-success mx-2" type="submit" [routerLink]="['/results']" (click)="search(selectedSearch, searchInput.value)">Search</button>
+            </div>
       </div>
       <div class="nav-item">
-          <a class="nav-link me-4" href="#">Advanced Search</a>
+          <a class="nav-link me-4" [routerLink]="['/search']">Advanced Search</a>
       </div>
       <div class="nav-item">
           <a class="nav-link mx-2" [routerLink]="['/login']">Log In</a>

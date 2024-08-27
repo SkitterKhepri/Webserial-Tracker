@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +17,7 @@ namespace WT_API.Models
     public string secondaryNextChLinkXPath { get; set; }
     public string otherNextChLinkXPaths { get; set; }
     public string titleXPath { get; set; }
+    [DefaultValue(false)]
     public bool reviewStatus { get; set; }
 
     public Serial() { }

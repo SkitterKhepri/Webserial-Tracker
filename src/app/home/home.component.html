@@ -8,23 +8,20 @@
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 <div class="col-5" *ngFor="let chapter of chapters | slice:-5">
                     <div class="col">
-                        <div class="card p-1 h-100 w-100">
-                          <div class="card-body">
-                            <h5 class="card-title">
+                      <div class="card p-1 h-100 w-100">
+                        <div class="card-body">
+                          <h5 class="card-title">
                               <a class="link-opacity-75-hover" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
-                            </h5>
-                            <p>--------------</p>
-                            <ng-container *ngIf="getSerial(chapter.serialId) as serial">
-                                <a class="link-opacity-50-hover" href="{{serial.home}}">
-                                    <h6 class="">{{serial.title}}</h6>
-                                </a>
-                                <p class="">by {{getAuthor(serial.authorId)?.name}}</p>
-                            </ng-container>
-                          </div>
-                          <!-- <div class="card-footer">
-                            <small class="text-body-secondary">Last upload 3 mins ago</small>
-                          </div> -->
+                          </h5>
+                          <p>--------------</p>
+                          <ng-container *ngIf="getSerial(chapter.serialId) as serial">
+                            <a class="link-opacity-50-hover" href="{{serial.home}}">
+                              <h6 class="">{{serial.title}}</h6>
+                            </a>
+                            <p class="">by {{getAuthor(serial.authorId)?.name}}</p>
+                          </ng-container>
                         </div>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -44,9 +41,6 @@
                                 <p>with {{chNum}} chapters</p>
                             </ng-container>
                           </div>
-                          <!-- <div class="card-footer">
-                            <small class="text-body-secondary">Last upload 3 mins ago</small>
-                          </div> -->
                         </div>
                     </div>
                 </div>

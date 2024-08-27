@@ -1,0 +1,61 @@
+<div class="conatiner main">
+    <div class="navBar">
+        <app-nav-bar></app-nav-bar>
+    </div>
+    <h4 class="m-2">Search Results:</h4>
+    <div class="container">
+
+        <div *ngIf="searchedCh != []">
+            <div *ngFor="let chapter of searchedCh">
+                <div id="'chapter' + {{chapter.id}}" class="card p-1 h-100 w-100">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                          <a class="link-opacity-75-hover" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
+                      </h5>
+                      <p>--------------</p>
+                      <ng-container *ngIf="getSerial(chapter.serialId) as serial">
+                        <a class="link-opacity-50-hover" href="{{serial.home}}">
+                          <h6 class="">{{serial.title}}</h6>
+                        </a>
+                        <p class="">by {{getAuthor(serial.authorId)?.name}}</p>
+                      </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="searchedSer != []">
+            <div *ngFor="let serial of searchedSer">
+                <div id="'serial' + {{serial.id}}" class="card p-1 h-100 w-100">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <a class="link-opacity-75-hover" href="{{serial.home}}" target="_blank">{{serial.title}}</a>
+                        <p class="">by {{getAuthor(serial.authorId)?.name}}</p>
+                      </h5>
+                      <ng-container *ngIf="getSerialChaptersCount(serial.id) as chNum">
+                          <p>with {{chNum}} chapters</p>
+                      </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="searchedAu != []">
+            <div *ngFor="let author of searchedAu">
+                <div id="'author' + {{author.id}}" class="card p-1 h-100 w-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{author.name}}
+                        </h5>
+                        <p>Works:</p>
+                        <div *ngFor="let serial of author.serials">
+                            <a class="link-opacity-50-hover" href="{{serial.home}}">
+                                <h6 class="">{{serial.title}}</h6>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
