@@ -1,10 +1,12 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using WT_API.Models;
 
 namespace WT_API.Data
 {
     
-    public class Context : DbContext
+    public class Context : IdentityDbContext<User>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -15,7 +17,6 @@ namespace WT_API.Data
 
         public Context(DbContextOptions<Context> options) : base(options) { }
        
-        public DbSet<Models.User> Users { get; set; }
         public DbSet<Models.Serial> Serials { get; set; }
         public DbSet<Models.Chapter> Chapters { get; set; }
         public DbSet<Models.Author> Authors { get; set; }

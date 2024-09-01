@@ -26,6 +26,6 @@ export class ChaptersService {
   }
 
   deleteChapter(id:any){
-    this.http.delete(this.apiUrl + id)
+    return this.http.delete(this.apiUrl + id)
   }
 }

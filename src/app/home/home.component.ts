@@ -14,25 +14,22 @@ import { AuthorsService } from '../services/authors.service';
 })
 export class HomeComponent {
 
-  users:any[] = []
   serials:any[] = []
   chapters:any[] = []
   authors:any[] = []
   newChapters:any[] = []
+  currentUser:any = null
+  currentUserClaims:any = null
 
   constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
     private chServ:ChaptersService, private authorServ:AuthorsService){
-    this.getUsers()
     this.getSerials()
     this.getChapters()
     this.getAuthors()
+    this.getCurrentUser()
+    this.getCurrentUserClaims()
   }
 
-  getUsers(){
-    this.userServ.getUsers().subscribe(
-        (users:any)=> this.users = users
-      )
-  }
 
   getSerials(){
     this.serServ.getSerials().subscribe(
@@ -62,5 +59,27 @@ export class HomeComponent {
 
   getSerialChaptersCount(id:any){
     return this.chapters.filter((ch:any) => ch.serialId == id).length
+  }
+
+  updateAll(){
+    this.serServ.updateSerials().subscribe(
+      (ser:any) => {
+        this.serials = ser
+        this.getChapters()
+        this.getAuthors()
+      }
+    )
+  }
+
+  getCurrentUser(){
+    this.userServ.currentUser.subscribe(
+      (us:any) => this.currentUser = us
+    )
+  }
+
+  getCurrentUserClaims(){
+    this.userServ.currentUserClaims.subscribe(
+      (cl:any) => this.currentUserClaims = cl
+    )
   }
 }

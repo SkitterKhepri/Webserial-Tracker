@@ -3,55 +3,114 @@
   "WorkspaceRootPath": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\userlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\userlistcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\serial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\serial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\serialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\serialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\chapterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\chapterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WT_API/True/SqlTable/dbo.Chapters.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\userclaimscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\userclaimscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\chapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\chapter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\authorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\authorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\chapterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\chapterscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\serial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\serial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\author.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\author.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\userwithclaims.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\userwithclaims.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\authenticationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\loggeduser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\loggeduser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\userclaimsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\userclaimsmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\userroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\userroles.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\rolesmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\rolesmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\updatemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\updatemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\services\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\serialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\serialscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\registrationmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\registrationmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WT_API/True/SqlTable/dbo.AspNetUsers.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\data\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\data\\context.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\scrapingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\scrapingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WT_API/True/SqlTable/dbo.Chapters.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\authorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\authorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\changepasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\changepasswordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\models\\scrapingserviceselenium.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,6 +121,10 @@
       "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\models\\likedserial.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\controllers\\scrapingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\controllers\\scrapingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\migrations\\20240819192927_new-new-init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\migrations\\20240819192927_new-new-init.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -70,16 +133,12 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:WT_API\\Migrations\\20240819192155_mig-n.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C8C741CB-C962-45AE-9FCB-607748741468}|DB_Reset\\DB_Reset.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\db_reset\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C8C741CB-C962-45AE-9FCB-607748741468}|DB_Reset\\DB_Reset.csproj|solutionrelative:db_reset\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\wt_api.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
       "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\wt_api.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|e:\\idegen\\coding\\webserial_tracker\\wt_api\\wt_api\\migrations\\20240829122638_usersv2v2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{47296A9E-B690-44CA-96EB-D4E4BC8ABAA5}|WT_API\\WT_API.csproj|solutionrelative:wt_api\\migrations\\20240829122638_usersv2v2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -89,17 +148,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 20,
               "Title": "SerialsController.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\SerialsController.cs",
               "RelativeDocumentMoniker": "WT_API\\Controllers\\SerialsController.cs",
               "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\SerialsController.cs",
               "RelativeToolTip": "WT_API\\Controllers\\SerialsController.cs",
-              "ViewState": "AQIAAJYAAAAAAAAAAAAiwIoAAAAjAAAA",
+              "ViewState": "AQIAADIAAAAAAAAAAAAQwCoAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-24T19:30:39.544Z",
               "IsPinned": true
@@ -110,7 +169,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
+              "Title": "Serial.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Serial.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\Serial.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Serial.cs",
+              "RelativeToolTip": "WT_API\\Models\\Serial.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAA6wBIAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-13T12:11:02.272Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "ChaptersController.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\ChaptersController.cs",
               "RelativeDocumentMoniker": "WT_API\\Controllers\\ChaptersController.cs",
@@ -118,11 +190,277 @@
               "RelativeToolTip": "WT_API\\Controllers\\ChaptersController.cs",
               "ViewState": "AQIAACwAAAAAAAAAAAAgwDIAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:00.366Z"
+              "WhenOpened": "2024-07-13T12:11:00.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Chapter.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Chapter.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\Chapter.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Chapter.cs",
+              "RelativeToolTip": "WT_API\\Models\\Chapter.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-13T12:11:02.27Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UserListController.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\UserListController.cs",
+              "RelativeDocumentMoniker": "WT_API\\Controllers\\UserListController.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\UserListController.cs",
+              "RelativeToolTip": "WT_API\\Controllers\\UserListController.cs",
+              "ViewState": "AQIAABEAAAAAAAAAAAAAwAkAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T10:58:58.035Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserClaimsController.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\UserClaimsController.cs",
+              "RelativeDocumentMoniker": "WT_API\\Controllers\\UserClaimsController.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\UserClaimsController.cs",
+              "RelativeToolTip": "WT_API\\Controllers\\UserClaimsController.cs",
+              "ViewState": "AQIAACQAAAAAAAAAAAAYwA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:26:47.012Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "User.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\User.cs",
+              "RelativeDocumentMoniker": "WT_API\\Controllers\\User.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\User.cs",
+              "RelativeToolTip": "WT_API\\Controllers\\User.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAQwHsAAABFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:52:05.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Author.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Author.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\Author.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Author.cs",
+              "RelativeToolTip": "WT_API\\Models\\Author.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-25T09:09:10.101Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "User.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\User.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\User.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\User.cs",
+              "RelativeToolTip": "WT_API\\Models\\User.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:05:31.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\appsettings.json",
+              "RelativeDocumentMoniker": "WT_API\\appsettings.json",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\appsettings.json",
+              "RelativeToolTip": "WT_API\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-07-13T12:11:02.266Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Program.cs",
+              "RelativeDocumentMoniker": "WT_API\\Program.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Program.cs",
+              "RelativeToolTip": "WT_API\\Program.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAuwEkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-13T12:11:00.759Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "WT_API\\Services\\AuthService.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Services\\AuthService.cs",
+              "RelativeToolTip": "WT_API\\Services\\AuthService.cs",
+              "ViewState": "AQIAAGcAAAAAAAAAAAAkwG8AAAAXAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:13:45.546Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "UserWithClaims.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UserWithClaims.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\UserWithClaims.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UserWithClaims.cs",
+              "RelativeToolTip": "WT_API\\Models\\UserWithClaims.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:06:33.619Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LoggedUser.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\LoggedUser.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\LoggedUser.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\LoggedUser.cs",
+              "RelativeToolTip": "WT_API\\Models\\LoggedUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:53:06.12Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "WT_API\\appsettings.Development.json",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\appsettings.Development.json",
+              "RelativeToolTip": "WT_API\\appsettings.Development.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-08-30T18:59:23.646Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "RolesModel.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\RolesModel.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\RolesModel.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\RolesModel.cs",
+              "RelativeToolTip": "WT_API\\Models\\RolesModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:53:37.635Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AuthenticationController.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\AuthenticationController.cs",
+              "RelativeDocumentMoniker": "WT_API\\Controllers\\AuthenticationController.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\AuthenticationController.cs",
+              "RelativeToolTip": "WT_API\\Controllers\\AuthenticationController.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAswCUAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:51:53.81Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "UpdateModel.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UpdateModel.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\UpdateModel.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UpdateModel.cs",
+              "RelativeToolTip": "WT_API\\Models\\UpdateModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:10:04.483Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "UserClaimsModel.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UserClaimsModel.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\UserClaimsModel.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UserClaimsModel.cs",
+              "RelativeToolTip": "WT_API\\Models\\UserClaimsModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:53:56.387Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "UserRoles.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UserRoles.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\UserRoles.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\UserRoles.cs",
+              "RelativeToolTip": "WT_API\\Models\\UserRoles.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAABUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:54:04.046Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Services\\IAuthService.cs",
+              "RelativeDocumentMoniker": "WT_API\\Services\\IAuthService.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Services\\IAuthService.cs",
+              "RelativeToolTip": "WT_API\\Services\\IAuthService.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAcAAAA+AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:52:49.577Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RegistrationModel.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\RegistrationModel.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\RegistrationModel.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\RegistrationModel.cs",
+              "RelativeToolTip": "WT_API\\Models\\RegistrationModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:12:06.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "dbo.AspNetUsers [Data]",
+              "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WT_API/True/SqlTable/dbo.AspNetUsers.sql",
+              "ToolTip": "dbo.AspNetUsers [Data]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
+              "WhenOpened": "2024-08-29T14:12:14.665Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "LoginModel.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\LoginModel.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\LoginModel.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\LoginModel.cs",
+              "RelativeToolTip": "WT_API\\Models\\LoginModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:53:25.151Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "20240829122638_usersv2v2.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Migrations\\20240829122638_usersv2v2.cs",
+              "RelativeDocumentMoniker": "WT_API\\Migrations\\20240829122638_usersv2v2.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Migrations\\20240829122638_usersv2v2.cs",
+              "RelativeToolTip": "WT_API\\Migrations\\20240829122638_usersv2v2.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T12:26:38.914Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
               "Title": "dbo.Chapters [Data]",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WT_API/True/SqlTable/dbo.Chapters.sql",
               "ToolTip": "dbo.Chapters [Data]",
@@ -131,119 +469,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "User.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\User.cs",
-              "RelativeDocumentMoniker": "WT_API\\Models\\User.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\User.cs",
-              "RelativeToolTip": "WT_API\\Models\\User.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAkAAAA",
+              "DocumentIndex": 24,
+              "Title": "Context.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Data\\Context.cs",
+              "RelativeDocumentMoniker": "WT_API\\Data\\Context.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Data\\Context.cs",
+              "RelativeToolTip": "WT_API\\Data\\Context.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAABNAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.273Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T12:11:02.268Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Author.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Author.cs",
-              "RelativeDocumentMoniker": "WT_API\\Models\\Author.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Author.cs",
-              "RelativeToolTip": "WT_API\\Models\\Author.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T09:09:10.101Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Program.cs",
-              "RelativeDocumentMoniker": "WT_API\\Program.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Program.cs",
-              "RelativeToolTip": "WT_API\\Program.cs",
-              "ViewState": "AQIAAB4AAAAAAAAAAADgvysAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:00.759Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "ScrapingServiceSelenium.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\ScrapingServiceSelenium.cs",
-              "RelativeDocumentMoniker": "WT_API\\Models\\ScrapingServiceSelenium.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\ScrapingServiceSelenium.cs",
-              "RelativeToolTip": "WT_API\\Models\\ScrapingServiceSelenium.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA1AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.262Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "WT_API\\Controllers\\UsersController.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "WT_API\\Controllers\\UsersController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACQAAAA5AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-13T19:22:07.697Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Serial.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Serial.cs",
-              "RelativeDocumentMoniker": "WT_API\\Models\\Serial.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Serial.cs",
-              "RelativeToolTip": "WT_API\\Models\\Serial.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAowBcAAAAgAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.272Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Chapter.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Chapter.cs",
-              "RelativeDocumentMoniker": "WT_API\\Models\\Chapter.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Chapter.cs",
-              "RelativeToolTip": "WT_API\\Models\\Chapter.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAlAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.27Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Login.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Login.cs",
-              "RelativeDocumentMoniker": "WT_API\\Models\\Login.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\Login.cs",
-              "RelativeToolTip": "WT_API\\Models\\Login.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-27T08:50:09.266Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 26,
               "Title": "AuthorsController.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\AuthorsController.cs",
               "RelativeDocumentMoniker": "WT_API\\Controllers\\AuthorsController.cs",
               "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\AuthorsController.cs",
               "RelativeToolTip": "WT_API\\Controllers\\AuthorsController.cs",
-              "ViewState": "AQIAAGIAAAAAAAAAAAAswHAAAAAFAAAA",
+              "ViewState": "AQIAAFcAAAAAAAAAAAAowHAAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T09:20:53.118Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 27,
+              "Title": "ChangePasswordModel.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\ChangePasswordModel.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\ChangePasswordModel.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\ChangePasswordModel.cs",
+              "RelativeToolTip": "WT_API\\Models\\ChangePasswordModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-29T11:53:01.763Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
               "Title": "LikedSerial.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\LikedSerial.cs",
               "RelativeDocumentMoniker": "WT_API\\Models\\LikedSerial.cs",
@@ -255,19 +517,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Context.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Data\\Context.cs",
-              "RelativeDocumentMoniker": "WT_API\\Data\\Context.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Data\\Context.cs",
-              "RelativeToolTip": "WT_API\\Data\\Context.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABNAAAA",
+              "DocumentIndex": 28,
+              "Title": "ScrapingServiceSelenium.cs",
+              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\ScrapingServiceSelenium.cs",
+              "RelativeDocumentMoniker": "WT_API\\Models\\ScrapingServiceSelenium.cs",
+              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Models\\ScrapingServiceSelenium.cs",
+              "RelativeToolTip": "WT_API\\Models\\ScrapingServiceSelenium.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.268Z"
+              "WhenOpened": "2024-07-13T12:11:02.262Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 30,
               "Title": "ScrapingController.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Controllers\\ScrapingController.cs",
               "RelativeDocumentMoniker": "WT_API\\Controllers\\ScrapingController.cs",
@@ -279,7 +541,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 32,
               "Title": "20240819192155_mig-n.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Migrations\\20240819192155_mig-n.cs",
               "RelativeDocumentMoniker": "WT_API\\Migrations\\20240819192155_mig-n.cs",
@@ -290,7 +552,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 31,
               "Title": "20240819192927_new-new-init.cs",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Migrations\\20240819192927_new-new-init.cs",
               "RelativeDocumentMoniker": "WT_API\\Migrations\\20240819192927_new-new-init.cs",
@@ -302,31 +564,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Program.cs",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\DB_Reset\\Program.cs",
-              "RelativeDocumentMoniker": "DB_Reset\\Program.cs",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\DB_Reset\\Program.cs",
-              "RelativeToolTip": "DB_Reset\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAIBJwAoAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:14:37.985Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\appsettings.json",
-              "RelativeDocumentMoniker": "WT_API\\appsettings.json",
-              "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\appsettings.json",
-              "RelativeToolTip": "WT_API\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAA+AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-07-13T12:11:02.266Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 33,
               "Title": "WT_API",
               "DocumentMoniker": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\WT_API.csproj",
               "RelativeDocumentMoniker": "WT_API\\WT_API.csproj",

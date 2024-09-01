@@ -16,6 +16,10 @@ export class SerialsService {
     return this.http.get(this.apiUrl)
   }
 
+  getSerial(id:any){
+    return this.http.get(this.apiUrl + id)
+  }
+
   postSerial(serial: any, authorName:any): Observable<any> {
     return this.http.post(this.apiUrl + "?authorName=" + authorName, serial);
   }
@@ -26,5 +30,13 @@ export class SerialsService {
 
   deleteSerial(id:any){
     return this.http.delete(this.apiUrl + id)
+  }
+
+  updateSerial(id:any){
+    return this.http.get(this.apiUrl + "update/" + id)
+  }
+
+  updateSerials(){
+    return this.http.get(this.apiUrl + "update/")
   }
 }

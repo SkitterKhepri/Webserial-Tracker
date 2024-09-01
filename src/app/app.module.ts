@@ -14,6 +14,8 @@ import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { FormsModule } from '@angular/forms';
 import { ResultsComponent } from './results/results.component';
+import { NewSerialComponent } from './new-serial/new-serial.component';
+import { AdminChaptersComponent } from './admin-chapters/admin-chapters.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ResultsComponent } from './results/results.component';
     RegistrationComponent,
     AdminSerialsComponent,
     AdminUsersComponent,
-    ResultsComponent
+    ResultsComponent,
+    NewSerialComponent,
+    AdminChaptersComponent
   ],
   imports: [
     BrowserModule,

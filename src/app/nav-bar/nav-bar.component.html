@@ -1,40 +1,71 @@
 <nav class="navbar bg-body-tertiary fixed-top">
-  <div class="container-fluid">
-      <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <a class="navbar-brand fs-4 me-auto" href="#">Webserial-Tracker</a>
-      <div class="nav-item flex-grow-1">
+    <div class="container-fluid">
+        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand fs-4 me-auto" href="#">Webserial-Tracker</a>
+        <div class="nav-item flex-grow-1">
             <div class="d-flex" role="search">
                 <input #searchInput class="form-control ms-2 me-2 flex-grow-1" type="search" placeholder="Search" aria-label="Search">
-                <select [(ngModel)]="selectedSearch" class="form-select form-control w-25" aria-label="Default select example">
+                <select name="selectSearch" [(ngModel)]="selectedSearch" class="form-select form-control w-25" aria-label="Default select example">
                     <option value="ser">Serial</option>
                     <option value="ch">Chapter</option>
                     <option value="au">Author</option>
                 </select>
                 <button class="btn btn-outline-success mx-2" type="submit" [routerLink]="['/results']" (click)="search(selectedSearch, searchInput.value)">Search</button>
             </div>
-      </div>
-      <div class="nav-item">
-          <a class="nav-link me-4" [routerLink]="['/search']">Advanced Search</a>
-      </div>
-      <div class="nav-item">
-          <a class="nav-link mx-2" [routerLink]="['/login']">Log In</a>
-      </div>
-      <div class="nav-item">
-          <a class="nav-link mx-2" [routerLink]="['/register']">Register</a>
-      </div>
-      <div class="offcanvas offcanvas-end" tabindex="-1" id="sideBar" aria-labelledby="sideBarLB">
-          <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="sideBarLB">Webserial-Tracker</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body d-flex flex-column">
-              <div class="nav-item navbar-text">Followed Works:</div>
-              <div class="nav-item mt-auto">
-                 <a class="nav-link" href="#">Log Out</a>
-              </div>
-          </div>
-      </div>
-  </div>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link me-4" (click)="kiir()">Advanced Search</a>
+        </div>
+        <div id="loggedin" class="nav-item d-flex align-items-center" *ngIf="currentUser == null">
+        <div class="nav-item">
+            <a class="nav-link mx-2" [routerLink]="['/login']">Login</a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mx-2" [routerLink]="['/register']">Register</a>
+        </div>
+        </div>
+        <div id="loggedout" class="nav-item d-flex align-items-center" *ngIf="currentUser != null">
+        <div class="nav-item">
+            <a class="nav-link mx-2">Welcome, {{currentUser?.userName}}</a>
+        </div>
+        <div class="nav-item">
+            <a class="nav-link mx-2" (click)="logOut()" href=".">Log Out</a>
+        </div>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="sideBar" aria-labelledby="sideBarLB">
+            <div class="offcanvas-header bg-secondary-subtle">
+                <a href="#" class="link-underline link-underline-opacity-0">
+                    <h5 class="offcanvas-title" id="sideBarLB">Webserial-Tracker</h5>
+                </a>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body bg-primary-subtle d-flex flex-column">
+                <div *ngIf="currentUserClaims?.includes('User')">
+                    <div class="nav-item my-3 p-1">
+                        <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Add Serial</a>
+                    </div>
+                </div>
+                <div *ngIf="currentUserClaims?.includes('Admin') || currentUserClaims?.includes('SAdmin')">
+                    <div class="nav-item my-3 p-1">
+                        <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Add Serial</a>
+                    </div>
+                    <div class="nav-item my-3 p-1">
+                        <a class="m-3 navbar-text" [routerLink]="['/adminSerials']">Manage Serials</a>
+                    </div>
+                    <div class="nav-item my-3 p-1">
+                        <a class="m-3 navbar-text" [routerLink]="['/adminUsers']">Manage Users</a>
+                    </div>
+                    <div class="nav-item my-3 p-1">
+                        <a class="m-3 navbar-text" [routerLink]="['/adminChapters']">Manage Chapters</a>
+                    </div>
+                </div>
+                <!-- <div class="nav-item navbar-text">Followed Works:</div> -->
+                <div class="nav-item mt-auto">
+                    <a class="nav-link" href="#" (click)="logOut()">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </nav>

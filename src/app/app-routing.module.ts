@@ -7,6 +7,8 @@ import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { ResultsComponent } from './results/results.component';
 import { SearchComponent } from './search/search.component';
+import { NewSerialComponent } from './new-serial/new-serial.component';
+import { AdminChaptersComponent } from './admin-chapters/admin-chapters.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -14,8 +16,10 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'adminSerials', component: AdminSerialsComponent},
   {path: 'adminUsers', component: AdminUsersComponent},
+  {path: 'adminChapters', component: AdminChaptersComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'search', component: SearchComponent},
+  {path: 'newSerial', component: NewSerialComponent},
   {path: '', component: HomeComponent}
 ];
 

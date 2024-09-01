@@ -11,19 +11,6 @@ export class AdminSerialsComponent {
 
   serials:any = []
   authors:any = []
-  newSerial:any ={
-    "id": 0,
-    "title": "",
-    "status": "",
-    "firstCh": "",
-    "home": "",
-    "nextChLinkXPath": "",
-    "secondaryNextChLinkXPath": "",
-    "otherNextChLinkXPaths": "",
-    "titleXPath": "",
-    "reviewStatus": true
-  }
-  newSerialAuthor:any
 
   constructor(private serServ:SerialsService, private authorServ:AuthorsService){
     this.getSerials()
@@ -62,26 +49,6 @@ export class AdminSerialsComponent {
     return this.serServ.putSerial(serial.id, serial, authorName).subscribe(
       () => this.getSerials()
     )
-  }
-
-  addSerial(authorName:any, comp:any, ong:any, hia:any, aba:any){
-    if (comp) {
-      this.newSerial.status = "COMPLETE"
-    }
-    if (ong) {
-      this.newSerial.status = "ONGOING"
-    }
-    if (hia) {
-      this.newSerial.status = "HIATUS"
-    }
-    if (aba) {
-      this.newSerial.status = "ABANDONED"
-    }
-    console.log(this.newSerial)
-    this.serServ.postSerial(this.newSerial, authorName).subscribe(
-      () => this.getSerials()
-    )
-    // this.newSerial = {}
   }
 
   deleteSerial(id:any){

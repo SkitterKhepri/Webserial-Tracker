@@ -37,7 +37,7 @@ namespace WT_API.Controllers
     }
 
     //Same as above, but adds all the new chapters of all serials first, probably takes really fucking long TODO: only admin
-    [HttpGet("/update")]
+    [HttpGet("/Serials/update")]
     public async Task<ActionResult<IEnumerable<Serial>>> UpdatedSerials()
     {
       if (_context.Serials == null)
@@ -67,7 +67,7 @@ namespace WT_API.Controllers
     }
 
     //Same as above, but adds the new chapters of the serial first
-    [HttpGet("/update/{id}")]
+    [HttpGet("/Serials/update/{id}")]
     public async Task<ActionResult<Serial>> UpdatedSerial(int id)
     {
       if (_context.Serials == null)
@@ -184,6 +184,11 @@ namespace WT_API.Controllers
       }
 
       _context.Serials.Remove(serial);
+      var chapters = await _context.Chapters.Where((ch) => ch.serialId == id).ToListAsync();
+      foreach (var chapter in chapters)
+      {
+        _context.Chapters.Remove(chapter);
+      }
       await _context.SaveChangesAsync();
 
       return NoContent();
@@ -228,7 +233,7 @@ namespace WT_API.Controllers
           //TODO maybe this doesnt need to happen every time, just first maybe?
           if (!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
           {
-            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
+            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink, serial.nextChLinkXPath, serial.secondaryNextChLinkXPath, serial.otherNextChLinkXPaths));
           }
         }
         if (nextCH == null)
@@ -297,7 +302,7 @@ namespace WT_API.Controllers
           //TODO maybe this doesnt need to happen every time, just first maybe?
           if (!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
           {
-            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink));
+            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink, serial.nextChLinkXPath, serial.secondaryNextChLinkXPath, serial.otherNextChLinkXPaths));
           }
         }
         if (nextCH == null)

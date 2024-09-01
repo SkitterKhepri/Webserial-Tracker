@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { SearchService } from '../services/search.service';
+import { UsersService } from '../services/users.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,8 +11,13 @@ import { SearchService } from '../services/search.service';
 export class NavBarComponent {
 
   selectedSearch:any = "ser"
+  currentUser:any = null
+  currentUserClaims:any = null
 
-  constructor(private seaServ:SearchService){}
+  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService){
+    this.getCurrentUser()
+    this.getCurrentUserClaims()
+  }
 
   search(searchType:any, input:any){
     this.seaServ.emptyResults()
@@ -30,5 +37,21 @@ export class NavBarComponent {
       default:
         this.seaServ.searchSerial(input)
     }
+  }
+
+  logOut(){
+    this.userServ.logOut()
+  }
+
+  getCurrentUser(){
+    this.currentUser = this.storage.getItem("user")
+  }
+
+  getCurrentUserClaims(){
+    this.currentUserClaims = this.storage.getItem("userClaims")
+  }
+
+  kiir(){
+    console.log(this.currentUser)
   }
 }

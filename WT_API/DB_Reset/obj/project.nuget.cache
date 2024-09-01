@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "5Xf8SYSQ3rc=",
-  "success": true,
+  "dgSpecHash": "GmK9ItPHNdU=",
+  "success": false,
   "projectFilePath": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\DB_Reset\\DB_Reset.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Idegen\\.nuget\\packages\\htmlagilitypack\\1.11.61\\htmlagilitypack.1.11.61.nupkg.sha512",
@@ -58,6 +58,10 @@
     "C:\\Users\\Idegen\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.33\\microsoft.aspnetcore.authentication.jwtbearer.6.0.33.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.33\\microsoft.aspnetcore.cryptography.internal.6.0.33.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.33\\microsoft.aspnetcore.cryptography.keyderivation.6.0.33.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.33\\microsoft.aspnetcore.identity.entityframeworkcore.6.0.33.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.2\\microsoft.codeanalysis.analyzers.3.3.2.nupkg.sha512",
@@ -80,7 +84,7 @@
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\6.0.32\\microsoft.entityframeworkcore.abstractions.6.0.32.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\6.0.32\\microsoft.entityframeworkcore.analyzers.6.0.32.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.32\\microsoft.entityframeworkcore.design.6.0.32.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.32\\microsoft.entityframeworkcore.relational.6.0.32.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.33\\microsoft.entityframeworkcore.relational.6.0.33.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\6.0.32\\microsoft.entityframeworkcore.sqlite.6.0.32.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\6.0.32\\microsoft.entityframeworkcore.sqlite.core.6.0.32.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\6.0.32\\microsoft.entityframeworkcore.sqlserver.6.0.32.nupkg.sha512",
@@ -92,16 +96,19 @@
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\6.0.1\\microsoft.extensions.dependencyinjection.6.0.1.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\6.0.0\\microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.dependencymodel\\6.0.0\\microsoft.extensions.dependencymodel.6.0.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.identity.core\\6.0.33\\microsoft.extensions.identity.core.6.0.33.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.identity.stores\\6.0.33\\microsoft.extensions.identity.stores.6.0.33.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.logging\\6.0.0\\microsoft.extensions.logging.6.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.options\\6.0.0\\microsoft.extensions.options.6.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.extensions.primitives\\6.0.0\\microsoft.extensions.primitives.6.0.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identity.client\\4.21.1\\microsoft.identity.client.4.21.1.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.8.0\\microsoft.identitymodel.jsonwebtokens.6.8.0.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.logging\\6.8.0\\microsoft.identitymodel.logging.6.8.0.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.8.0\\microsoft.identitymodel.protocols.6.8.0.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.8.0\\microsoft.identitymodel.protocols.openidconnect.6.8.0.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.8.0\\microsoft.identitymodel.tokens.6.8.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.35.0\\microsoft.identitymodel.abstractions.6.35.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.35.0\\microsoft.identitymodel.jsonwebtokens.6.35.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.logging\\6.35.0\\microsoft.identitymodel.logging.6.35.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.protocols\\6.35.0\\microsoft.identitymodel.protocols.6.35.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\6.35.0\\microsoft.identitymodel.protocols.openidconnect.6.35.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.35.0\\microsoft.identitymodel.tokens.6.35.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
@@ -175,7 +182,7 @@
     "C:\\Users\\Idegen\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\system.globalization.calendars\\4.3.0\\system.globalization.calendars.4.3.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\system.globalization.extensions\\4.3.0\\system.globalization.extensions.4.3.0.nupkg.sha512",
-    "C:\\Users\\Idegen\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
+    "C:\\Users\\Idegen\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.35.0\\system.identitymodel.tokens.jwt.6.35.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\system.io.compression\\4.3.0\\system.io.compression.4.3.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\system.io.compression.zipfile\\4.3.0\\system.io.compression.zipfile.4.3.0.nupkg.sha512",
@@ -232,5 +239,15 @@
     "C:\\Users\\Idegen\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Idegen\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Detected package downgrade: Microsoft.EntityFrameworkCore from 6.0.33 to 6.0.32. Reference the package directly from the project to select a different version. \r\n DB_Reset -> WT_API -> Microsoft.EntityFrameworkCore (>= 6.0.33) \r\n DB_Reset -> Microsoft.EntityFrameworkCore (>= 6.0.32)",
+      "libraryId": "Microsoft.EntityFrameworkCore",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

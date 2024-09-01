@@ -1,0 +1,86 @@
+<div class="conatiner main">
+    <div class="navBar">
+        <app-nav-bar></app-nav-bar>
+    </div>
+    <div class="container chapters">
+        <div class="row align-items-center" *ngFor="let chapter of chapters">
+            <div class="col mb-2">
+                <div id="title" class="form-control w-100">{{chapter.title}}</div>
+            </div>
+            <div class="col-auto mb-2">
+                <button class="btn btn-secondary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + chapter.id" type="button">
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+            </div>
+            <div>
+                <div class="collapse" [id]="'collapse' + chapter.id">
+                    <div class="container border border-info-subtle border-3 rounded-2">
+                        <div class="row align-items-center my-1 p-1">
+                            <div class="col-auto border border-2">
+                                <p class="m-1">{{chapter.id}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <label for="title">Title:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="title" class="form-control" [(ngModel)]="chapter.title">
+                            </div>
+                            <div class="col-auto">
+                                <label for="authorId">Serial Id:</label>
+                            </div>
+                            <div class="col-auto border border-2">
+                                <p class="m-1">{{chapter.serialId}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <p class="m-1">Serial's Title:</p>
+                            </div>
+                            <div class="col-md-3 flex-grow-1">
+                                <input #authorName type="text" id="serialName" class="form-control" [value]="selectSerial(chapter.serialId)?.title">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="titleXP">Link:</label>
+                            </div>
+                            <div class="col-md-10 flex-grow-1">
+                                <input type="text" class="form-control" [(ngModel)]="chapter.link">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath1">Next Chapter XPath:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="XPath1" class="form-control" [(ngModel)]="chapter.nextChLinkXPath">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath2">Secondary Next Chapter XPath:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="XPath2" class="form-control" [(ngModel)]="chapter.secondaryNextChLinkXPath">
+                            </div>
+                        </div>
+                        <div class="row align-items-center my-1">
+                            <div class="col-auto">
+                                <label for="XPath3">Other Next Chapter XPath:</label>
+                            </div>
+                            <div class="col-md-8 flex-grow-1">
+                                <input type="text" id="XPath3" class="form-control" [(ngModel)]="chapter.otherNextChLinkXPaths">
+                            </div>
+                        </div>
+                        <div class="row my-1 align-items-center">
+                            <div class="col flex-grow-1 my-1">
+                                <button class="btn btn-success form-control" (click)="updateChapter(chapter)">Update</button>
+                            </div>
+                            <div class="col flex-grow-1 my-1">
+                                <button class="btn btn-danger form-control" (click)="deleteChapter(chapter.id)">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

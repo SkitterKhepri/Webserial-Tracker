@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { UsersService } from '../services/users.service';
+import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -8,22 +10,35 @@ import { UsersService } from '../services/users.service';
 })
 export class AdminUsersComponent {
 
-  users:any = []
+  users:any[] = []
+  currentUserClaims:any = null
 
-  constructor(private usersServ:UsersService){
-
+  constructor(private usersServ:UsersService,private storage:StorageService, private router:Router){
+    this.getCurrentUserClaims()
+    // if(!this.currentUserClaims.includes("Admin") || !this.currentUserClaims.includes("SAdmin")){
+    //   this.router.navigate(['/home'])
+    // }
     this.getUsers()
+    
   }
 
   getUsers(){
     this.usersServ.getUsers().subscribe(
-      (us:any) => this.users = us
+      (uss:any) => this.users = uss
     )
   }
 
-  updateUser(user:any){
-    this.usersServ.putUser(user).subscribe(
-      () => this.getUsers()
+  getCurrentUserClaims(){
+    this.currentUserClaims = this.storage.getItem("userClaims")
+  }
+  
+  updateUser(id:any, username:any, email:any){
+    let user = {id, username, email}
+    this.usersServ.updateUser(user).subscribe(
+      (msg:any) => {
+        this.getUsers()
+        console.log(msg)
+      }
     )
   }
 
@@ -32,6 +47,5 @@ export class AdminUsersComponent {
       () => this.getUsers()
     )
   }
-
 
 }

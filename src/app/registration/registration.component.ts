@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BaseService } from '../services/base.service';
 import { UsersService } from '../services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -9,42 +10,31 @@ import { UsersService } from '../services/users.service';
 })
 export class RegistrationComponent {
 
-  
-  users:any = []
   newUser:any = {
-    "id" : 0,
-    "userName" : "",
+    "username" : "",
     "email" : "",
     "password" : ""
   }
+  passMatch:boolean = true
 
-  constructor(private userServ:UsersService){
-    this.getUsers()
-  }
+  constructor(private userServ:UsersService, private router:Router){}
 
-  getUsers(){
-    this.userServ.getUsers().subscribe(
-      (users:any)=> this.users = users
+
+  register(user:any, pass1:any, pass2:any){
+    if(this.passwordMatch(pass1, pass2)){
+      this.passMatch = true
+      this.newUser.password = pass1
+      this.userServ.register(user).subscribe(
+        ()=>{
+          this.userServ.justReg.next(true)
+          this.router.navigate(['/login'])
+          this.newUser = {}
+        }
       )
-  }
-
-  postNewUser(userName:string, email:string, pass1:string, pass2:string){
-    //this might not work, have possible saved solution in project folder
-    if (this.users.findIndex((u:any) => u.userName === this.newUser.userName) === -1) {
-      if(this.passwordMatch(pass1, pass2)){
-        this.newUser.userName = userName
-        this.newUser.email = email
-        this.newUser.password = pass1
-        console.log(this.newUser)
-        this.userServ.postUser(this.newUser).subscribe();
-        console.log("User added")
-      }
-      else{
-        console.log("Passwords dont match")
-      }
+      
     }
     else{
-      console.log("Username taken")
+      this.passMatch = false
     }
   }
 
@@ -53,15 +43,6 @@ export class RegistrationComponent {
       return true 
     }
     else{ return false }
-  }
-
-  kiir(){
-    this.userServ.postUser({
-      "id": 0,
-      "userName": "idegen",
-      "email": "idegen@gmail.com",
-      "password": "ass1"
-    }).subscribe()
   }
 
 }
