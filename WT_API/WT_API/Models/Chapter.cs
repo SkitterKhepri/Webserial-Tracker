@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace WT_API.Models
 {
   public class Chapter
@@ -9,6 +11,10 @@ namespace WT_API.Models
     public string nextChLinkXPath { get; set; }
     public string secondaryNextChLinkXPath { get; set; }
     public string otherNextChLinkXPaths { get; set; }
+    [DefaultValue(false)]
+    public bool isLastChapter { get; set; }
+    [DefaultValue(false)]
+    public bool reviewStatus { get; set; }
 
     public Chapter() { }
 

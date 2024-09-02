@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { ChaptersService } from '../services/chapters.service';
 import { SerialsService } from '../services/serials.service';
 
@@ -7,19 +7,26 @@ import { SerialsService } from '../services/serials.service';
   templateUrl: './admin-chapters.component.html',
   styleUrls: ['./admin-chapters.component.css']
 })
-export class AdminChaptersComponent {
+export class AdminChaptersComponent implements AfterViewInit{
 
   chapters:any[] = []
   serials:any[] = []
 
-  constructor(private chServ:ChaptersService, private serServ:SerialsService){
+  constructor(private chServ:ChaptersService, private serServ:SerialsService, private changeDT:ChangeDetectorRef){
     this.getChapters()
     this.getSerials()
   }
 
+  ngAfterViewInit(){
+    this.changeDT.detectChanges()
+  }
+
   getChapters(){
     this.chServ.getChapters().subscribe(
-      (chapters:any) => this.chapters = chapters
+      (chapters:any) => {
+        this.chapters = chapters
+        this.changeDT.detectChanges()
+      }
     )
   }
 
@@ -30,6 +37,7 @@ export class AdminChaptersComponent {
   }
   
   updateChapter(chapter:any){
+    chapter.reviewStatus = true
     this.chServ.putChapter(chapter).subscribe(
       () => this.getChapters()
     )

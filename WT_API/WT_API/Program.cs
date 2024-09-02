@@ -21,8 +21,8 @@ builder.Services.AddTransient<IAuthService, AuthService>();
 
 builder.Services.AddControllers();
 
-builder.Services.AddTransient<ScrapingServiceSelenium>();
-builder.Services.AddHttpClient<ScrapingServiceHtmlAgilityPack>();
+builder.Services.AddTransient<ScrapingService>();
+//builder.Services.AddHttpClient<ScrapingServiceHtmlAgilityPack>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

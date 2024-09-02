@@ -8,9 +8,9 @@ import { StorageService } from './storage.service';
 })
 export class UsersService {
 
-  currentUserClaims:any = new BehaviorSubject(null)
+  // currentUserClaims:any = new BehaviorSubject(null)
   justReg:any = new BehaviorSubject(false)
-  currentUser:any = new BehaviorSubject(null)
+  // currentUser:any = new BehaviorSubject(null)
 
   constructor(private http : HttpClient, private storage:StorageService) {}
 
@@ -48,17 +48,15 @@ export class UsersService {
     return this.http.delete(this.apiUrl + 'user/' + id, {headers})
   }
 
-  updateCurrentUserClaims(claims:any){
-    this.currentUserClaims.next(claims)
+  getCurrentClaims(){
+    return this.storage.getItem("userClaims")
   }
 
-  updateCurrentUser(user:any){
-    this.currentUser.next(user)
+  getCurrentUser(){
+    return this.storage.getItem("user")
   }
 
   logOut(){
-    this.updateCurrentUserClaims(null)
-    this.updateCurrentUser(null)
     this.storage.clear()
   }
 

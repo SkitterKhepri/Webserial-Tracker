@@ -11,7 +11,6 @@ import { StorageService } from '../services/storage.service';
 export class AdminUsersComponent {
 
   users:any[] = []
-  currentUserClaims:any = null
 
   constructor(private usersServ:UsersService,private storage:StorageService, private router:Router){
     this.getCurrentUserClaims()
@@ -29,7 +28,7 @@ export class AdminUsersComponent {
   }
 
   getCurrentUserClaims(){
-    this.currentUserClaims = this.storage.getItem("userClaims")
+    return this.storage.getItem("userClaims")
   }
   
   updateUser(id:any, username:any, email:any){

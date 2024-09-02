@@ -15,10 +15,10 @@
                 <button class="btn btn-outline-success mx-2" type="submit" [routerLink]="['/results']" (click)="search(selectedSearch, searchInput.value)">Search</button>
             </div>
         </div>
-        <div class="nav-item">
+        <!-- <div class="nav-item">
             <a class="nav-link me-4" (click)="kiir()">Advanced Search</a>
-        </div>
-        <div id="loggedin" class="nav-item d-flex align-items-center" *ngIf="currentUser == null">
+        </div> -->
+        <div id="loggedin" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() == null">
         <div class="nav-item">
             <a class="nav-link mx-2" [routerLink]="['/login']">Login</a>
         </div>
@@ -26,9 +26,9 @@
             <a class="nav-link mx-2" [routerLink]="['/register']">Register</a>
         </div>
         </div>
-        <div id="loggedout" class="nav-item d-flex align-items-center" *ngIf="currentUser != null">
+        <div id="loggedout" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() != null">
         <div class="nav-item">
-            <a class="nav-link mx-2">Welcome, {{currentUser?.userName}}</a>
+            <a class="nav-link mx-2">Welcome, {{getCurrentUser().userName}}</a>
         </div>
         <div class="nav-item">
             <a class="nav-link mx-2" (click)="logOut()" href=".">Log Out</a>
@@ -42,12 +42,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body bg-primary-subtle d-flex flex-column">
-                <div *ngIf="currentUserClaims?.includes('User')">
+                <div *ngIf="getCurrentUserClaims()?.includes('User')">
                     <div class="nav-item my-3 p-1">
                         <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Add Serial</a>
                     </div>
                 </div>
-                <div *ngIf="currentUserClaims?.includes('Admin') || currentUserClaims?.includes('SAdmin')">
+                <div *ngIf="getCurrentUserClaims()?.includes('Admin') || getCurrentUserClaims()?.includes('SAdmin')">
                     <div class="nav-item my-3 p-1">
                         <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Add Serial</a>
                     </div>

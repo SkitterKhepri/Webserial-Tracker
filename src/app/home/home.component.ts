@@ -18,16 +18,12 @@ export class HomeComponent {
   chapters:any[] = []
   authors:any[] = []
   newChapters:any[] = []
-  currentUser:any = null
-  currentUserClaims:any = null
 
   constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
     private chServ:ChaptersService, private authorServ:AuthorsService){
     this.getSerials()
     this.getChapters()
     this.getAuthors()
-    this.getCurrentUser()
-    this.getCurrentUserClaims()
   }
 
 
@@ -63,23 +59,19 @@ export class HomeComponent {
 
   updateAll(){
     this.serServ.updateSerials().subscribe(
-      (ser:any) => {
-        this.serials = ser
+      (uCh:any) => {
+        console.log(uCh + " chapters were added")
+        this.getSerials()
         this.getChapters()
-        this.getAuthors()
       }
     )
   }
 
-  getCurrentUser(){
-    this.userServ.currentUser.subscribe(
-      (us:any) => this.currentUser = us
-    )
-  }
+  // getCurrentUser(){
+  //   return this.userServ.getCurrentUser()
+  // }
 
-  getCurrentUserClaims(){
-    this.userServ.currentUserClaims.subscribe(
-      (cl:any) => this.currentUserClaims = cl
-    )
-  }
+  // getCurrentUserClaims(){
+  //   return this.userServ.getCurrentClaims()
+  // }
 }

@@ -11,13 +11,8 @@ import { StorageService } from '../services/storage.service';
 export class NavBarComponent {
 
   selectedSearch:any = "ser"
-  currentUser:any = null
-  currentUserClaims:any = null
 
-  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService){
-    this.getCurrentUser()
-    this.getCurrentUserClaims()
-  }
+  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService){}
 
   search(searchType:any, input:any){
     this.seaServ.emptyResults()
@@ -44,14 +39,14 @@ export class NavBarComponent {
   }
 
   getCurrentUser(){
-    this.currentUser = this.storage.getItem("user")
+    return this.userServ.getCurrentUser()
   }
 
   getCurrentUserClaims(){
-    this.currentUserClaims = this.storage.getItem("userClaims")
+    return this.userServ.getCurrentClaims()
   }
 
   kiir(){
-    console.log(this.currentUser)
+    console.log(this.getCurrentUser())
   }
 }

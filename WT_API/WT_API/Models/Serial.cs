@@ -9,7 +9,7 @@ namespace WT_API.Models
     [Key]
     public int id { get; set; }
     public string title { get; set; }
-    public string status { get; set; }
+    public SerialStatuses status { get; set; }
     public int? authorId { get; set; }
     public string firstCh { get; set; }
     public string home {  get; set; }

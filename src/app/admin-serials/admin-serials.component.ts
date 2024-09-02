@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SerialsService } from '../services/serials.service';
 import { AuthorsService } from '../services/authors.service';
+import { SerialStatuses } from '../enums/serial-statuses.enum';
 
 @Component({
   selector: 'app-admin-serials',
@@ -35,17 +36,19 @@ export class AdminSerialsComponent {
 
   updateSerial(serial:any, authorName:any, comp:any, ong:any, hia:any, aba:any){
     if (comp) {
-      serial.status = "COMPLETE"
+      serial.status = SerialStatuses.Completed
     }
     if (ong) {
-      serial.status = "ONGOING"
+      serial.status = SerialStatuses.Ongoing
     }
     if (hia) {
-      serial.status = "HIATUS"
+      serial.status = SerialStatuses.Hiatus
     }
     if (aba) {
-      serial.status = "ABANDONED"
+      serial.status = SerialStatuses.Abandoned
     }
+    serial.reviewStatus = true
+    console.log(serial)
     return this.serServ.putSerial(serial.id, serial, authorName).subscribe(
       () => this.getSerials()
     )
