@@ -120,9 +120,6 @@ namespace WT_API.Services
     }
     public async Task<(int, string)> Register(RegistrationModel model)
     {
-
-
-
       var userExists = await userManager.FindByNameAsync(model.Username);
       if (userExists != null)
         return (0, "User already exists");

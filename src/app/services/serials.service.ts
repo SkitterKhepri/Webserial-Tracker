@@ -29,18 +29,26 @@ export class SerialsService {
   }
 
   putSerial(id:any, serial:any, authorName:any){
-    return this.http.put(this.apiUrl + 'api/Serials/' + id + "?authorName=" + authorName, serial)
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.put(this.apiUrl + 'api/Serials/' + id + "?authorName=" + authorName, serial, {headers})
   }
 
   deleteSerial(id:any){
-    return this.http.delete(this.apiUrl + 'api/Serials/' + id)
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.delete(this.apiUrl + 'api/Serials/' + id, {headers})
   }
 
   updateSerial(id:any){
-    return this.http.get(this.apiUrl + "Serials/update/" + id)
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.get(this.apiUrl + "Serials/update/" + id, {headers})
   }
 
   updateSerials(){
-    return this.http.get(this.apiUrl + "Serials/update")
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.get(this.apiUrl + "Serials/update", {headers})
   }
 }

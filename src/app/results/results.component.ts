@@ -16,36 +16,21 @@ export class ResultsComponent implements OnInit {
   authors:any[] = []
 
   ngOnInit(): void {
-      
   }
 
-  searchedSer:any = []
-  searchedCh:any = []
-  searchedAu:any = []
+  searchedSer:any
+  searchedCh:any
+  searchedAu: { [key: string]: any[] } = {}
 
-  authorsSerials:any = []
 
   constructor(private search:SearchService, private serServ:SerialsService, private chServ:ChaptersService, private authorServ:AuthorsService){
     
     this.getSerials()
     this.getChapters()
     this.getAuthors()
-
-    this.search.serResults.subscribe(
-      (res:any) => this.searchedSer = res
-    )
-    this.search.chResults.subscribe(
-      (res:any) => this.searchedCh = res
-    )
-    this.search.auResults.subscribe(
-      (res:any) => {
-        this.searchedAu = res
-        this.searchedAu.forEach((au:any) => {
-          au.serials = this.auSerials(au.id)
-        });
-        
-      }
-    )
+    this.serResults()
+    this.chResults()
+    this.auResults()
   }
   getSerials(){
     this.serServ.getSerials().subscribe(
@@ -65,10 +50,6 @@ export class ResultsComponent implements OnInit {
     )
   }
 
-  auSerials(auId:any){
-    return this.serials.filter((ser:any) => ser.authorId == auId)
-  }
-
   getAuthor(id:any) : any{
     return this.authors.find((au:any)=> au.id == id)
   }
@@ -79,5 +60,23 @@ export class ResultsComponent implements OnInit {
 
   getSerialChaptersCount(id:any){
     return this.chapters.filter((ch:any) => ch.serialId == id).length
+  }
+
+  serResults(){
+    this.search.serResults.subscribe(
+      (res:any) => this.searchedSer = res
+    )
+  }
+
+  chResults(){
+    this.search.chResults.subscribe(
+      (res:any) => this.searchedCh = res
+    )
+  }
+
+  auResults(){
+    this.search.auResults.subscribe(
+      (res:any) => this.searchedAu = res
+    )
   }
 }

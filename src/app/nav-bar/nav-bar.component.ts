@@ -45,8 +45,4 @@ export class NavBarComponent {
   getCurrentUserClaims(){
     return this.userServ.getCurrentClaims()
   }
-
-  kiir(){
-    console.log(this.getCurrentUser())
-  }
 }

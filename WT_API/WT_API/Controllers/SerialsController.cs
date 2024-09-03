@@ -92,6 +92,7 @@ namespace WT_API.Controllers
     // PUT: api/Serials/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> PutSerial(int id, Serial serial, string authorName)
     {
       if (id != serial.id)
@@ -106,14 +107,10 @@ namespace WT_API.Controllers
       {
         serial.authorId = author.id;
       }
-      else
+      else if(author == null)
       {
-        author = new Author();
+        author = await _context.Authors.FindAsync(serial.authorId);
         author.name = authorName;
-        _context.Authors.Add(author);
-        await _context.SaveChangesAsync();
-        Console.WriteLine(author.id);
-        serial.authorId = author.id;
       }
 
       try
@@ -135,10 +132,9 @@ namespace WT_API.Controllers
       return NoContent();
     }
 
-    // POST: api/Serials
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    //[Authorize]
+
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult<Serial>> PostSerial(Serial serial, string authorName)
     {
       if (_context.Serials == null)
@@ -175,6 +171,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Serials/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> DeleteSerial(int id)
     {
       if (_context.Serials == null)
@@ -192,6 +189,12 @@ namespace WT_API.Controllers
       foreach (var chapter in chapters)
       {
         _context.Chapters.Remove(chapter);
+      }
+      Author author = await _context.Authors.FindAsync(serial.authorId);
+      List<Serial> authorWorks = await _context.Serials.Where(ser => ser.authorId == author.id).ToListAsync();
+      if(authorWorks.Count == 0)
+      {
+        _context.Authors.Remove(author);
       }
       await _context.SaveChangesAsync();
 

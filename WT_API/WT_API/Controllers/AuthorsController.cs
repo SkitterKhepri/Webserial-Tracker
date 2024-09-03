@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using WT_API.Data;
 using WT_API.Models;
@@ -18,6 +19,7 @@ namespace WT_API.Controllers
 
     // GET: api/Authors
     [HttpGet]
+
     public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
     {
       if (_context.Authors == null)
@@ -49,6 +51,7 @@ namespace WT_API.Controllers
     // PUT: api/Author/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> PutAuthor(int id, Author author)
     {
       if (id != author.id)
@@ -80,6 +83,7 @@ namespace WT_API.Controllers
     // POST: api/Authors
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<ActionResult<Author>> PostAuthor(Author author)
     {
       if (_context.Authors == null)
@@ -94,6 +98,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Authors/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> DeleteAuthor(int id)
     {
       if (_context.Authors == null)

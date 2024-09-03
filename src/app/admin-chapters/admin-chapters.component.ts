@@ -51,7 +51,7 @@ export class AdminChaptersComponent implements AfterViewInit {
       }
       
     });
-    this.serialIds = Object.keys(this.chaptersGroupedBySerial);
+    // this.serialIds = Object.keys(this.chaptersGroupedBySerial);
   }
 
   deleteChapter(id: number) {

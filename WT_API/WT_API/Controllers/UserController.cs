@@ -40,6 +40,7 @@ namespace WT_API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "SAdmin,Admin")]
         public async Task<IActionResult> Get(string id)
         {
             //var currentUserName = HttpContext.User.Identity.Name;
@@ -114,7 +115,7 @@ namespace WT_API.Controllers
 
         [HttpPut]
         [Route("changePassword/{id}")]
-        [Authorize]
+        [Authorize(Roles = "SAdmin,Admin")]
         public async Task<IActionResult> ChangePassword(ChangePasswordModel model, string id)
         {
             try

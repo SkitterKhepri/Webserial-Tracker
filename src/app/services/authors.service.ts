@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorsService {
 
-  constructor(private http : HttpClient) {
+  constructor(private http : HttpClient, private storage:StorageService) {
     this.getAuthors()
   }
 
@@ -22,14 +23,20 @@ export class AuthorsService {
   }
 
   postAuthor(author: any): Observable<any> {
-    return this.http.post(this.apiUrl, author);
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.post(this.apiUrl, author, {headers});
   }
 
   putAuthor(author:any){
-    return this.http.put(this.apiUrl + author.id, author)
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.put(this.apiUrl + author.id, author, {headers})
   }
 
   deleteAuthor(id:any){
-    this.http.delete(this.apiUrl + id)
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    this.http.delete(this.apiUrl + id, {headers})
   }
 }

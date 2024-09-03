@@ -40,15 +40,15 @@
             </div>
         </div>
 
-        <div *ngIf="searchedAu != []">
-            <div *ngFor="let author of searchedAu">
-                <div id="'author' + {{author.id}}" class="card p-1 h-100 w-100">
+        <div *ngIf="searchedAu != {}">
+            <div *ngFor="let author of searchedAu | keyvalue">
+                <div id="'author' + {{author.key}}" class="card p-1 h-100 w-100">
                     <div class="card-body">
                         <h5 class="card-title">
-                            {{author.name}}
+                            {{author.key}}
                         </h5>
                         <p>Works:</p>
-                        <div *ngFor="let serial of author.serials">
+                        <div *ngFor="let serial of author.value">
                             <a class="link-opacity-50-hover" href="{{serial.home}}">
                                 <h6 class="">{{serial.title}}</h6>
                             </a>

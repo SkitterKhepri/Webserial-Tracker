@@ -10,7 +10,7 @@ namespace WT_API.Models
     public int id { get; set; }
     public string title { get; set; }
     public SerialStatuses status { get; set; }
-    public int? authorId { get; set; }
+    public int authorId { get; set; }
     public string firstCh { get; set; }
     public string home {  get; set; }
     public string nextChLinkXPath { get; set; }

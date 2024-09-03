@@ -15,7 +15,7 @@ export class SearchService {
 
   serResults = new BehaviorSubject([])
   chResults = new BehaviorSubject([])
-  auResults = new BehaviorSubject([])
+  auResults = new BehaviorSubject({})
 
   constructor(private serServ:SerialsService, private chServ:ChaptersService, private auServ:AuthorsService) {
 
@@ -43,10 +43,15 @@ export class SearchService {
     )
   }
 
+  auSerials(auId:any){
+    let serials = this.serials.filter((ser:any) => ser.authorId == auId)
+    return serials
+  }
+
   emptyResults(){
     this.serResults.next([])
     this.chResults.next([])
-    this.auResults.next([])
+    this.auResults.next({})
   }
   
   searchSerial(serTitle:any){
@@ -63,9 +68,11 @@ export class SearchService {
 
   searchAuthor(auName:any){
     let normalisedName = auName.trim().toLowerCase()
-    let results = this.authors.filter((au:any) => au.name.toLowerCase().includes(normalisedName))
-    this.auResults.next(results)
+    let results:any[] = this.authors.filter((au:any) => au.name.toLowerCase().includes(normalisedName))
+    let fullResults:any = []
+    results.forEach((au:any) => {
+      fullResults[au.name] = this.auSerials(au.id)
+    });
+    this.auResults.next(fullResults)
   }
-
-  
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using WT_API.Data;
 using WT_API.Models;
@@ -51,20 +52,8 @@ namespace WT_API.Controllers
       return chapter;
     }
 
-    //[HttpGet("sl/{serialId}")]
-    //public async Task<ActionResult<IEnumerable<Chapter>>> GetSerialChapters(int serialId)
-    //{
-    //  if (_context.Chapters == null)
-    //  {
-    //    return NotFound();
-    //  }
-
-    //  return await _context.Chapters.Where(ch => ch.serialId == serialId).ToListAsync();
-    //}
-
-    // PUT: api/Chapters/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> PutChapter(int id, Chapter chapter)
     {
       if (id != chapter.id)
@@ -96,6 +85,7 @@ namespace WT_API.Controllers
     // POST: api/Chapters
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPost]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<ActionResult<Chapter>> PostChapter(Chapter chapter)
     {
       if (_context.Chapters == null)
@@ -110,6 +100,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Chapters/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> DeleteChapter(int id)
     {
       if (_context.Chapters == null)

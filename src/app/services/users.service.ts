@@ -19,7 +19,7 @@ export class UsersService {
   getUsers(){
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.get(this.apiUrl + "userlist", { headers })
+    return this.http.get(this.apiUrl + "user/userlist", { headers })
   }
 
   register(user:any){
