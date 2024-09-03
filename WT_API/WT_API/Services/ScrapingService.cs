@@ -60,12 +60,34 @@ namespace WT_API.Services
         }
         if (nextCH == null)
         {
-          nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+          try
+          {
+            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+          }
+          catch (Exception ex)
+          {
+            nextCH = null;
+          }
           if (nextCH == null)
           {
-            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
+            try
+            {
+              nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
+            }
+            catch (Exception ex)
+            {
+              nextCH = null;
+            }
             if (nextCH == null)
             {
+              var lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault();
+              if (lastChapter == null)
+              {
+                Console.WriteLine("Should be zero: " + chapterCount);
+                return (0, 0);
+              }
+              lastChapter.isLastChapter = true;
+              _context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true;
               Console.WriteLine($"{chapterCount} chapters added");
               _context.SaveChanges();
               return (1, chapterCount);
@@ -139,12 +161,34 @@ namespace WT_API.Services
         }
         if (nextCH == null)
         {
-          nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+          try
+          {
+            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+          }
+          catch (Exception ex)
+          {
+            nextCH = null;
+          }
           if (nextCH == null)
           {
-            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
+            try
+            {
+              nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
+            }
+            catch(Exception ex)
+            {
+              nextCH = null;
+            }
             if (nextCH == null)
             {
+              var lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault();
+              if (lastChapter == null)
+              {
+                Console.WriteLine("Should be zero: " + chapterCount);
+                return (0, 0);
+              }
+              lastChapter.isLastChapter = true;
+              _context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true;
               Console.WriteLine($"{chapterCount} chapters added");
               _context.SaveChanges();
               return (1, chapterCount);
@@ -174,7 +218,7 @@ namespace WT_API.Services
 
       string pageContent = "";
       HttpClient client2 = new HttpClient();
-      Uri fullUri = new Uri(link);
+      //Uri fullUri = new Uri(link);
 
       if (response.IsSuccessStatusCode)
       {
@@ -194,10 +238,24 @@ namespace WT_API.Services
       //this one is handling 429 "too many requests" rate limiting issues, probably imperfectly, for Katalepsis -- docs
       else if (response.StatusCode == HttpStatusCode.TooManyRequests)
       {
-        while (response.StatusCode == HttpStatusCode.TooManyRequests)
+        Console.WriteLine("Too many requests. Waiting...");
+
+        if (response.Headers.TryGetValues("Retry-After", out IEnumerable<string> values))
         {
-          Thread.Sleep(50);
+          if (int.TryParse(values.FirstOrDefault(), out int retryAfterSeconds))
+          {
+            await Task.Delay(retryAfterSeconds * 1000);
+          }
+          else
+          {
+            await Task.Delay(1000);
+          }
         }
+        else
+        {
+          await Task.Delay(1000);
+        }
+        //response = await client2.GetAsync(request);
         response.EnsureSuccessStatusCode();
         pageContent = await response.Content.ReadAsStringAsync();
       }

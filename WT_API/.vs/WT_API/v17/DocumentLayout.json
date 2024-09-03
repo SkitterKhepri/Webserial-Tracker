@@ -176,8 +176,7 @@
               "ViewState": "AQIAAJQAAAAAAAAAAAAwwKcAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-24T19:30:39.544Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -187,7 +186,7 @@
               "RelativeDocumentMoniker": "WT_API\\Services\\ScrapingService.cs",
               "ToolTip": "E:\\Idegen\\Coding\\Webserial_tracker\\WT_API\\WT_API\\Services\\ScrapingService.cs",
               "RelativeToolTip": "WT_API\\Services\\ScrapingService.cs",
-              "ViewState": "AQIAAHgAAAAAAAAAAAAQwH4AAAALAAAA",
+              "ViewState": "AQIAAKgAAAAAAAAAAAAkwL4AAABdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-02T17:33:52.837Z",
               "IsPinned": true,
@@ -204,8 +203,7 @@
               "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAA1AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-29T11:51:53.81Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -221,8 +219,7 @@
               "RelativeToolTip": "WT_API\\Models\\Serial.cs",
               "ViewState": "AQIAAAwAAAAAAAAAAAAmwCUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.272Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T12:11:02.272Z"
             },
             {
               "$type": "Document",
@@ -234,8 +231,7 @@
               "RelativeToolTip": "WT_API\\Models\\SerialStatuses.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T18:43:51.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-02T18:43:51.08Z"
             },
             {
               "$type": "Document",
@@ -244,8 +240,7 @@
               "DocumentMoniker": "ViewDataWindow_MSSQL__/_localdb__MSSQLLocalDB/WT_API/True/SqlTable/dbo.Serials.sql",
               "ToolTip": "dbo.Serials [Data]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-09-02T22:54:53.462Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-02T22:54:53.462Z"
             },
             {
               "$type": "Document",
@@ -257,8 +252,7 @@
               "RelativeToolTip": "WT_API\\Models\\UserClaimsModel.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T11:53:56.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T11:53:56.387Z"
             },
             {
               "$type": "Document",
@@ -270,8 +264,7 @@
               "RelativeToolTip": "WT_API\\Program.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAuwBYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:00.759Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T12:11:00.759Z"
             },
             {
               "$type": "Document",
@@ -283,8 +276,7 @@
               "RelativeToolTip": "WT_API\\Controllers\\User.cs",
               "ViewState": "AQIAAEwAAAAAAAAAAAAkwFUAAAAPAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T11:52:05.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T11:52:05.935Z"
             },
             {
               "$type": "Document",
@@ -296,8 +288,7 @@
               "RelativeToolTip": "WT_API\\Models\\UserRoles.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T11:54:04.046Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T11:54:04.046Z"
             },
             {
               "$type": "Document",
@@ -321,8 +312,7 @@
               "RelativeToolTip": "WT_API\\Migrations\\20240902201420_final-fixes.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAA7wBwAAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-02T20:14:26.361Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-02T20:14:26.361Z"
             },
             {
               "$type": "Document",
@@ -334,8 +324,7 @@
               "RelativeToolTip": "WT_API\\Controllers\\UserListController.cs",
               "ViewState": "AQIAABEAAAAAAAAAAAAAwAkAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T10:58:58.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T10:58:58.035Z"
             },
             {
               "$type": "Document",
@@ -347,8 +336,7 @@
               "RelativeToolTip": "WT_API\\Models\\Chapter.cs",
               "ViewState": "AQIAAAoAAAAAAAAAAAAkwBIAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:02.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T12:11:02.27Z"
             },
             {
               "$type": "Document",
@@ -360,8 +348,7 @@
               "RelativeToolTip": "WT_API\\Services\\AuthService.cs",
               "ViewState": "AQIAABUAAAAAAAAAAAAuwG8AAAAXAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T11:13:45.546Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T11:13:45.546Z"
             },
             {
               "$type": "Document",

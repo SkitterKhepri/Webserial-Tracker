@@ -18,6 +18,7 @@ export class HomeComponent {
   chapters:any[] = []
   authors:any[] = []
   newChapters:any[] = []
+  // latestChapters:any = {} //TODO, maybe
 
   constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
     private chServ:ChaptersService, private authorServ:AuthorsService){
