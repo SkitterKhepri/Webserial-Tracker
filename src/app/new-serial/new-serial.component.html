@@ -73,23 +73,23 @@
                 </div>
                 <div class="col-md-8 flex-grow-1">
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="radiobtn" id="completed" autocomplete="off" #complete>
+                        <input type="radio" class="btn-check" name="radiobtn" id="completed" autocomplete="off" #complete [(ngModel)]="newSerial.status" [value]="0">
                         <label class="btn btn-outline-primary" for="completed">Completed</label>
                     
-                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" autocomplete="off" #ongoing>
+                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" autocomplete="off" #ongoing [(ngModel)]="newSerial.status" [value]="1">
                         <label class="btn btn-outline-primary" for="ongoing">Ongoing</label>
                     
-                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" autocomplete="off" #hiatus>
+                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" autocomplete="off" #hiatus [(ngModel)]="newSerial.status" [value]="2">
                         <label class="btn btn-outline-primary" for="hiatus">Hiatus</label>
 
-                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" autocomplete="off" #abandoned>
+                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" autocomplete="off" #abandoned [(ngModel)]="newSerial.status" [value]="3">
                         <label class="btn btn-outline-primary" for="abandoned">Abandoned</label>
                     </div>
                 </div>
             </div>
             <div class="row my-1 align-items-center">
                 <div class="col my-1">
-                    <button class="btn btn-primary form-control" (click)="addSerial(authorName.value, complete.checked, ongoing.checked, hiatus.checked, abandoned.checked)">Add</button>
+                    <button class="btn btn-primary form-control" (click)="addSerial(authorName.value)">Add</button>
                 </div>
             </div>
         </div>

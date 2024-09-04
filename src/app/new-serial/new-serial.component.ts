@@ -27,23 +27,10 @@ export class NewSerialComponent {
 
   constructor(private serServ:SerialsService, private userServ : UsersService){}
 
-  addSerial(authorName:any, comp:any, ong:any, hia:any, aba:any){
-    if (comp) {
-      this.newSerial.status = SerialStatuses.Completed
-    }
-    if (ong) {
-      this.newSerial.status = SerialStatuses.Ongoing
-    }
-    if (hia) {
-      this.newSerial.status = SerialStatuses.Hiatus
-    }
-    if (aba) {
-      this.newSerial.status = SerialStatuses.Abandoned
-    }
+  addSerial(authorName:any){
     if(this.userServ.getCurrentClaims().includes("Admin") || this.userServ.getCurrentClaims().includes("SAdmin")){
       this.newSerial.reviewStatus = true
     }
-    console.log(this.newSerial)
     this.serServ.postSerial(this.newSerial, authorName).subscribe()
     this.newSerial = {}
     this.newSerialAuthor = ""

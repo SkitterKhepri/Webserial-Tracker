@@ -5,7 +5,7 @@
     <div class="container serials">
         <div class="row align-items-center" *ngFor="let serial of serials">
             <div class="col mb-2">
-                <div id="title" class="form-control w-100">{{serial.title}}</div>
+                <div id="title" class="form-control w-100 title">{{serial.title}}</div>
             </div>
             <div class="col-auto mb-2">
                 <button class="btn btn-secondary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + serial.id" type="button">
@@ -13,7 +13,7 @@
                 </button>
             </div>
             <div>
-                <div class="collapse" [id]="'collapse' + serial.id">
+                <div class="collapse my-2" [id]="'collapse' + serial.id">
                     <div class="container border border-info-subtle border-3 rounded-2">
                         <div class="row align-items-center my-1 p-1">
                             <div class="col-auto border border-2">
@@ -92,16 +92,16 @@
                             </div>
                             <div class="col-md-8 flex-grow-1">
                                 <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" autocomplete="off" #complete [checked]="serial.status == 'COMPLETE'">
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" autocomplete="off" #complete [(ngModel)]="serial.status" [value]="0">
                                     <label class="btn btn-outline-primary" for="completed-{{serial.id}}">Completed</label>
                                   
-                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" autocomplete="off" #ongoing [checked]="serial.status == 'ONGOING'">
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" autocomplete="off" #ongoing [(ngModel)]="serial.status" [value]="1">
                                     <label class="btn btn-outline-primary" for="ongoing-{{serial.id}}">Ongoing</label>
                                   
-                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" autocomplete="off" #hiatus [checked]="serial.status == 'HIATUS'">
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" autocomplete="off" #hiatus [(ngModel)]="serial.status" [value]="2">
                                     <label class="btn btn-outline-primary" for="hiatus-{{serial.id}}">Hiatus</label>
 
-                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" autocomplete="off" #abandoned [checked]="serial.status == 'ABANDONED'">
+                                    <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" autocomplete="off" #abandoned [(ngModel)]="serial.status" [value]="3">
                                     <label class="btn btn-outline-primary" for="abandoned-{{serial.id}}">Abandoned</label>
                                 </div>
                             </div>
