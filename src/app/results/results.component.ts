@@ -11,7 +11,7 @@ import { AuthorsService } from '../services/authors.service';
 })
 export class ResultsComponent implements OnInit {
 
-  serials:any[] = []
+  reviewedSerials:any[] = []
   chapters:any[] = []
   authors:any[] = []
 
@@ -28,13 +28,20 @@ export class ResultsComponent implements OnInit {
     this.getSerials()
     this.getChapters()
     this.getAuthors()
+    
     this.serResults()
     this.chResults()
     this.auResults()
   }
   getSerials(){
     this.serServ.getSerials().subscribe(
-      (serials:any)=> this.serials = serials
+      (serials:any)=> {
+        serials.forEach((serial:any) => {
+          if(serial.reviewStatus){
+            this.reviewedSerials.push(serial)
+          }  
+        });
+      }
     )
   }
 
@@ -55,7 +62,7 @@ export class ResultsComponent implements OnInit {
   }
 
   getSerial(id:any) :any {
-    return this.serials.find((ser:any) => ser.id ==id)
+    return this.reviewedSerials.find((ser:any) => ser.id ==id)
   }
 
   getSerialChaptersCount(id:any){

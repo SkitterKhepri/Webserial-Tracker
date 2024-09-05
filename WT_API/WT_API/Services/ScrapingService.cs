@@ -270,31 +270,27 @@ namespace WT_API.Services
       int finalChCount = 0;
       List<Serial> serials = await _context.Serials.ToListAsync();
 
-      if (true)
-      {
-          
-      }
-
       foreach (Serial serial in serials)
       {
-        Chapter? lastChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
-        
-        string lastLink;
-        if (lastChapter == null)
-        {
-          lastLink = serial.firstCh;
-        }
-        else
-        {
-          if (lastChapter.isLastChapter == true && lastChapter.reviewStatus == true && (serial.status == SerialStatuses.Completed
-              || serial.status == SerialStatuses.Abandoned))
+        if (serial.reviewStatus) {
+          Chapter? lastChapter = _context.Chapters.Where(ch => ch.isLastChapter).OrderByDescending(ch => ch.id).FirstOrDefault();
+          
+          string lastLink;
+          if (lastChapter == null)
           {
-            continue;
+            lastLink = serial.firstCh;
           }
-          lastLink = lastChapter.link;
+          else
+          {
+            if (lastChapter.reviewStatus == true && (serial.status == SerialStatuses.Completed || serial.status == SerialStatuses.Abandoned))
+            {
+              continue;
+            }
+            lastLink = lastChapter.link;
+          }
+          var (result, chCount) = await AddSerialChapters(serial, lastLink);
+          finalChCount += chCount;
         }
-        var (result, chCount) = await AddSerialChapters(serial, lastLink);
-        finalChCount += chCount;
       }
       return (1, finalChCount);
     }
@@ -308,19 +304,22 @@ namespace WT_API.Services
       {
         return (0, 0);
       }
+      if (serial.reviewStatus) {
 
-      Chapter? lastChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
-      string lastLink;
-      if (lastChapter == null)
-      {
-        lastLink = serial.firstCh;
-      }
-      else
-      {
-        lastLink = lastChapter.link;
-      }
+        Chapter? lastChapter = _context.Chapters.Where(ch => ch.isLastChapter).OrderByDescending(ch => ch.id).FirstOrDefault();
+        string lastLink;
+        if (lastChapter == null)
+        {
+          lastLink = serial.firstCh;
+        }
+        else
+        {
+          lastLink = lastChapter.link;
+        }
 
-      return await AddSerialChapters(serial, lastLink);
+        return await AddSerialChapters(serial, lastLink);
+      }
+      else return (2, 0);
     }
   }
 }

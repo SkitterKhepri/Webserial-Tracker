@@ -85,6 +85,10 @@ namespace WT_API.Controllers
         return NotFound();
       }
       var (result, updatedChs) = await _scraper.UpdateSerial(id);
+      if(result == 2)
+      {
+        return StatusCode(StatusCodes.Status406NotAcceptable, "Serial awaiting approval");
+      }
 
       return Ok(updatedChs);
     }
@@ -145,28 +149,35 @@ namespace WT_API.Controllers
       if (_context.Serials.Where(ser => ser.title == serial.title).Any())
       {
         Console.WriteLine("Serial with same title already in DB");
-        return NoContent();
+        return StatusCode(StatusCodes.Status417ExpectationFailed, "Serial already added");
       }
-      var author = _context.Authors.FirstOrDefault(au => au.name == authorName);
-      if (author != null)
+      if (authorName != "")
       {
-        serial.authorId = author.id;
-      }
-      else
-      {
-        author = new Author();
-        author.name = authorName;
-        _context.Authors.Add(author);
-        await _context.SaveChangesAsync();
-        Console.WriteLine(author.id);
-        serial.authorId = author.id;
+        var author = _context.Authors.FirstOrDefault(au => au.name == authorName);
+        if (author != null)
+        {
+          serial.authorId = author.id;
+        }
+        else
+        {
+          author = new Author();
+          author.name = authorName;
+          _context.Authors.Add(author);
+          await _context.SaveChangesAsync();
+          Console.WriteLine(author.id);
+          serial.authorId = author.id;
+        }
       }
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
       //serial.id is the new id here
-      var (result, addedChs) = await _scraper.AddSerialChapters(serial);
+      var (result, addedChs) = (0, 0);
+      if (serial.reviewStatus)
+      {
+         (result, addedChs) = await _scraper.AddSerialChapters(serial);
+      }
       
-      return Ok(new {serial.title, author.name, addedChs});
+      return Ok(new {serial.title, addedChs});
     }
 
     // DELETE: api/Serials/5
@@ -200,6 +211,24 @@ namespace WT_API.Controllers
 
       return NoContent();
     }
+
+
+    [HttpPatch("{id}/approve")]
+    [Authorize(Roles = "SAdmin, Admin")]
+    public async Task<IActionResult> Approve(int id, Review review)
+    {
+      var serial = await _context.Serials.FindAsync(id);
+
+      if (serial == null)
+        return NotFound();
+
+      serial.reviewStatus = review.reviewStatus;
+
+      await _context.SaveChangesAsync();
+
+      return StatusCode(StatusCodes.Status202Accepted);
+    }
+
 
     private bool SerialExists(int id)
     {

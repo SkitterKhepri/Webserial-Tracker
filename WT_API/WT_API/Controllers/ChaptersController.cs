@@ -119,6 +119,22 @@ namespace WT_API.Controllers
       return NoContent();
     }
 
+    [HttpPatch("{id}/approve")]
+    [Authorize(Roles = "SAdmin, Admin")]
+    public async Task<IActionResult> Approve(int id, Review review)
+    {
+      var chapter = await _context.Chapters.FindAsync(id);
+
+      if (chapter == null)
+        return NotFound();
+
+      chapter.reviewStatus = review.reviewStatus;
+
+      await _context.SaveChangesAsync();
+
+      return StatusCode(StatusCodes.Status202Accepted);
+    }
+
     private bool ChapterExists(int id)
     {
       return (_context.Chapters?.Any(e => e.id == id)).GetValueOrDefault();

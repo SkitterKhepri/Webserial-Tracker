@@ -14,11 +14,11 @@ import { AuthorsService } from '../services/authors.service';
 })
 export class HomeComponent {
 
-  serials:any[] = []
-  chapters:any[] = []
+  reviewedSerials:any[] = []
+  reviewedSerialChapters:any[] = []
   authors:any[] = []
   newChapters:any[] = []
-  // latestChapters:any = {} //TODO, maybe
+  reviewedSerialIds:any = []
 
   constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
     private chServ:ChaptersService, private authorServ:AuthorsService){
@@ -29,14 +29,30 @@ export class HomeComponent {
 
 
   getSerials(){
+    this.reviewedSerials = []
+    this.reviewedSerialIds = []
     this.serServ.getSerials().subscribe(
-      (serials:any)=> this.serials = serials
+      (serials:any)=> {
+        serials.forEach((serial:any) => {
+          if(serial.reviewStatus){
+            this.reviewedSerials.push(serial)
+            this.reviewedSerialIds.push(serial.id)
+          }  
+        });
+      }
     )
   }
 
   getChapters(){
+    this.reviewedSerialChapters = []
     this.chServ.getChapters().subscribe(
-      (chapters:any) => this.chapters = chapters
+      (chapters:any) => {
+        chapters.forEach((chapter:any) => {
+          if(this.reviewedSerialIds.includes(chapter.serialId)){
+            this.reviewedSerialChapters.push(chapter)
+          }
+        });
+      }
     )
   }
 
@@ -51,11 +67,11 @@ export class HomeComponent {
   }
 
   getSerial(id:any) :any {
-    return this.serials.find((ser:any) => ser.id ==id)
+    return this.reviewedSerials.find((ser:any) => ser.id ==id)
   }
 
   getSerialChaptersCount(id:any){
-    return this.chapters.filter((ch:any) => ch.serialId == id).length
+    return this.reviewedSerialChapters.filter((ch:any) => ch.serialId == id).length
   }
 
   updateAll(){
@@ -67,12 +83,4 @@ export class HomeComponent {
       }
     )
   }
-
-  // getCurrentUser(){
-  //   return this.userServ.getCurrentUser()
-  // }
-
-  // getCurrentUserClaims(){
-  //   return this.userServ.getCurrentClaims()
-  // }
 }

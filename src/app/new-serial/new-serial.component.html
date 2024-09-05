@@ -4,10 +4,10 @@
     </div>
     <div class="container newSerial my-2">
         <h4>New Serial:</h4>
-        <div class="container border border-info-subtle border-3 rounded-2 ">
+        <div class="container border bg-secondary-subtle border-info-subtle border-3 rounded-2 ">
             <div class="row align-items-center my-1 p-1">
                 <div class="col-auto">
-                    <label for="title">Title:</label>
+                    <label for="title">Title:<b class="text-danger">*</b></label>
                 </div>
                 <div class="col-md-4">
                     <input type="text" id="title" class="form-control" [(ngModel)]="newSerial.title">
@@ -21,7 +21,7 @@
             </div>
             <div class="row align-items-center my-1">
                 <div class="col-auto">
-                    <label for="homePg">Home Page:</label>
+                    <label for="homePg">Home Page:<b class="text-danger">*</b></label>
                 </div>
                 <div class="col-md-10 flex-grow-1">
                     <input type="text" class="form-control" id="homePg" [(ngModel)]="newSerial.home">
@@ -92,6 +92,9 @@
                     <button class="btn btn-primary form-control" (click)="addSerial(authorName.value)">Add</button>
                 </div>
             </div>
+        </div>
+        <div class="info my-2">
+            <p class="text-primary">Fields marked by <b class="text-danger">*</b> are required for adding a new serial!</p>
         </div>
     </div>
 </div>

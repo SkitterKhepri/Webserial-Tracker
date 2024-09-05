@@ -12,6 +12,8 @@ export class AdminSerialsComponent {
 
   serials:any = []
   authors:any = []
+  unReviewedSerials:any = []
+  reviewedSerials:any = []
 
   constructor(private serServ:SerialsService, private authorServ:AuthorsService){
     this.getSerials()
@@ -19,8 +21,19 @@ export class AdminSerialsComponent {
   }
 
   getSerials(){
+    this.reviewedSerials = []
+    this.unReviewedSerials = []
     this.serServ.getSerials().subscribe(
-      (serials:any)=> this.serials = serials
+      (serials:any)=> {
+        serials.forEach((serial:any) => {
+          if(serial.reviewStatus){
+            this.reviewedSerials.push(serial)
+          }
+          if(!serial.reviewStatus){
+            this.unReviewedSerials.push(serial)
+          }
+        });
+      }
     )
   }
 
@@ -34,21 +47,8 @@ export class AdminSerialsComponent {
     return this.authors.find((au:any) => au.id == id)
   }
 
-  updateSerial(serial:any, authorName:any, comp:any, ong:any, hia:any, aba:any){
-    if (comp) {
-      serial.status = SerialStatuses.Completed
-    }
-    if (ong) {
-      serial.status = SerialStatuses.Ongoing
-    }
-    if (hia) {
-      serial.status = SerialStatuses.Hiatus
-    }
-    if (aba) {
-      serial.status = SerialStatuses.Abandoned
-    }
+  updateSerial(serial:any, authorName:any){
     serial.reviewStatus = true
-    console.log(serial)
     return this.serServ.putSerial(serial.id, serial, authorName).subscribe(
       () => this.getSerials()
     )
@@ -56,6 +56,13 @@ export class AdminSerialsComponent {
 
   deleteSerial(id:any){
     this.serServ.deleteSerial(id).subscribe(
+      () => this.getSerials()
+    )
+  }
+
+  approveSerial(id:any, reviewStatus:boolean){
+    let reviewStatusObj = { "reviewStatus" : reviewStatus}
+    this.serServ.approveSerial(id, reviewStatusObj).subscribe(
       () => this.getSerials()
     )
   }

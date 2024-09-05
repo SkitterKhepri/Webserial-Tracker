@@ -21,7 +21,7 @@ export class NewSerialComponent {
     "secondaryNextChLinkXPath": "",
     "otherNextChLinkXPaths": "",
     "titleXPath": "",
-    "reviewStatus": true
+    "reviewStatus": false
   }
   newSerialAuthor:any
 

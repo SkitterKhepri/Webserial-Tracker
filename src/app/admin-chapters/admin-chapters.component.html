@@ -133,7 +133,7 @@
                                         <p class="m-1">Serial's Title:</p>
                                     </div>
                                     <div class="col-md-3 flex-grow-1">
-                                        <input #authorName type="text" id="serialName" class="form-control" [value]="selectSerial(chapter.serialId)?.title">
+                                        <input #serialTitle type="text" id="serialName" class="form-control" readonly [value]="selectSerial(chapter.serialId)?.title">
                                     </div>
                                 </div>
                                 <div class="row align-items-center my-1">

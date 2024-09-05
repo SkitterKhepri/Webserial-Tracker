@@ -9,7 +9,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class SearchService {
 
-  serials:any = []
+  reviewedSerials:any = []
+  reviewedSerialChapters:any = []
+  reviewedSerialIds:any = []
+
   chapters:any = []
   authors:any = []
 
@@ -18,22 +21,36 @@ export class SearchService {
   auResults = new BehaviorSubject({})
 
   constructor(private serServ:SerialsService, private chServ:ChaptersService, private auServ:AuthorsService) {
-
     this.getSerials()
     this.getChapters()
     this.getAuthors()
-
   }
 
   getSerials(){
+    this.reviewedSerials = []
+    this.reviewedSerialIds = []
     this.serServ.getSerials().subscribe(
-      (serials:any)=> this.serials = serials
+      (serials:any)=> {
+        serials.forEach((serial:any) => {
+          if(serial.reviewStatus){
+            this.reviewedSerials.push(serial)
+            this.reviewedSerialIds.push(serial.id)
+          }  
+        });
+      }
     )
   }
 
   getChapters(){
+    this.reviewedSerialChapters = []
     this.chServ.getChapters().subscribe(
-      (chapters:any) => this.chapters = chapters
+      (chapters:any) => {
+        chapters.forEach((chapter:any) => {
+          if(this.reviewedSerialIds.includes(chapter.serialId)){
+            this.reviewedSerialChapters.push(chapter)
+          }
+        });
+      }
     )
   }
 
@@ -44,7 +61,7 @@ export class SearchService {
   }
 
   auSerials(auId:any){
-    let serials = this.serials.filter((ser:any) => ser.authorId == auId)
+    let serials = this.reviewedSerials.filter((ser:any) => ser.authorId == auId)
     return serials
   }
 
@@ -56,7 +73,7 @@ export class SearchService {
   
   searchSerial(serTitle:any){
     let normalisedTitle = serTitle.trim().toLowerCase()
-    let results = this.serials.filter((ser:any) => ser.title.toLowerCase().includes(normalisedTitle))
+    let results = this.reviewedSerials.filter((ser:any) => ser.title.toLowerCase().includes(normalisedTitle))
     this.serResults.next(results)
   }
 

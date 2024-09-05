@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WT_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e30c5af06ff823e011b99fa083403ccfd7198773")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8ad5f6e779c382b2b15cc2e854f3c5dcaf33c23")]
 [assembly: System.Reflection.AssemblyProductAttribute("WT_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WT_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

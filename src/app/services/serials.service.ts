@@ -24,7 +24,6 @@ export class SerialsService {
   postSerial(serial: any, authorName:any): Observable<any> {
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({"Authorization" : `Bearer ${token}`})
-    console.log(serial)
     return this.http.post(this.apiUrl + 'api/Serials/' + "?authorName=" + authorName, serial, {headers});
   }
 
@@ -50,5 +49,11 @@ export class SerialsService {
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
     return this.http.get(this.apiUrl + "Serials/update", {headers})
+  }
+
+  approveSerial(id:any, reviewStatus:any){
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.patch(this.apiUrl + "api/Serials/" + id + "/approve", reviewStatus, {headers})
   }
 }
