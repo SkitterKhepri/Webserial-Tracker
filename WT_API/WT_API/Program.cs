@@ -28,7 +28,7 @@ builder.Services.AddTransient<ScrapingService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddIdentity<User, IdentityRole>()
+builder.Services.AddIdentity<User, IdentityRole>(options => options.Password.RequireNonAlphanumeric = false)
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 // Adding Authentication  

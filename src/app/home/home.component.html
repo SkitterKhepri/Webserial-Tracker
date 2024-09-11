@@ -8,7 +8,11 @@
             <h4 class="ms-5 mb-2">New Releases</h4>
           </div>
           <div>
-            <button class="btn btn-success btn-sm me-5 mb-2" id="updateAll" (click)="updateAll()">Update All Serials</button>
+            <div *ngIf="isUpdating" class="d-flex align-items-center me-5 mb-2" role="status">
+              <div class="me-1">Updating...</div>
+              <div class="spinner-border text-success spinner-border-sm"></div>
+            </div>
+            <button *ngIf="!isUpdating" class="btn btn-success btn-sm me-5 mb-2" id="updateAll" (click)="updateAll()">Update All Serials</button>
           </div>
         </div>
         <div class="newReleases ms-5 me-5 border border-secondary-subtle border-3 rounded-4 p-2">

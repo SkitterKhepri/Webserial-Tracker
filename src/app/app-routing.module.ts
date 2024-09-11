@@ -9,17 +9,21 @@ import { ResultsComponent } from './results/results.component';
 import { SearchComponent } from './search/search.component';
 import { NewSerialComponent } from './new-serial/new-serial.component';
 import { AdminChaptersComponent } from './admin-chapters/admin-chapters.component';
+import { authGuard } from './guard/authen.guard';
+import { adminGuard } from './guard/admin.guard';
+import { AdminNewserialComponent } from './admin-newserial/admin-newserial.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LogInComponent},
   {path: 'register', component: RegistrationComponent},
-  {path: 'adminSerials', component: AdminSerialsComponent},
-  {path: 'adminUsers', component: AdminUsersComponent},
-  {path: 'adminChapters', component: AdminChaptersComponent},
+  {path: 'adminSerials', canActivate: [authGuard, adminGuard], component: AdminSerialsComponent},
+  {path: 'adminUsers', canActivate: [authGuard, adminGuard], component: AdminUsersComponent},
+  {path: 'adminChapters', canActivate: [authGuard, adminGuard], component: AdminChaptersComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'search', component: SearchComponent},
-  {path: 'newSerial', component: NewSerialComponent},
+  {path: 'newSerial', canActivate: [authGuard], component: NewSerialComponent},
+  {path: 'adminNewSerial', canActivate: [authGuard, adminGuard], component: AdminNewserialComponent},
   {path: '', component: HomeComponent}
 ];
 

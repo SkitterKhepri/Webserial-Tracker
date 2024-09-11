@@ -21,8 +21,11 @@
           <label class="form-label" for="password">Password</label>
           <input #password name="password" type="password" id="password" class="form-control" required/>
         </div>
-        
-        <button  type="submit" class="btn btn-primary btn-block mb-4" (click)="login({username : username.value, password : password.value})">Login</button>
+        <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+          {{ errorMessage }}
+        </div>
+        <div *ngIf="isLoading" class="spinner-border text-primary mt-2" role="status"></div>
+        <button *ngIf="!isLoading" type="submit" class="btn btn-primary btn-block mb-4" (click)="login({username : username.value, password : password.value})">Login</button>
         <div class="text-center">
           <div class="row">
             <div class="col-1">

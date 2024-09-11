@@ -64,7 +64,7 @@ namespace WT_API.Services
           {
             nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
           }
-          catch (Exception ex)
+          catch (Exception)
           {
             nextCH = null;
           }
@@ -74,20 +74,22 @@ namespace WT_API.Services
             {
               nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
               nextCH = null;
             }
             if (nextCH == null)
             {
               var lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault();
-              if (lastChapter == null)
+              try
               {
-                Console.WriteLine("Should be zero: " + chapterCount);
-                return (0, 0);
+                lastChapter.isLastChapter = true;
               }
-              lastChapter.isLastChapter = true;
-              _context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true;
+              catch (NullReferenceException)
+              {
+                Console.WriteLine("No new chapters were added");
+              }
+              //_context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true;
               Console.WriteLine($"{chapterCount} chapters added");
               _context.SaveChanges();
               return (1, chapterCount);
@@ -125,6 +127,11 @@ namespace WT_API.Services
       string pageContent = await CheckUrl(response, startUrl);
       HtmlDocument htmlDoc = new HtmlDocument();
       htmlDoc.LoadHtml(pageContent);
+
+      Console.WriteLine(htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath).InnerHtml + "--html");
+      Console.WriteLine(htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath).InnerText + "--text");
+
+      HtmlNode nextChButton;
       HtmlNode nextCH;
       string nextCHURL;
       string currentUrl = startUrl;
@@ -132,28 +139,16 @@ namespace WT_API.Services
       while (true)
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
-
-        //debug
-        //Console.WriteLine(nextCH.InnerText);
         HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
-        //probably dont need this if?
         if (chTitleNode != null)
         {
           string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
           string chLink = currentUrl;
-          //TODO maybe this doesnt need to happen every time, just first maybe?
-          if (!(_context.Chapters.Where(ch => ch.title == chTitle).Any()))
-          {
-            chapterCount++;
-            _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink, serial.nextChLinkXPath, serial.secondaryNextChLinkXPath, serial.otherNextChLinkXPaths));
-          }
+          chapterCount++;
+          _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink, serial.nextChLinkXPath, serial.secondaryNextChLinkXPath, serial.otherNextChLinkXPaths));
         }
         else {
           var lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault();
-          if (lastChapter == null) {
-            Console.WriteLine("Should be zero: " + chapterCount);
-            return (0, 0);
-          }
           lastChapter.isLastChapter = true;
           _context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true;
           _context.SaveChanges();
@@ -165,7 +160,7 @@ namespace WT_API.Services
           {
             nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
           }
-          catch (Exception ex)
+          catch (Exception)
           {
             nextCH = null;
           }
@@ -175,20 +170,22 @@ namespace WT_API.Services
             {
               nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.otherNextChLinkXPaths);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
               nextCH = null;
             }
             if (nextCH == null)
             {
               var lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault();
-              if (lastChapter == null)
+              try
               {
-                Console.WriteLine("Should be zero: " + chapterCount);
-                return (0, 0);
+                lastChapter.isLastChapter = true;
               }
-              lastChapter.isLastChapter = true;
-              _context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true;
+              catch (NullReferenceException)
+              {
+                Console.WriteLine("No new chapters were added");
+              }
+              /*_context.Entry(lastChapter).Property(ch => ch.isLastChapter).IsModified = true*/;
               Console.WriteLine($"{chapterCount} chapters added");
               _context.SaveChanges();
               return (1, chapterCount);

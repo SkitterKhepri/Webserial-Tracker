@@ -16,6 +16,8 @@ import { FormsModule } from '@angular/forms';
 import { ResultsComponent } from './results/results.component';
 import { NewSerialComponent } from './new-serial/new-serial.component';
 import { AdminChaptersComponent } from './admin-chapters/admin-chapters.component';
+import { AdminNewserialComponent } from './admin-newserial/admin-newserial.component';
+import { LikedSerialsComponent } from './liked-serials/liked-serials.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AdminChaptersComponent } from './admin-chapters/admin-chapters.componen
     AdminUsersComponent,
     ResultsComponent,
     NewSerialComponent,
-    AdminChaptersComponent
+    AdminChaptersComponent,
+    AdminNewserialComponent,
+    LikedSerialsComponent
   ],
   imports: [
     BrowserModule,

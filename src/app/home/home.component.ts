@@ -20,6 +20,8 @@ export class HomeComponent {
   newChapters:any[] = []
   reviewedSerialIds:any = []
 
+  isUpdating:boolean = false
+
   constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
     private chServ:ChaptersService, private authorServ:AuthorsService){
     this.getSerials()
@@ -31,16 +33,19 @@ export class HomeComponent {
   getSerials(){
     this.reviewedSerials = []
     this.reviewedSerialIds = []
-    this.serServ.getSerials().subscribe(
-      (serials:any)=> {
+    this.serServ.getSerials().subscribe({
+      next: (serials:any) => {
         serials.forEach((serial:any) => {
           if(serial.reviewStatus){
             this.reviewedSerials.push(serial)
             this.reviewedSerialIds.push(serial.id)
           }  
         });
+      },
+      error: (response:any) => {
+        console.log("shits fucked: " + response)
       }
-    )
+    })
   }
 
   getChapters(){
@@ -75,12 +80,21 @@ export class HomeComponent {
   }
 
   updateAll(){
-    this.serServ.updateSerials().subscribe(
-      (uCh:any) => {
+    this.isUpdating = true
+    this.serServ.updateSerials().subscribe({
+      next: (uCh:any) => {
         console.log(uCh + " chapters were added")
         this.getSerials()
         this.getChapters()
+        this.isUpdating = false
+      },
+      error: (response) => {
+        console.log("updating shat itself: " + response)
+        this.isUpdating = false
+      },
+      complete: () => {
+        this.isUpdating = false
       }
-    )
+    })
   }
 }

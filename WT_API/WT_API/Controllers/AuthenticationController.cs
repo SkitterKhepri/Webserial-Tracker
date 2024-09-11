@@ -58,6 +58,7 @@ namespace WT_API.Controllers
                 var (status, message) = await _authService.Register(model);
                 if (status == 0)
                 {
+                    Console.WriteLine(BadRequest(message));
                     return BadRequest(message);
                 }
                 if (model.Username != "Admin")

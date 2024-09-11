@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { UsersService } from '../services/users.service';
 import { StorageService } from '../services/storage.service';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,7 @@ export class NavBarComponent {
 
   selectedSearch:any = "ser"
 
-  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService){}
+  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService, private authServ : AuthServiceService){}
 
   search(searchType:any, input:any){
     this.seaServ.emptyResults()
@@ -35,14 +36,14 @@ export class NavBarComponent {
   }
 
   logOut(){
-    this.userServ.logOut()
+    this.authServ.logOut()
   }
 
   getCurrentUser(){
-    return this.userServ.getCurrentUser()
+    return this.authServ.getCurrentUser()
   }
 
   getCurrentUserClaims(){
-    return this.userServ.getCurrentClaims()
+    return this.authServ.getCurrentClaims()
   }
 }

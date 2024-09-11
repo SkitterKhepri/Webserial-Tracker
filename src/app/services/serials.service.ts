@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class SerialsService {
   }
 
   getSerial(id:any){
-    return this.http.get(this.apiUrl + 'api/Serials/' + id)
+    return this.http.get(this.apiUrl + 'api/Serials/' + id).pipe(catchError(this.handleError))
   }
 
   postSerial(serial: any, authorName:any): Observable<any> {
@@ -55,5 +55,13 @@ export class SerialsService {
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
     return this.http.patch(this.apiUrl + "api/Serials/" + id + "/approve", reviewStatus, {headers})
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage:any = "An unknown error occurred!";
+    if (error.status === 400) {
+      (typeof(error.error) == "string") ? errorMessage = error.error : errorMessage = "Bad Request: Invalid data.";
+    }
+    return throwError(() => new Error(errorMessage));
   }
 }
