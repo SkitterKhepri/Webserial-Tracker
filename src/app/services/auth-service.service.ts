@@ -23,13 +23,13 @@ export class AuthServiceService {
   }
 
   logOut(){
-    this.route.navigate(['/home'])
     this.storage.clear()
+    this.route.navigate(['/home'])
   }
 
   logoutGoLogin(){
-    this.route.navigate(['/login'])
     this.storage.clear()
+    this.route.navigate(['/login'], {state: {sessionExp : true}})
   }
 
   

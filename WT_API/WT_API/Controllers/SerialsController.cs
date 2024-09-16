@@ -10,13 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using WT_API.Data;
 using WT_API.Models;
 using System.Text;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Dependency;
 using WT_API.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
 namespace WT_API.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("[controller]")]
   [ApiController]
   public class SerialsController : ControllerBase
   {
@@ -29,15 +30,29 @@ namespace WT_API.Controllers
       _scraper = scraper;
     }
 
-    // GET: api/Serials
+    // GET: Serials
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Serial>>> GetSerials()
+    public async Task<ActionResult<IEnumerable<SerialDTO>>> GetSerials()
     {
       if (_context.Serials == null)
       {
         return NotFound();
       }
-      return await _context.Serials.ToListAsync();
+      var serialList = await _context.Serials.ToListAsync();
+      List<SerialDTO> serialDTOs = new List<SerialDTO>();
+      foreach (Serial serial in serialList)
+      {
+        SerialDTO serialDTO = new SerialDTO();
+        serialDTO.Serial = serial;
+        //var serialized = JsonConvert.SerializeObject(userList[i]);
+        //userWithClaims = JsonConvert.DeserializeObject<UserWithClaims>(serialized);
+        Author author = await _context.Authors.FindAsync(serial.authorId);
+        serialDTO.Author = author;
+        List<Chapter> chapters = await _context.Chapters.ToListAsync();
+        serialDTO.Chapters = chapters;
+        serialDTOs.Add(serialDTO);
+      }
+      return Ok(serialDTOs);
     }
 
     //Same as above, but adds all the new chapters of all serials first, probably takes really fucking long TODO: only admin
@@ -70,7 +85,6 @@ namespace WT_API.Controllers
       return serial;
     }
 
-    //Same as above, but adds the new chapters of the serial first
     [HttpGet("/Serials/update/{id}")]
     public async Task<ActionResult<Serial>> UpdatedSerial(int id)
     {
@@ -96,7 +110,7 @@ namespace WT_API.Controllers
     // PUT: api/Serials/5
     // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
     [HttpPut("{id}")]
-    [Authorize(Roles = "SAdmin,Admin")]
+    //[Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> PutSerial(int id, Serial serial, string authorName)
     {
       if (id != serial.id)
@@ -138,14 +152,13 @@ namespace WT_API.Controllers
 
 
     [HttpPost]
-    [Authorize]
+    //[Authorize]
     public async Task<ActionResult<Serial>> PostSerial(Serial serial, string authorName)
     {
       if (_context.Serials == null)
       {
         return Problem("Entity set 'Context.Serials'  is null. korte");
       }
-
       if (_context.Serials.Where(ser => ser.title == serial.title).Any())
       {
         Console.WriteLine("Serial with same title already in DB");
@@ -164,13 +177,11 @@ namespace WT_API.Controllers
           author.name = authorName;
           _context.Authors.Add(author);
           await _context.SaveChangesAsync();
-          Console.WriteLine(author.id);
           serial.authorId = author.id;
         }
       }
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
-      //serial.id is the new id here
       var (result, addedChs) = (0, 0);
       if (serial.reviewStatus)
       {
@@ -182,7 +193,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Serials/5
     [HttpDelete("{id}")]
-    [Authorize(Roles = "SAdmin,Admin")]
+    //[Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> DeleteSerial(int id)
     {
       if (_context.Serials == null)
@@ -203,7 +214,7 @@ namespace WT_API.Controllers
       }
       Author author = await _context.Authors.FindAsync(serial.authorId);
       List<Serial> authorWorks = await _context.Serials.Where(ser => ser.authorId == author.id).ToListAsync();
-      if(authorWorks.Count == 0)
+      if(authorWorks.Count == 1)
       {
         _context.Authors.Remove(author);
       }
@@ -214,7 +225,7 @@ namespace WT_API.Controllers
 
 
     [HttpPatch("{id}/approve")]
-    [Authorize(Roles = "SAdmin, Admin")]
+    //[Authorize(Roles = "SAdmin, Admin")]
     public async Task<IActionResult> Approve(int id, Review review)
     {
       var serial = await _context.Serials.FindAsync(id);

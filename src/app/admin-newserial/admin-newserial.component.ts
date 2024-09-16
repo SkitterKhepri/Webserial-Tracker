@@ -25,6 +25,7 @@ export class AdminNewserialComponent {
   newSerialAuthor:any = ""
   isAdding:boolean = false
   missingData:boolean = true
+  errorAdding:boolean = false
 
   constructor(private serServ:SerialsService, private userServ : UsersService, private authServ : AuthServiceService){}
 
@@ -38,7 +39,7 @@ export class AdminNewserialComponent {
         this.isAdding = false
       },
       error: (error) => {
-        console.log(error)
+        this.errorAdding = true
         this.isAdding = false
       },
       complete: () => {

@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Text;
 using WT_API.Data;
 using WT_API.Models;
-using WT_API.Models.WT_API.Models;
 using WT_API.Services;
 
 var builder = WebApplication.CreateBuilder(args);

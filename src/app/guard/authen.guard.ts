@@ -4,10 +4,9 @@ import { inject } from '@angular/core';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthServiceService);
-  const router = inject(Router);
 
   if (authService.isSessionExpired()) {
-    router.navigate(['/login']);
+    authService.logoutGoLogin()
     return false;
   }
   return true;

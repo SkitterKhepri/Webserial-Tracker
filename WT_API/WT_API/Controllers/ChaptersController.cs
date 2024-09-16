@@ -12,7 +12,7 @@ using WT_API.Models;
 
 namespace WT_API.Controllers
 {
-  [Route("api/[controller]")]
+  [Route("[controller]")]
   [ApiController]
   public class ChaptersController : ControllerBase
   {
@@ -21,35 +21,6 @@ namespace WT_API.Controllers
     public ChaptersController(Context context)
     {
       _context = context;
-    }
-
-    // GET: api/Chapters
-    [HttpGet]
-    public async Task<ActionResult<IEnumerable<Chapter>>> GetChapters()
-    {
-      if (_context.Chapters == null)
-      {
-        return NotFound();
-      }
-      return await _context.Chapters.ToListAsync();
-    }
-
-    //GET: api/Chapters/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Chapter>> GetChapter(int id)
-    {
-      if (_context.Chapters == null)
-      {
-        return NotFound();
-      }
-      var chapter = await _context.Chapters.FindAsync(id);
-
-      if (chapter == null)
-      {
-        return NotFound();
-      }
-
-      return chapter;
     }
 
     [HttpPut("{id}")]
@@ -78,43 +49,6 @@ namespace WT_API.Controllers
           throw;
         }
       }
-
-      return NoContent();
-    }
-
-    // POST: api/Chapters
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-    [HttpPost]
-    [Authorize(Roles = "SAdmin,Admin")]
-    public async Task<ActionResult<Chapter>> PostChapter(Chapter chapter)
-    {
-      if (_context.Chapters == null)
-      {
-        return Problem("Entity set 'Context.Chapters'  is null.");
-      }
-      _context.Chapters.Add(chapter);
-      await _context.SaveChangesAsync();
-
-      return CreatedAtAction("GetChapter", new { id = chapter.id }, chapter);
-    }
-
-    // DELETE: api/Chapters/5
-    [HttpDelete("{id}")]
-    [Authorize(Roles = "SAdmin,Admin")]
-    public async Task<IActionResult> DeleteChapter(int id)
-    {
-      if (_context.Chapters == null)
-      {
-        return NotFound();
-      }
-      var chapter = await _context.Chapters.FindAsync(id);
-      if (chapter == null)
-      {
-        return NotFound();
-      }
-
-      _context.Chapters.Remove(chapter);
-      await _context.SaveChangesAsync();
 
       return NoContent();
     }

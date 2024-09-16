@@ -8,7 +8,10 @@
     </h2>
   </div>
   <div *ngIf="justReg" class=" m-5 pt-3 text-success-emphasis text-center bg-success-subtle border border-success rounded-3">
-    <p>You have succesfully registered! You can now login and recommend new serials to be added!</p>
+    <p>You have succesfully registered!</p>
+  </div>
+  <div *ngIf="sessionExp" class=" m-5 pt-3 text-warning-emphasis text-center bg-warning-subtle border border-warning rounded-3">
+    <p>Session expired. Please login to continue!</p>
   </div>
   <div class="container mx-auto mt-4 text-center w-50 border border-primary border-2 rounded">
     <form>

@@ -15,9 +15,15 @@ export class LogInComponent implements OnDestroy {
   justReg:boolean = false
   errorMessage:String = ""
   isLoading:boolean = false
+  sessionExp:boolean = false
 
   constructor(private userServ:UsersService, private http:HttpClient, private storage:StorageService, private router:Router){
     this.userServ.justReg.subscribe((reg:any) => this.justReg = reg)
+
+    const navigation = router.getCurrentNavigation()
+    if (navigation?.extras.state){
+      this.sessionExp = navigation.extras.state['sessionExp']
+    }
   }
 
   login(user:any){

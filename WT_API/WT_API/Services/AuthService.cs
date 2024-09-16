@@ -153,6 +153,7 @@ namespace WT_API.Services
     public async Task<(int, User?, string)> Login(LoginModel model)
     {
       var user = await userManager.FindByNameAsync(model.Username);
+      user.LastLoggedOn = DateTime.Now;
       if (user == null)
         return (0, null, "Invalid username");
       if (!await userManager.CheckPasswordAsync(user, model.Password))
