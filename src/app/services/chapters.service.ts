@@ -9,20 +9,20 @@ import { StorageService } from './storage.service';
 export class ChaptersService {
 
   constructor(private http : HttpClient, private storage:StorageService) {
-    this.getChapters()
+    // this.getChapters()
   }
 
   readonly apiUrl = 'https://localhost:7286/api/Chapters/'
 
-  getChapters() : Observable<any>{
-    return this.http.get(this.apiUrl)
-  }
+  // getChapters() : Observable<any>{
+  //   return this.http.get(this.apiUrl)
+  // }
 
-  postChapter(chapter: any): Observable<any> {
-    const token = this.storage.getItem("token")
-    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.post(this.apiUrl, chapter, {headers});
-  }
+  // postChapter(chapter: any): Observable<any> {
+  //   const token = this.storage.getItem("token")
+  //   const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+  //   return this.http.post(this.apiUrl, chapter, {headers});
+  // }
 
   putChapter(chapter:any){
     const token = this.storage.getItem("token")

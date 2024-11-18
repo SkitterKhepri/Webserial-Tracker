@@ -16,14 +16,19 @@ import { AdminNewserialComponent } from './admin-newserial/admin-newserial.compo
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LogInComponent},
-  {path: 'register', component: RegistrationComponent},
+  // {path: 'register', component: RegistrationComponent},
   {path: 'adminSerials', canActivate: [authGuard, adminGuard], component: AdminSerialsComponent},
+  // {path: 'adminSerials', component: AdminSerialsComponent},
   {path: 'adminUsers', canActivate: [authGuard, adminGuard], component: AdminUsersComponent},
+  // {path: 'adminUsers', component: AdminUsersComponent},
   {path: 'adminChapters', canActivate: [authGuard, adminGuard], component: AdminChaptersComponent},
+  {path: 'adminChapters', component: AdminChaptersComponent},
   {path: 'results', component: ResultsComponent},
-  {path: 'search', component: SearchComponent},
+  // {path: 'search', component: SearchComponent},
   {path: 'newSerial', canActivate: [authGuard], component: NewSerialComponent},
+  // {path: 'newSerial', component: NewSerialComponent},
   {path: 'adminNewSerial', canActivate: [authGuard, adminGuard], component: AdminNewserialComponent},
+  {path: 'adminNewSerial', component: AdminNewserialComponent},
   {path: '', component: HomeComponent}
 ];
 

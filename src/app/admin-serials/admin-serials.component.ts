@@ -11,13 +11,13 @@ import { SerialStatuses } from '../enums/serial-statuses.enum';
 export class AdminSerialsComponent {
 
   serials:any = []
-  authors:any = []
+  // authors:any = []
   unReviewedSerials:any = []
   reviewedSerials:any = []
 
   constructor(private serServ:SerialsService, private authorServ:AuthorsService){
     this.getSerials()
-    this.getAuthors()
+    // this.getAuthors()
   }
 
   getSerials(){
@@ -37,15 +37,15 @@ export class AdminSerialsComponent {
     )
   }
 
-  getAuthors(){
-    this.authorServ.getAuthors().subscribe(
-      (authors:any) => this.authors = authors
-    )
-  }
+  // getAuthors(){
+  //   this.authorServ.getAuthors().subscribe(
+  //     (authors:any) => this.authors = authors
+  //   )
+  // }
 
-  selectAuthor(id:any){
-    return this.authors.find((au:any) => au.id == id)
-  }
+  // selectAuthor(id:any){
+  //   return this.authors.find((au:any) => au.id == id)
+  // }
 
   updateSerial(serial:any, authorName:any){
     serial.reviewStatus = true

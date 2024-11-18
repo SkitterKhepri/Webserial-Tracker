@@ -9,13 +9,10 @@ import { SerialsService } from '../services/serials.service';
 })
 export class AdminChaptersComponent implements AfterViewInit {
 
-  chapters: any[] = [];
   serials: any[] = [];
-  chaptersGroupedBySerial: any = {};
   serialIds: any[] = [];
 
   constructor(private chServ: ChaptersService, private serServ: SerialsService, private changeDT: ChangeDetectorRef) {
-    this.getChapters();
     this.getSerials();
   }
 
@@ -23,49 +20,35 @@ export class AdminChaptersComponent implements AfterViewInit {
     this.changeDT.detectChanges();
   }
 
-  getChapters() {
-    this.chServ.getChapters().subscribe((chapters: any) => {
-      this.chapters = chapters;
-      this.groupChaptersBySerial();
-      this.changeDT.detectChanges();
-    });
-  }
+  // getChapters() {
+  //   this.chServ.getChapters().subscribe((chapters: any) => {
+  //     this.chapters = chapters;
+  //     this.groupChaptersBySerial();
+  //     this.changeDT.detectChanges();
+  //   });
+  // }
 
-  groupChaptersBySerial() {
-    this.chaptersGroupedBySerial = {};
-
-    this.chapters.forEach(chapter => {
-      const serialId = chapter.serialId;
-      if (!this.chaptersGroupedBySerial[serialId]) {
-        this.chaptersGroupedBySerial[serialId] = 
-        {
-          lastChapters : [],
-          otherChapters : []
-        };
-      }
-      if(chapter.isLastChapter){
-        this.chaptersGroupedBySerial[serialId].lastChapters.push(chapter);
-      }
-      else{
-        this.chaptersGroupedBySerial[serialId].otherChapters.push(chapter);
-      }
-      
-    });
-    // this.serialIds = Object.keys(this.chaptersGroupedBySerial);
+  groupChapters(serial:any) {
+    let processedSerial:any
+    processedSerial.lastChapters = serial.chapters.filter((chapter:any) => chapter.isLastChapter);
+    processedSerial.otherChapters = serial.chapters.filter((chapter:any) => !chapter.isLastChapter);
+    return processedSerial
   }
 
   deleteChapter(id: number) {
-    this.chServ.deleteChapter(id).subscribe(() => this.getChapters());
+    this.chServ.deleteChapter(id).subscribe(() => this.getSerials());
   }
 
   updateChapter(chapter: any) {
     chapter.reviewStatus = true;
-    this.chServ.putChapter(chapter).subscribe(() => this.getChapters());
+    this.chServ.putChapter(chapter).subscribe(() => this.getSerials());
   }
 
   getSerials() {
     this.serServ.getSerials().subscribe((serials: any) => {
-      this.serials = serials;
+      serials.forEach((serial:any) => {
+        this.serials.push(this.groupChapters(serial))
+      });
       this.changeDT.detectChanges();
     });
   }

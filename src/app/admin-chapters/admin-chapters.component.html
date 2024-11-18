@@ -14,8 +14,8 @@
             </div>
             <div>
                 <div class="collapse" [id]="'collapse' + serial.id">
-                    <h3>Last Chapters</h3>
-                    <div class="row align-items-center chapter-container" *ngFor="let chapter of chaptersGroupedBySerial[serial.id]?.lastChapters">
+                    <h3>Last Chapter(s)</h3>
+                    <div class="row align-items-center chapter-container" *ngFor="let chapter of serial.lastChapters">
                         <div class="col mb-2">
                             <div id="title" class="form-control w-100 bg-danger-subtle">{{chapter.title}}</div>
                         </div>
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     <h3>Other Chapters</h3>
-                    <div class="row align-items-center chapter-container" *ngFor="let chapter of chaptersGroupedBySerial[serial.id]?.otherChapters">
+                    <div class="row align-items-center chapter-container" *ngFor="let chapter of serial.otherChapters">
                         <div class="col mb-2">
                             <div id="title" class="form-control w-100 bg-primary-subtle">{{chapter.title}}</div>
                         </div>

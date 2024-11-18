@@ -42,14 +42,11 @@ namespace WT_API.Controllers
       List<SerialDTO> serialDTOs = new List<SerialDTO>();
       foreach (Serial serial in serialList)
       {
-        SerialDTO serialDTO = new SerialDTO();
-        serialDTO.Serial = serial;
-        //var serialized = JsonConvert.SerializeObject(userList[i]);
-        //userWithClaims = JsonConvert.DeserializeObject<UserWithClaims>(serialized);
-        Author author = await _context.Authors.FindAsync(serial.authorId);
-        serialDTO.Author = author;
-        List<Chapter> chapters = await _context.Chapters.ToListAsync();
-        serialDTO.Chapters = chapters;
+        SerialDTO serialDTO = new SerialDTO(serial);
+        Author author = await _context.Authors.FindAsync(serialDTO.authorId);
+        serialDTO.author = author;
+        List<Chapter> chapters = await _context.Chapters.Where((ch) => ch.serialId == serialDTO.id).ToListAsync();
+        serialDTO.chapters = chapters;
         serialDTOs.Add(serialDTO);
       }
       return Ok(serialDTOs);
@@ -69,20 +66,27 @@ namespace WT_API.Controllers
 
     // GET: api/Serials/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<Serial>> GetSerial(int id)
+    public async Task<ActionResult<SerialDTO>> GetSerial(int id)
     {
       if (_context.Serials == null)
       {
         return NotFound();
       }
-      var serial = await _context.Serials.FindAsync(id);
 
-      if (serial == null)
+      Serial serial = await _context.Serials.FindAsync(id);
+
+      SerialDTO serialDTO = new SerialDTO(serial);
+      
+      serialDTO.chapters = await _context.Chapters.Where((ch) => ch.serialId == serialDTO.id).ToListAsync();
+      serialDTO.author = await _context.Authors.FindAsync(serialDTO.authorId);
+
+
+      if (serialDTO == null)
       {
         return NotFound();
       }
 
-      return serial;
+      return serialDTO;
     }
 
     [HttpGet("/Serials/update/{id}")]

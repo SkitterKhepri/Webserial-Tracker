@@ -43,21 +43,13 @@ export class SearchService {
 
   getChapters(){
     this.reviewedSerialChapters = []
-    this.chServ.getChapters().subscribe(
-      (chapters:any) => {
-        chapters.forEach((chapter:any) => {
-          if(this.reviewedSerialIds.includes(chapter.serialId)){
-            this.reviewedSerialChapters.push(chapter)
-          }
-        });
-      }
-    )
+    this.reviewedSerials.forEach((serial:any) => {
+      this.reviewedSerialChapters.concat(serial.chapters)
+    });
   }
 
   getAuthors(){
-    this.auServ.getAuthors().subscribe(
-      (authors:any) => this.authors = authors
-    )
+    this.authors.push(this.reviewedSerials.author)
   }
 
   auSerials(auId:any){

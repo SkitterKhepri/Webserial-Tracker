@@ -1,10 +1,22 @@
 namespace WT_API.Models
 {
-  public class SerialDTO
+  public class SerialDTO : Serial
   {
-    public Serial Serial { get; set; }
-    public IList<Chapter> Chapters { get; set; }
-    public Author Author { get; set; }
+    public IList<Chapter> chapters { get; set; }
+    public Author author { get; set; }
+
+    public SerialDTO(Serial serial)
+    {
+      this.title = serial.title;
+      this.status = serial.status;
+      this.authorId = serial.authorId;
+      this.firstCh = serial.firstCh;
+      this.home = serial.home;
+      this.nextChLinkXPath = serial.nextChLinkXPath;
+      this.secondaryNextChLinkXPath = serial.secondaryNextChLinkXPath;
+      this.otherNextChLinkXPaths = serial.otherNextChLinkXPaths;
+      this.titleXPath = serial.titleXPath;
+    }
 
   }
 }
