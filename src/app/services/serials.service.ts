@@ -48,7 +48,7 @@ export class SerialsService {
   updateSerials(){
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.get(this.apiUrl + "/update", {headers})
+    return this.http.get(this.apiUrl + "update", {headers})
   }
 
   approveSerial(id:any, reviewStatus:any){

@@ -24,12 +24,12 @@ export class RegistrationComponent implements OnDestroy {
 
 
   register(user:any, pass1:any, pass2:any){
-    this.isLoading = true
     if(this.passwordCheck(pass1, pass2)){
       this.passMatch = true
       this.newUser.password = pass1
       if (user.email.includes('@') && user.email.includes('.')) {
         this.validEmail = true
+        this.isLoading = true
         this.userServ.register(user).subscribe({
           next: ()=>{
             this.userServ.justReg.next(true)

@@ -232,14 +232,12 @@ namespace WT_API.Controllers
     //[Authorize(Roles = "SAdmin, Admin")]
     public async Task<IActionResult> Approve(int id, Review review)
     {
-      var serial = await _context.Serials.FindAsync(id);
+      Serial serial = await _context.Serials.FindAsync(id);
 
       if (serial == null)
         return NotFound();
 
-      serial.reviewStatus = review.reviewStatus;
-
-      await _context.SaveChangesAsync();
+      _context.SaveChanges();
 
       return StatusCode(StatusCodes.Status202Accepted);
     }

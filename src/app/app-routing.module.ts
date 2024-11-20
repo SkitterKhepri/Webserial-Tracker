@@ -16,7 +16,7 @@ import { AdminNewserialComponent } from './admin-newserial/admin-newserial.compo
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LogInComponent},
-  // {path: 'register', component: RegistrationComponent},
+  {path: 'register', component: RegistrationComponent},
   {path: 'adminSerials', canActivate: [authGuard, adminGuard], component: AdminSerialsComponent},
   // {path: 'adminSerials', component: AdminSerialsComponent},
   {path: 'adminUsers', canActivate: [authGuard, adminGuard], component: AdminUsersComponent},

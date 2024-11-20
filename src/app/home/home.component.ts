@@ -39,7 +39,9 @@ export class HomeComponent {
         serials.forEach((serial:any) => {
           if(serial.reviewStatus){
             this.reviewedSerials.push(serial)
-            this.reviewedSerialChapters.push(serial.chapters)
+            serial.chapters.forEach((ch:any) => {
+              this.reviewedSerialChapters.push(ch)
+            });
           }  
         });
       },

@@ -7,6 +7,7 @@ namespace WT_API.Models
 
     public SerialDTO(Serial serial)
     {
+      this.id = serial.id;
       this.title = serial.title;
       this.status = serial.status;
       this.authorId = serial.authorId;
@@ -16,6 +17,7 @@ namespace WT_API.Models
       this.secondaryNextChLinkXPath = serial.secondaryNextChLinkXPath;
       this.otherNextChLinkXPaths = serial.otherNextChLinkXPaths;
       this.titleXPath = serial.titleXPath;
+      this.reviewStatus = serial.reviewStatus;
     }
 
   }

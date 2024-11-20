@@ -15,7 +15,7 @@ namespace WT_API.Services
     {
       _context = context;
     }
-
+    //Overload 1
     public async Task<(int, int)> AddSerialChapters(Serial serial)
     {
 
@@ -114,7 +114,7 @@ namespace WT_API.Services
     }
 
 
-    //Overload 2
+    //Overload 2 used when updating serials
     public async Task<(int, int)> AddSerialChapters(Serial serial, string startUrl)
     {
       Console.WriteLine(startUrl);
@@ -127,10 +127,7 @@ namespace WT_API.Services
       HtmlDocument htmlDoc = new HtmlDocument();
       htmlDoc.LoadHtml(pageContent);
 
-      Console.WriteLine(htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath).InnerHtml + "--html");
-      Console.WriteLine(htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath).InnerText + "--text");
-
-      HtmlNode nextChButton;
+      //HtmlNode nextChButton;
       HtmlNode nextCH;
       string nextCHURL;
       string currentUrl = startUrl;
@@ -140,26 +137,6 @@ namespace WT_API.Services
       while (true)
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
-        HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
-        if (chTitleNode != null)
-        {
-          string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
-          string chLink = currentUrl;
-          chapterCount++;
-          _context.Chapters.Add(new Chapter(serial.id, chTitle, chLink, DateTime.Now, serial.nextChLinkXPath, serial.secondaryNextChLinkXPath, serial.otherNextChLinkXPaths));
-        }
-        else {
-          if (lastChapter == null)
-          {
-            Console.WriteLine($"{chapterCount} chapters added");
-            _context.SaveChanges();
-            return (1, chapterCount);
-          }
-          lastChapter.isLastChapter = true;
-          lastChapter.reviewStatus = false;
-          _context.SaveChanges();
-          return (1, chapterCount);
-        }
         if (nextCH == null)
         {
           try
@@ -209,6 +186,31 @@ namespace WT_API.Services
           }
           pageContent = await CheckUrl(response, tbCheckedUrl);
           currentUrl = tbCheckedUrl;
+          //adding chapter------
+          string chLink = "";
+          HtmlNode chTitleNode = htmlDoc.DocumentNode.SelectSingleNode(serial.titleXPath);
+          if (chTitleNode != null)
+          {
+            string chTitle = WebUtility.HtmlDecode(chTitleNode.InnerText);
+            chLink = currentUrl;
+            chapterCount++;
+            lastChapter = new Chapter(serial.id, chTitle, chLink, DateTime.Now, serial.nextChLinkXPath, serial.secondaryNextChLinkXPath, serial.otherNextChLinkXPaths);
+            _context.Chapters.Add(lastChapter);
+          }
+          else
+          {
+            if (lastChapter == null)
+            {
+              Console.WriteLine($"{chapterCount} chapters added");
+              _context.SaveChanges();
+              return (1, chapterCount);
+            }
+            lastChapter.isLastChapter = true;
+            lastChapter.reviewStatus = false;
+            _context.SaveChanges();
+            return (1, chapterCount);
+          }
+          //--------
           htmlDoc.LoadHtml(pageContent);
         }
       }

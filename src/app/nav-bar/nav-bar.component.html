@@ -44,15 +44,15 @@
             <div class="offcanvas-body bg-primary-subtle d-flex flex-column">
                 <div *ngIf="getCurrentUserClaims()?.includes('User')">
                     <div class="nav-item my-3 p-1">
-                        <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Add Serial</a>
+                        <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Propose Serial</a>
                     </div>
                 </div>
                 <div *ngIf="getCurrentUserClaims()?.includes('Admin') || getCurrentUserClaims()?.includes('SAdmin')">
                     <div class="nav-item my-3 p-1">
-                        <a class="m-3 navbar-text" [routerLink]="['/adminNewSerial']">Add New Serial (Admin)</a>
+                        <a class="m-3 navbar-text" [routerLink]="['/adminNewSerial']">Add New Serial</a>
                     </div>
                     <div class="nav-item my-3 p-1">
-                        <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Add Serial (User)</a>
+                        <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Propose Serial</a>
                     </div>
                     <div class="nav-item my-3 p-1">
                         <a class="m-3 navbar-text" [routerLink]="['/adminSerials']">Manage Serials</a>

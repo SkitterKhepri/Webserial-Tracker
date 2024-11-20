@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { ChaptersService } from '../services/chapters.service';
 import { SerialsService } from '../services/serials.service';
+import { Serial } from '../models';
 
 @Component({
   selector: 'app-admin-chapters',
@@ -29,9 +30,10 @@ export class AdminChaptersComponent implements AfterViewInit {
   // }
 
   groupChapters(serial:any) {
-    let processedSerial:any
-    processedSerial.lastChapters = serial.chapters.filter((chapter:any) => chapter.isLastChapter);
-    processedSerial.otherChapters = serial.chapters.filter((chapter:any) => !chapter.isLastChapter);
+    let processedSerial:any = {}
+    processedSerial = serial
+    processedSerial.lastChapters = serial.chapters.filter((chapter:any) => chapter.isLastChapter)
+    processedSerial.otherChapters = serial.chapters.filter((chapter:any) => !chapter.isLastChapter)
     return processedSerial
   }
 

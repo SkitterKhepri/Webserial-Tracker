@@ -7,7 +7,7 @@
 
         <div *ngIf="searchedCh != []">
             <div *ngFor="let chapter of searchedCh">
-                <div id="'chapter' + {{chapter.id}}" class="card p-1 h-100 w-100">
+                <div id="'chapter' + {{chapter.id}}" class="card p-1 h-100 w-100 m-2">
                     <div class="card-body">
                       <h5 class="card-title">
                           <a class="link-opacity-75-hover" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
@@ -26,7 +26,7 @@
 
         <div *ngIf="searchedSer != []">
             <div *ngFor="let serial of searchedSer">
-                <div id="'serial' + {{serial.id}}" class="card p-1 h-100 w-100">
+                <div id="'serial' + {{serial.id}}" class="card p-1 h-100 w-100 m-2">
                     <div class="card-body">
                       <h5 class="card-title">
                         <a class="link-opacity-75-hover" href="{{serial.home}}" target="_blank">{{serial.title}}</a>
@@ -42,7 +42,7 @@
 
         <div *ngIf="searchedAu != {}">
             <div *ngFor="let author of searchedAu | keyvalue">
-                <div id="'author' + {{author.key}}" class="card p-1 h-100 w-100">
+                <div id="'author' + {{author.key}}" class="card p-1 h-100 w-100 m-2">
                     <div class="card-body">
                         <h5 class="card-title">
                             {{author.key}}

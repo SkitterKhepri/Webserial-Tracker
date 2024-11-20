@@ -12,7 +12,7 @@ export class ChaptersService {
     // this.getChapters()
   }
 
-  readonly apiUrl = 'https://localhost:7286/api/Chapters/'
+  readonly apiUrl = 'https://localhost:7286/Chapters/'
 
   // getChapters() : Observable<any>{
   //   return this.http.get(this.apiUrl)

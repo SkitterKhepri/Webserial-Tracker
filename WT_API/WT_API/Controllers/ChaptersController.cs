@@ -73,5 +73,28 @@ namespace WT_API.Controllers
     {
       return (_context.Chapters?.Any(e => e.id == id)).GetValueOrDefault();
     }
+
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteChapter(int id)
+    {
+      var chapter = await _context.Chapters.FindAsync(id);
+
+      if (chapter == null)
+      {
+        return NotFound();
+      }
+      _context.Chapters.Remove(chapter);
+
+      var newLastCh = await _context.Chapters.Where(ch => ch.serialId == chapter.serialId).OrderByDescending(ch => ch.id).FirstOrDefaultAsync();
+      if (newLastCh != null)
+      {
+        newLastCh.isLastChapter = true;
+      }
+
+      await _context.SaveChangesAsync();
+      return NoContent();
+    }
+
   }
 }
