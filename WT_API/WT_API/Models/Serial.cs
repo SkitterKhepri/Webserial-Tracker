@@ -15,6 +15,7 @@ namespace WT_API.Models
     public string firstCh { get; set; }
     [Required]
     public string home {  get; set; }
+    public string bannerPath { get; set; }
     public string nextChLinkXPath { get; set; }
     public string secondaryNextChLinkXPath { get; set; }
     public string otherNextChLinkXPaths { get; set; }
@@ -30,6 +31,7 @@ namespace WT_API.Models
       this.authorId = newSer.authorId;
       this.firstCh = newSer.firstCh;
       this.home = newSer.home;
+      this.bannerPath = newSer.bannerPath;
       this.nextChLinkXPath = newSer.nextChLinkXPath;
       this.secondaryNextChLinkXPath = newSer.secondaryNextChLinkXPath;
       this.otherNextChLinkXPaths = newSer.otherNextChLinkXPaths;

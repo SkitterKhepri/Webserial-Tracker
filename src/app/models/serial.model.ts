@@ -9,6 +9,7 @@ export interface Serial {
   authorId: number;
   firstCh: string;
   home: string;
+  banner: string;
   nextChLinkXPath?: string;
   secondaryNextChLinkXPath?: string;
   otherNextChLinkXPaths?: string;

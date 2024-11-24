@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthorsService } from '../services/authors.service';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SerialsService } from '../services/serials.service';
 import { SerialStatuses } from '../enums/serial-statuses.enum';
 import { UsersService } from '../services/users.service';
@@ -18,10 +19,6 @@ export class NewSerialComponent {
     "status": "",
     "firstCh": "",
     "home": "",
-    "nextChLinkXPath": "",
-    "secondaryNextChLinkXPath": "",
-    "otherNextChLinkXPaths": "",
-    "titleXPath": "",
     "reviewStatus": false
   }
   newSerialAuthor:any

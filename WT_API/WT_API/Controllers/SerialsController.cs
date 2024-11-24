@@ -80,7 +80,6 @@ namespace WT_API.Controllers
       serialDTO.chapters = await _context.Chapters.Where((ch) => ch.serialId == serialDTO.id).ToListAsync();
       serialDTO.author = await _context.Authors.FindAsync(serialDTO.authorId);
 
-
       if (serialDTO == null)
       {
         return NotFound();
@@ -157,7 +156,7 @@ namespace WT_API.Controllers
 
     [HttpPost]
     //[Authorize]
-    public async Task<ActionResult<Serial>> PostSerial(Serial serial, string authorName)
+    public async Task<ActionResult<Serial>> PostSerial([FromForm] SerialDTO serial)
     {
       if (_context.Serials == null)
       {
@@ -168,9 +167,9 @@ namespace WT_API.Controllers
         Console.WriteLine("Serial with same title already in DB");
         return StatusCode(StatusCodes.Status417ExpectationFailed, "Serial already added");
       }
-      if (authorName != "")
+      if (serial.author.name != "")
       {
-        var author = _context.Authors.FirstOrDefault(au => au.name == authorName);
+        var author = _context.Authors.FirstOrDefault(au => au.name == serial.author.name);
         if (author != null)
         {
           serial.authorId = author.id;
@@ -178,14 +177,23 @@ namespace WT_API.Controllers
         else
         {
           author = new Author();
-          author.name = authorName;
+          author.name = serial.author.name;
           _context.Authors.Add(author);
           await _context.SaveChangesAsync();
           serial.authorId = author.id;
         }
       }
+
+      //banner image saving
+      IFormFile? banner = serial.banerUpload;
+      string path = $@"..\img\{serial.title}";
+      FileStream fileStream = System.IO.File.Create(path);
+      fileStream.Dispose();
+      serial.bannerPath = path;
+
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
+
       var (result, addedChs) = (0, 0);
       if (serial.reviewStatus)
       {
@@ -242,6 +250,33 @@ namespace WT_API.Controllers
       return StatusCode(StatusCodes.Status202Accepted);
     }
 
+    [HttpGet("images/{fileName}")]
+    public IActionResult GetImage(string fileName)
+    {
+      string filePath = Path.Combine("..", "img", fileName);
+
+      if (!System.IO.File.Exists(filePath))
+      {
+        return NotFound();
+      }
+
+      var image = System.IO.File.OpenRead(filePath);
+      return File(image, GetMimeType(image.Name));
+    }
+
+
+    private string GetMimeType(string fileName)
+    {
+      string extension = Path.GetExtension(fileName).ToLowerInvariant();
+      return extension switch
+      {
+        ".jpg" or ".jpeg" => "image/jpeg",
+        ".png" => "image/png",
+        ".gif" => "image/gif",
+        ".bmp" => "image/bmp",
+        ".webp" => "image/webp"
+      };
+    }
 
     private bool SerialExists(int id)
     {

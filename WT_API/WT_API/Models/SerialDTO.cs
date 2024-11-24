@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Http;
+
 namespace WT_API.Models
 {
   public class SerialDTO : Serial
   {
     public IList<Chapter> chapters { get; set; }
     public Author author { get; set; }
+    public IFormFile? banerUpload { get; set; } = null;
 
     public SerialDTO(Serial serial)
     {
@@ -13,6 +16,7 @@ namespace WT_API.Models
       this.authorId = serial.authorId;
       this.firstCh = serial.firstCh;
       this.home = serial.home;
+      this.bannerPath = serial.bannerPath;
       this.nextChLinkXPath = serial.nextChLinkXPath;
       this.secondaryNextChLinkXPath = serial.secondaryNextChLinkXPath;
       this.otherNextChLinkXPaths = serial.otherNextChLinkXPaths;

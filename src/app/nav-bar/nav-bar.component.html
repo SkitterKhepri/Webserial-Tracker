@@ -46,6 +46,9 @@
                     <div class="nav-item my-3 p-1">
                         <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Propose Serial</a>
                     </div>
+                    <!-- <div class="nav-item my-3 p-1">
+                        <a class="m-3 navbar-text" [routerLink]="['/likedSer']">Liked Serials</a>
+                    </div> -->
                 </div>
                 <div *ngIf="getCurrentUserClaims()?.includes('Admin') || getCurrentUserClaims()?.includes('SAdmin')">
                     <div class="nav-item my-3 p-1">
@@ -63,6 +66,9 @@
                     <div class="nav-item my-3 p-1">
                         <a class="m-3 navbar-text" [routerLink]="['/adminChapters']">Manage Chapters</a>
                     </div>
+                </div>
+                <div class="nav-item my-3 p-1">
+                    <a class="m-3 navbar-text" [routerLink]="['/likedSer']">Liked Serials</a>
                 </div>
                 <!-- <div class="nav-item navbar-text">Followed Works:</div> -->
                 <div class="nav-item mt-auto">

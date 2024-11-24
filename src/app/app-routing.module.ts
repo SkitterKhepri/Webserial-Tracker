@@ -12,6 +12,7 @@ import { AdminChaptersComponent } from './admin-chapters/admin-chapters.componen
 import { authGuard } from './guard/authen.guard';
 import { adminGuard } from './guard/admin.guard';
 import { AdminNewserialComponent } from './admin-newserial/admin-newserial.component';
+import { LikedSerialsComponent } from './liked-serials/liked-serials.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'adminChapters', canActivate: [authGuard, adminGuard], component: AdminChaptersComponent},
   {path: 'adminChapters', component: AdminChaptersComponent},
   {path: 'results', component: ResultsComponent},
+  {path: 'likedSer', component: LikedSerialsComponent},
   // {path: 'search', component: SearchComponent},
   {path: 'newSerial', canActivate: [authGuard], component: NewSerialComponent},
   // {path: 'newSerial', component: NewSerialComponent},
