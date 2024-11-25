@@ -4,10 +4,11 @@ namespace WT_API.Models
 {
   public class SerialDTO : Serial
   {
-    public IList<Chapter> chapters { get; set; }
-    public Author author { get; set; }
+    public IList<Chapter>? chapters { get; set; }
+    public Author? author { get; set; }
     public IFormFile? banerUpload { get; set; } = null;
 
+    public SerialDTO() { }
     public SerialDTO(Serial serial)
     {
       this.id = serial.id;

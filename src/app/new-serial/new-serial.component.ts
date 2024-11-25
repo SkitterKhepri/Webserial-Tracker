@@ -16,21 +16,37 @@ export class NewSerialComponent {
   newSerial:any ={
     "id": 0,
     "title": "",
-    "status": "",
-    "firstCh": "",
+    "authorName": "",
     "home": "",
+    "firstCh": "",
+    "status": "",
     "reviewStatus": false
   }
-  newSerialAuthor:any
+  isProposing = false
+  errorProposing = false
+  constructor(private serServ:SerialsService){}
 
-  constructor(private serServ:SerialsService, private userServ : UsersService, private authServ : AuthServiceService){}
-
-  addSerial(authorName:any){
-    if(this.authServ.getCurrentClaims().includes("Admin") || this.authServ.getCurrentClaims().includes("SAdmin")){
-      this.newSerial.reviewStatus = true
-    }
-    this.serServ.postSerial(this.newSerial, authorName).subscribe()
+  addSerial(){
+    this.isProposing = true
+    this.errorProposing = false
+    let formData = new FormData()
+    formData.append("title", this.newSerial.title)
+    formData.append("authorName", this.newSerial.authorName)
+    formData.append("home", this.newSerial.home)
+    formData.append("firstCh", this.newSerial.firstCh)
+    formData.append("status", this.newSerial.status)
+    this.serServ.proposeSerial(formData).subscribe({
+      next: () => {
+        this.isProposing = false
+      },
+      error: (error) => {
+        this.errorProposing = true
+        this.isProposing = false
+      },
+      complete: () => {
+        this.isProposing = false
+      }
+    })
     this.newSerial = {}
-    this.newSerialAuthor = ""
   }
 }

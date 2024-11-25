@@ -16,7 +16,7 @@
                     <p class="m-1">Author's Name:<b class="text-danger">*</b></p>
                 </div>
                 <div class="col-md-3 flex-grow-1">
-                    <input #authorName type="text" id="authorName" class="form-control" [(ngModel)]="newSerialAuthor">
+                    <input type="text" id="authorName" class="form-control" [(ngModel)]="newSerial.authorName">
                 </div>
             </div>
             <div class="row align-items-center my-1">
@@ -55,9 +55,18 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-1 align-items-center">
-                <div class="col my-1">
-                    <button class="btn btn-primary form-control" (click)="addSerial(authorName.value)">Add</button>
+            <div *ngIf="isProposing" class="d-flex align-items-center mt-2 mb-1" role="status">
+                <strong class="me-1">Proposing serial...</strong>
+                <div class="spinner-border text-info"></div>
+            </div>
+            <div *ngIf="errorProposing" class="d-flex align-items-center mt-2 mb-1" role="status">
+                <div class="alert alert-danger text-danger">An error occured while proposing the serial. Check the details, and try again!</div>
+            </div>
+            <div *ngIf="!isProposing">
+                <div class="row my-1 align-items-center">
+                    <div class="col my-1">
+                        <button class="btn btn-primary form-control" (click)="addSerial()">Add</button>
+                    </div>
                 </div>
             </div>
         </div>

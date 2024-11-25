@@ -10,8 +10,8 @@ namespace WT_API.Models
     public string link {  get; set; }
     public DateTime added { get; set; }
     public string nextChLinkXPath { get; set; }
-    public string secondaryNextChLinkXPath { get; set; }
-    public string otherNextChLinkXPaths { get; set; }
+    public string? secondaryNextChLinkXPath { get; set; }
+    public string? otherNextChLinkXPaths { get; set; }
     [DefaultValue(false)]
     public bool isLastChapter { get; set; }
     [DefaultValue(true)]

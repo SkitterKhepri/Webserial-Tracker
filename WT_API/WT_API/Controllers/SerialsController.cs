@@ -52,9 +52,9 @@ namespace WT_API.Controllers
       return Ok(serialDTOs);
     }
 
-    //Same as above, but adds all the new chapters of all serials first, probably takes really fucking long TODO: only admin
+    //Same as above, but adds all the new chapters of all serials first
     [HttpGet("/Serials/update")]
-    public async Task<ActionResult<IEnumerable<Serial>>> UpdatedSerials()
+    public async Task<ActionResult<IEnumerable<Serial>>> UpdateSerials()
     {
       if (_context.Serials == null)
       {
@@ -64,7 +64,7 @@ namespace WT_API.Controllers
       return Ok(updatedChs);
     }
 
-    // GET: api/Serials/5
+
     [HttpGet("{id}")]
     public async Task<ActionResult<SerialDTO>> GetSerial(int id)
     {
@@ -89,7 +89,7 @@ namespace WT_API.Controllers
     }
 
     [HttpGet("/Serials/update/{id}")]
-    public async Task<ActionResult<Serial>> UpdatedSerial(int id)
+    public async Task<ActionResult<Serial>> UpdateSerial(int id)
     {
       if (_context.Serials == null)
       {
@@ -110,29 +110,55 @@ namespace WT_API.Controllers
       return Ok(updatedChs);
     }
 
-    // PUT: api/Serials/5
-    // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+
     [HttpPut("{id}")]
-    //[Authorize(Roles = "SAdmin,Admin")]
-    public async Task<IActionResult> PutSerial(int id, Serial serial, string authorName)
+    [Authorize(Roles = "SAdmin,Admin")]
+    public async Task<IActionResult> PutSerial(int id, SerialDTO serialDTO)
     {
-      if (id != serial.id)
+      if (id != serialDTO.id)
       {
         return BadRequest();
       }
 
-      _context.Entry(serial).State = EntityState.Modified;
+      Serial serial = await _context.Serials.FindAsync(id);
 
-      var author = _context.Authors.FirstOrDefault(au => au.name == authorName);
+      if (serial == null)
+      {
+        return NotFound();
+      }
+
+      var author = _context.Authors.FirstOrDefault(au => au.name == serialDTO.author.name);
       if (author != null)
       {
-        serial.authorId = author.id;
+        serialDTO.authorId = author.id;
       }
-      else if(author == null)
+      else
       {
-        author = await _context.Authors.FindAsync(serial.authorId);
-        author.name = authorName;
+        author = new Author();
+        author.name = serialDTO.author.name;
+        _context.Authors.Add(author);
+        await _context.SaveChangesAsync();
+        serialDTO.authorId = author.id;
       }
+
+      //banner image saving
+      if (serialDTO.banerUpload != null)
+      {
+        IFormFile banner = serialDTO.banerUpload;
+        string path = @"..\img\";
+        if (System.IO.File.Exists(path + serial.title + ".png"))
+        {
+          System.IO.File.Delete(path + serial.title + ".png");
+          serial.bannerPath = path + serialDTO.title + ".png";
+        }
+        using (FileStream fileStream = new FileStream(path + serialDTO.title + ".png", FileMode.Create))
+        {
+          banner.CopyTo(fileStream);
+        }
+        serial.bannerPath = path + serial.title + ".png";
+      }
+
+      serial.DTOMapper(serialDTO);
 
       try
       {
@@ -153,54 +179,106 @@ namespace WT_API.Controllers
       return NoContent();
     }
 
-
-    [HttpPost]
-    //[Authorize]
-    public async Task<ActionResult<Serial>> PostSerial([FromForm] SerialDTO serial)
+    [HttpPost("/Serials/addSerial")]
+    [Authorize(Roles = "SAdmin,Admin")]
+    public async Task<ActionResult<Serial>> AddSerial([FromForm] SerialDTO newSerial)
     {
       if (_context.Serials == null)
       {
         return Problem("Entity set 'Context.Serials'  is null. korte");
       }
-      if (_context.Serials.Where(ser => ser.title == serial.title).Any())
+      if (_context.Serials.Where(ser => ser.title == newSerial.title).Any())
       {
         Console.WriteLine("Serial with same title already in DB");
         return StatusCode(StatusCodes.Status417ExpectationFailed, "Serial already added");
       }
-      if (serial.author.name != "")
+
+      Serial serial = new Serial(newSerial);
+
+      Author? author = _context.Authors.FirstOrDefault(au => au.name == newSerial.author.name);
+      if (author != null)
       {
-        var author = _context.Authors.FirstOrDefault(au => au.name == serial.author.name);
-        if (author != null)
-        {
-          serial.authorId = author.id;
-        }
-        else
-        {
-          author = new Author();
-          author.name = serial.author.name;
-          _context.Authors.Add(author);
-          await _context.SaveChangesAsync();
-          serial.authorId = author.id;
-        }
+        serial.authorId = author.id;
+      }
+      else
+      {
+        author = new Author();
+        author.name = newSerial.author.name;
+        _context.Authors.Add(author);
+        await _context.SaveChangesAsync();
+        serial.authorId = author.id;
       }
 
       //banner image saving
-      IFormFile? banner = serial.banerUpload;
-      string path = $@"..\img\{serial.title}";
-      FileStream fileStream = System.IO.File.Create(path);
-      fileStream.Dispose();
-      serial.bannerPath = path;
+      if (newSerial.banerUpload != null)
+      {
+        IFormFile? banner = newSerial.banerUpload;
+        string path = $@"..\img";
+        using (FileStream fileStream = new FileStream(path + newSerial.title + ".png", FileMode.Create))
+        {
+          banner.CopyTo(fileStream);
+        }
+        serial.bannerPath = path + serial.title + ".png";
+      }
 
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
 
-      var (result, addedChs) = (0, 0);
-      if (serial.reviewStatus)
-      {
-         (result, addedChs) = await _scraper.AddSerialChapters(serial);
-      }
+      //Adding chapters
+      var (result, addedChs) = (0, 0);      
+      (result, addedChs) = await _scraper.AddSerialChapters(serial);
       
-      return Ok(new {serial.title, addedChs});
+
+      return Ok(new { serial.title, addedChs });
+    }
+
+
+    [HttpPost("/Serials/proposeSerial")]
+    [Authorize]
+    public async Task<ActionResult<Serial>> ProposeSerial([FromForm] NewSerial newSerial)
+    {
+      if (_context.Serials == null)
+      {
+        return Problem("Entity set 'Context.Serials'  is null. korte");
+      }
+      if (_context.Serials.Where(ser => ser.title == newSerial.title).Any())
+      {
+        Console.WriteLine("Serial with same title already in DB");
+        return StatusCode(StatusCodes.Status417ExpectationFailed, "Serial already added");
+      }
+
+      Serial serial = new Serial(newSerial);
+
+      Author? author = _context.Authors.FirstOrDefault(au => au.name == newSerial.authorName);
+      if (author != null)
+      {
+        serial.authorId = author.id;
+      }
+      else
+      {
+        author = new Author();
+        author.name = newSerial.authorName;
+        _context.Authors.Add(author);
+        await _context.SaveChangesAsync();
+        serial.authorId = author.id;
+      }
+
+      //banner image saving
+      if (newSerial.banerUpload != null)
+      {
+        IFormFile? banner = newSerial.banerUpload;
+        string path = $@"..\img";
+        using (FileStream fileStream = new FileStream(path + newSerial.title + ".png", FileMode.Create))
+        {
+          banner.CopyTo(fileStream);
+        }
+        serial.bannerPath = path + serial.title + ".png";
+      }
+
+      _context.Serials.Add(serial);
+      await _context.SaveChangesAsync();
+      
+      return Ok();
     }
 
     // DELETE: api/Serials/5
@@ -237,13 +315,15 @@ namespace WT_API.Controllers
 
 
     [HttpPatch("{id}/approve")]
-    //[Authorize(Roles = "SAdmin, Admin")]
+    [Authorize(Roles = "SAdmin, Admin")]
     public async Task<IActionResult> Approve(int id, Review review)
     {
       Serial serial = await _context.Serials.FindAsync(id);
 
       if (serial == null)
         return NotFound();
+
+      serial.reviewStatus = review.reviewStatus;
 
       _context.SaveChanges();
 

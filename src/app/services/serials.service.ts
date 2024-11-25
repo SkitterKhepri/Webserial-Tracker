@@ -8,7 +8,7 @@ import { StorageService } from './storage.service';
 })
 export class SerialsService {
   constructor(private http : HttpClient, private storage:StorageService) {
-    this.getSerials()
+    // this.getSerials()
   }
 
   readonly apiUrl = 'https://localhost:7286/Serials/'
@@ -21,16 +21,22 @@ export class SerialsService {
     return this.http.get(this.apiUrl + id)
   }
 
-  postSerial(serial: any, authorName:any): Observable<any> {
+  addSerial(serial: any): Observable<any> {
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({"Authorization" : `Bearer ${token}`})
-    return this.http.post(this.apiUrl + "?authorName=" + authorName, serial, {headers});
+    return this.http.post(this.apiUrl + "addSerial/", serial, {headers});
   }
 
-  putSerial(id:any, serial:any, authorName:any){
+  proposeSerial(serial: any): Observable<any> {
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({"Authorization" : `Bearer ${token}`})
+    return this.http.post(this.apiUrl + "proposeSerial/", serial, {headers});
+  }
+
+  putSerial(id:any, serial:any){
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.put(this.apiUrl + id + "?authorName=" + authorName, serial, {headers})
+    return this.http.put(this.apiUrl + id, serial, {headers})
   }
 
   deleteSerial(id:any){

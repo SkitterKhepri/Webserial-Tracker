@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WT_API.Data;
 
@@ -11,9 +12,10 @@ using WT_API.Data;
 namespace WT_API.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241125153854_nullables")]
+    partial class nullables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,12 +197,14 @@ namespace WT_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("otherNextChLinkXPaths")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("reviewStatus")
                         .HasColumnType("bit");
 
                     b.Property<string>("secondaryNextChLinkXPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("serialId")
@@ -242,7 +246,7 @@ namespace WT_API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<int>("authorId")
+                    b.Property<int?>("authorId")
                         .HasColumnType("int");
 
                     b.Property<string>("bannerPath")

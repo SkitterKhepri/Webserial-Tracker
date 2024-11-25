@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WT_API.Data;
 
@@ -11,9 +12,10 @@ using WT_API.Data;
 namespace WT_API.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20241125153202_banner")]
+    partial class banner
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,12 +197,14 @@ namespace WT_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("otherNextChLinkXPaths")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("reviewStatus")
                         .HasColumnType("bit");
 
                     b.Property<string>("secondaryNextChLinkXPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("serialId")
@@ -246,9 +250,11 @@ namespace WT_API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("bannerPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("firstCh")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("home")
@@ -256,18 +262,21 @@ namespace WT_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("nextChLinkXPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("otherNextChLinkXPaths")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("reviewStatus")
                         .HasColumnType("bit");
 
                     b.Property<string>("secondaryNextChLinkXPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("status")
+                    b.Property<int>("status")
                         .HasColumnType("int");
 
                     b.Property<string>("title")
@@ -275,6 +284,7 @@ namespace WT_API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("titleXPath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");

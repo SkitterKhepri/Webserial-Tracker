@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthServiceService } from '../services/auth-service.service';
 import { SerialsService } from '../services/serials.service';
 import { UsersService } from '../services/users.service';
+import { Serial } from '../models';
 
 @Component({
   selector: 'app-admin-newserial',
@@ -10,18 +11,7 @@ import { UsersService } from '../services/users.service';
 })
 export class AdminNewserialComponent {
 
-  newSerial:any ={
-    "id": 0,
-    "title": "",
-    "status": "",
-    "firstCh": "",
-    "home": "",
-    "nextChLinkXPath": "",
-    "secondaryNextChLinkXPath": "",
-    "otherNextChLinkXPaths": "",
-    "titleXPath": "",
-    "reviewStatus": true
-  }
+  newSerial:any = {}
   newSerialAuthor:any = ""
   isAdding:boolean = false
   missingData:boolean = true
@@ -31,10 +21,11 @@ export class AdminNewserialComponent {
 
   addSerial(authorName:any){
     this.isAdding = true
+    let formData = new FormData()
     if(authorName == ""){
       authorName = "unknown"
     }
-    this.serServ.postSerial(this.newSerial, authorName).subscribe({
+    this.serServ.addSerial(formData).subscribe({
       next: () => {
         this.isAdding = false
       },
@@ -45,7 +36,6 @@ export class AdminNewserialComponent {
       complete: () => {
         this.isAdding = false
       }
-      
     })
     this.newSerial = {}
     this.newSerialAuthor = ""

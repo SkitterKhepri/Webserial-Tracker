@@ -242,23 +242,41 @@ namespace WT_API.Services
       else if (response.StatusCode == HttpStatusCode.TooManyRequests)
       {
         Console.WriteLine("Too many requests. Waiting...");
+        bool rateLimited = true;
+        int rateOfLimit = 1;
 
-        if (response.Headers.TryGetValues("Retry-After", out IEnumerable<string> values))
-        {
-          if (int.TryParse(values.FirstOrDefault(), out int retryAfterSeconds))
+        while(rateLimited) {
+          if (response.Headers.TryGetValues("Retry-After", out IEnumerable<string> values))
           {
-            await Task.Delay(retryAfterSeconds * 1000);
+            if (int.TryParse(values.FirstOrDefault(), out int retryAfterSeconds))
+            {
+              Console.WriteLine("Rate limit exceeded, retrying after provided amount of time...");
+              await Task.Delay(retryAfterSeconds * 1000);
+            }
+            else
+            {
+              Console.WriteLine($"invalid Retry-After value, waiting {rateOfLimit} seconds");
+              await Task.Delay(1000 * rateOfLimit);
+              rateOfLimit++;
+            }
           }
           else
           {
-            await Task.Delay(1000);
+            Console.WriteLine($"no retry-after, waiting {rateOfLimit} second");
+            await Task.Delay(1000 * rateOfLimit);
+            rateOfLimit++;
+          }
+          response = await client2.GetAsync(link);
+          if (response.StatusCode == HttpStatusCode.TooManyRequests)
+          {
+            Console.WriteLine("Still rate-limited. Waiting...");
+          }
+          else
+          {
+            rateLimited = false;
           }
         }
-        else
-        {
-          await Task.Delay(1000);
-        }
-        //response = await client2.GetAsync(request);
+
         response.EnsureSuccessStatusCode();
         pageContent = await response.Content.ReadAsStringAsync();
       }
@@ -309,7 +327,7 @@ namespace WT_API.Services
       }
       if (serial.reviewStatus) {
 
-        Chapter? lastChapter = _context.Chapters.Where(ch => ch.isLastChapter).OrderByDescending(ch => ch.id).FirstOrDefault();
+        Chapter? lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault(ch => ch.serialId == serial.id);
         string lastLink;
         if (lastChapter == null)
         {

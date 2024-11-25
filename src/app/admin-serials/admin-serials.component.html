@@ -39,7 +39,7 @@
                                 <p class="m-1">Author's Name:</p>
                             </div>
                             <div class="col-md-3 flex-grow-1">
-                                <input #authorName type="text" id="authorName" class="form-control" [value]="serial.author.name">
+                                <input type="text" id="authorName" class="form-control" [(ngModel)]="serial.author.name">
                             </div>
                         </div>
                         <div class="row align-items-center my-1">
@@ -111,14 +111,32 @@
                             </div>
                         </div>
                         <div class="row my-1 align-items-center">
-                            <div class="col flex-grow-1 my-1">
-                                <button class="btn btn-success form-control" (click)="approveSerial(serial.id, true)">Approve</button>
+                            <div *ngIf="!deleting && !modifying && !approving">
+                                <div class="col  my-1">
+                                    <button class="btn btn-success form-control" (click)="approveSerial(serial.id, true)">Approve</button>
+                                </div>
+                                <div class="col my-1">
+                                    <button class="btn btn-warning form-control" (click)="modifySerial(serial)">Modify</button>
+                                </div>
+                                <div class="col my-1">
+                                    <button class="btn btn-danger form-control" (click)="deleteSerial(serial.id)">Delete</button>
+                                </div>
                             </div>
-                            <div class="col flex-grow-1 my-1">
-                                <button class="btn btn-warning form-control" (click)="updateSerial(serial, authorName.value)">Update</button>
+                            <div *ngIf="approving" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Approving...</div>
+                                <div class="spinner-border text-success spinner-border-sm"></div>
                             </div>
-                            <div class="col flex-grow-1 my-1">
-                                <button class="btn btn-danger form-control" (click)="deleteSerial(serial.id)">Delete</button>
+                            <div *ngIf="modifying" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Modifying...</div>
+                                <div class="spinner-border text-warning spinner-border-sm"></div>
+                            </div>
+                            <div *ngIf="addingChs" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Adding chapters...</div>
+                                <div class="spinner-border text-primary spinner-border-sm"></div>
+                            </div>
+                            <div *ngIf="deleting" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Updating...</div>
+                                <div class="spinner-border text-danger spinner-border-sm"></div>
                             </div>
                         </div>
                     </div>
@@ -158,7 +176,7 @@
                                 <p class="m-1">Author's Name:</p>
                             </div>
                             <div class="col-md-3 flex-grow-1">
-                                <input #authorName type="text" id="authorName" class="form-control" [value]="serial.author.name">
+                                <input type="text" id="authorName" class="form-control" [(ngModel)]="serial.author.name">
                             </div>
                         </div>
                         <div class="row align-items-center my-1">
@@ -230,14 +248,32 @@
                             </div>
                         </div>
                         <div class="row my-1 align-items-center">
-                            <div class="col flex-grow-1 my-1">
-                                <button class="btn btn-danger form-control" (click)="approveSerial(serial.id, false)">Revoke Approval</button>
+                            <div *ngIf="!deleting && !modifying && !approving">
+                                <div class="col flex-grow-1 my-1">
+                                    <button class="btn btn-danger form-control" (click)="approveSerial(serial.id, false)">Revoke Approval</button>
+                                </div>
+                                <div class="col flex-grow-1 my-1">
+                                    <button class="btn btn-warning form-control" (click)="modifySerial(serial)">Modify</button>
+                                </div>
+                                <div class="col flex-grow-1 my-1">
+                                    <button class="btn btn-danger form-control" (click)="deleteSerial(serial.id)">Delete</button>
+                                </div>
                             </div>
-                            <div class="col flex-grow-1 my-1">
-                                <button class="btn btn-warning form-control" (click)="updateSerial(serial, authorName.value)">Update</button>
+                            <div *ngIf="approving" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Approving...</div>
+                                <div class="spinner-border text-success spinner-border-sm"></div>
                             </div>
-                            <div class="col flex-grow-1 my-1">
-                                <button class="btn btn-danger form-control" (click)="deleteSerial(serial.id)">Delete</button>
+                            <div *ngIf="modifying" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Modifying...</div>
+                                <div class="spinner-border text-warning spinner-border-sm"></div>
+                            </div>
+                            <div *ngIf="addingChs" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Adding chapters...</div>
+                                <div class="spinner-border text-primary spinner-border-sm"></div>
+                            </div>
+                            <div *ngIf="deleting" class="d-flex align-items-center me-5 my-2" role="status">
+                                <div class="me-1">Updating...</div>
+                                <div class="spinner-border text-danger spinner-border-sm"></div>
                             </div>
                         </div>
                     </div>
