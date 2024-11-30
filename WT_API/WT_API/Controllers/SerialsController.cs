@@ -106,8 +106,11 @@ namespace WT_API.Controllers
       {
         return StatusCode(StatusCodes.Status406NotAcceptable, "Serial awaiting approval");
       }
-
-      return Ok(updatedChs);
+      else if (result == 0)
+      {
+        return Problem("Error adding first chapter");
+      }
+      else return Ok(updatedChs);
     }
 
 

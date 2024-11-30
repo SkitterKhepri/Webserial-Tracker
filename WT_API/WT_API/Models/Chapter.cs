@@ -1,4 +1,6 @@
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 namespace WT_API.Models
 {
@@ -11,7 +13,7 @@ namespace WT_API.Models
     public DateTime added { get; set; }
     public string nextChLinkXPath { get; set; }
     public string? secondaryNextChLinkXPath { get; set; }
-    public string? otherNextChLinkXPaths { get; set; }
+    public string? otherNextChLinkXPathsJSONString { get; set; }
     [DefaultValue(false)]
     public bool isLastChapter { get; set; }
     [DefaultValue(true)]
@@ -19,7 +21,7 @@ namespace WT_API.Models
 
     public Chapter() { }
 
-    public Chapter (int serialId, string title, string link, DateTime added, string xp1, string xp2, string xp3)
+    public Chapter (int serialId, string title, string link, DateTime added, string xp1, string xp2, List<string> xp3)
     {
       this.serialId = serialId;
       this.title = title;
@@ -28,7 +30,13 @@ namespace WT_API.Models
       this.nextChLinkXPath = xp1;
       this.secondaryNextChLinkXPath = xp2;
       this.otherNextChLinkXPaths = xp3;
+    }
 
+    [NotMapped]
+    public List<string>? otherNextChLinkXPaths
+    {
+      get => otherNextChLinkXPathsJSONString == null ? new List<string>() : JsonSerializer.Deserialize<List<string>>(otherNextChLinkXPathsJSONString);
+      set => otherNextChLinkXPathsJSONString = JsonSerializer.Serialize(value);
     }
   }
 }

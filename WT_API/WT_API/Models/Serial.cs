@@ -1,6 +1,9 @@
+using HtmlAgilityPack;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net;
+using System.Text.Json;
 
 namespace WT_API.Models
 {
@@ -16,7 +19,7 @@ namespace WT_API.Models
     public string? bannerPath { get; set; }
     public string? nextChLinkXPath { get; set; }
     public string? secondaryNextChLinkXPath { get; set; }
-    public string? otherNextChLinkXPaths { get; set; }
+    public string? otherNextChLinkXPathsJSONString { get; set; }
     public string? titleXPath { get; set; }
     [DefaultValue(false)]
     public bool reviewStatus { get; set; }
@@ -54,6 +57,13 @@ namespace WT_API.Models
       this.otherNextChLinkXPaths = newSerial.otherNextChLinkXPaths;
       this.titleXPath = newSerial.titleXPath;
       this.reviewStatus = newSerial.reviewStatus;
+    }
+
+    [NotMapped]
+    public List<string>? otherNextChLinkXPaths
+    {
+      get => otherNextChLinkXPathsJSONString == null ? new List<string>() : JsonSerializer.Deserialize<List<string>>(otherNextChLinkXPathsJSONString);
+      set => otherNextChLinkXPathsJSONString = JsonSerializer.Serialize(value);
     }
   }
 }
