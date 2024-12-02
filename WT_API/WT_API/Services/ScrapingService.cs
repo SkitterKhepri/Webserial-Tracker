@@ -62,38 +62,50 @@ namespace WT_API.Services
       }
 
       //last working link's inner-text
-      string nextChInnerText = htmlDoc.DocumentNode.SelectSingleNode(serial.firstCh).InnerText;
+      string nextChInnerText = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath).InnerText;
 
       while (true)
       {
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
-        if (wrongNextNodes.Contains(nextCH) || (nextCH.Attributes["href"].Value == prevUrl && !firstLoop))
+        if (nextCH != null)
         {
-          nextCH = null;
-        }
-
-        if (nextCH == null)
-        {
-          Console.WriteLine("Trying secondary XPath...");
-          nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
           if (wrongNextNodes.Contains(nextCH) || (nextCH.Attributes["href"].Value == prevUrl && !firstLoop))
           {
             nextCH = null;
           }
+        }
+
+        if (nextCH == null)
+        {
+          if (serial.secondaryNextChLinkXPath != null)
+          {
+            Console.WriteLine("Trying secondary XPath...");
+            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+            if (nextCH != null)
+            {
+              if (wrongNextNodes.Contains(nextCH) || (nextCH.Attributes["href"].Value == prevUrl && !firstLoop))
+              {
+                nextCH = null;
+              }
+            }
+          }
 
           if (nextCH == null)
           {
-            Console.WriteLine("Trying other XPaths...");
-            foreach (string xpath in serial.otherNextChLinkXPaths)
+            if (serial.otherNextChLinkXPaths != null)
             {
-              nextCH = htmlDoc.DocumentNode.SelectSingleNode(xpath);
-              if (nextCH != null)
+              Console.WriteLine("Trying other XPaths...");
+              foreach (string xpath in serial.otherNextChLinkXPaths)
               {
-                if (!wrongNextNodes.Contains(nextCH) && nextCH.Attributes.Contains("href"))
+                nextCH = htmlDoc.DocumentNode.SelectSingleNode(xpath);
+                if (nextCH != null)
                 {
-                  if (nextCH.Attributes["href"].Value != prevUrl)
+                  if (!wrongNextNodes.Contains(nextCH) && nextCH.Attributes.Contains("href"))
                   {
-                    break;
+                    if (nextCH.Attributes["href"].Value != prevUrl)
+                    {
+                      break;
+                    }
                   }
                 }
               }

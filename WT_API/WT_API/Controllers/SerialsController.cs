@@ -115,7 +115,7 @@ namespace WT_API.Controllers
 
 
     [HttpPut("{id}")]
-    [Authorize(Roles = "SAdmin,Admin")]
+    //[Authorize(Roles = "SAdmin,Admin")] //TODO need
     public async Task<IActionResult> PutSerial(int id, SerialDTO serialDTO)
     {
       if (id != serialDTO.id)
@@ -183,8 +183,8 @@ namespace WT_API.Controllers
     }
 
     [HttpPost("/Serials/addSerial")]
-    [Authorize(Roles = "SAdmin,Admin")]
-    public async Task<ActionResult<Serial>> AddSerial([FromForm] SerialDTO newSerial)
+    //[Authorize(Roles = "SAdmin,Admin")] //TODO need
+    public async Task<ActionResult<Serial>> AddSerial([FromForm] AddedSerial newSerial)
     {
       if (_context.Serials == null)
       {
@@ -198,7 +198,7 @@ namespace WT_API.Controllers
 
       Serial serial = new Serial(newSerial);
 
-      Author? author = _context.Authors.FirstOrDefault(au => au.name == newSerial.author.name);
+      Author? author = _context.Authors.FirstOrDefault(au => au.name == newSerial.authorName);
       if (author != null)
       {
         serial.authorId = author.id;
@@ -206,7 +206,7 @@ namespace WT_API.Controllers
       else
       {
         author = new Author();
-        author.name = newSerial.author.name;
+        author.name = newSerial.authorName;
         _context.Authors.Add(author);
         await _context.SaveChangesAsync();
         serial.authorId = author.id;
@@ -237,8 +237,8 @@ namespace WT_API.Controllers
 
 
     [HttpPost("/Serials/proposeSerial")]
-    [Authorize]
-    public async Task<ActionResult<Serial>> ProposeSerial([FromForm] NewSerial newSerial)
+    //[Authorize] //TODO need
+    public async Task<ActionResult<Serial>> ProposeSerial([FromForm] ProposedSerial newSerial)
     {
       if (_context.Serials == null)
       {
@@ -286,7 +286,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Serials/5
     [HttpDelete("{id}")]
-    //[Authorize(Roles = "SAdmin,Admin")]
+    //[Authorize(Roles = "SAdmin,Admin")] //TODO need
     public async Task<IActionResult> DeleteSerial(int id)
     {
       if (_context.Serials == null)
@@ -318,7 +318,7 @@ namespace WT_API.Controllers
 
 
     [HttpPatch("{id}/approve")]
-    [Authorize(Roles = "SAdmin, Admin")]
+    //[Authorize(Roles = "SAdmin, Admin")] //TODO need
     public async Task<IActionResult> Approve(int id, Review review)
     {
       Serial serial = await _context.Serials.FindAsync(id);

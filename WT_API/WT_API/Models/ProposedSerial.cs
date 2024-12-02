@@ -1,6 +1,6 @@
 namespace WT_API.Models
 {
-  public class NewSerial
+  public class ProposedSerial
   {
     public string title { get; set; }
     public string authorName { get; set; }
@@ -9,6 +9,6 @@ namespace WT_API.Models
     public SerialStatuses status { get; set; }
     public IFormFile? banerUpload { get; set; } = null;
 
-    public NewSerial() { }
+    public ProposedSerial() { }
   }
 }

@@ -26,14 +26,14 @@ namespace WT_API.Models
 
     public Serial() { }
 
-    public Serial(NewSerial newSer)
+    public Serial(ProposedSerial newSer)
     {
       this.title = newSer.title;
       this.status = newSer.status;
       this.firstCh = newSer.firstCh;
       this.home = newSer.home;
     }
-    public Serial(SerialDTO newSer)
+    public Serial(AddedSerial newSer)
     {
       this.title = newSer.title;
       this.status = newSer.status;
