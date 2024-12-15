@@ -1144,3 +1144,4 @@ E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\refint\WT_API.
 E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\WT_API.pdb
 E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\WT_API.genruntimeconfig.cache
 E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\ref\WT_API.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\SixLabors.ImageSharp.dll

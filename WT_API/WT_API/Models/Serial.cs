@@ -33,20 +33,20 @@ namespace WT_API.Models
       this.firstCh = newSer.firstCh;
       this.home = newSer.home;
     }
-    public Serial(AddedSerial newSer)
-    {
-      this.title = newSer.title;
-      this.status = newSer.status;
-      this.firstCh = newSer.firstCh;
-      this.home = newSer.home;
-      this.nextChLinkXPath = newSer.nextChLinkXPath;
-      this.secondaryNextChLinkXPath = newSer.secondaryNextChLinkXPath;
-      this.otherNextChLinkXPaths = newSer.otherNextChLinkXPaths;
-      this.titleXPath = newSer.titleXPath;
-      this.reviewStatus = newSer.reviewStatus;
-    }
+    //public Serial(CompleteSerial newSer)
+    //{
+    //  this.title = newSer.title;
+    //  this.status = newSer.status;
+    //  this.firstCh = newSer.firstCh;
+    //  this.home = newSer.home;
+    //  this.nextChLinkXPath = newSer.nextChLinkXPath;
+    //  this.secondaryNextChLinkXPath = newSer.secondaryNextChLinkXPath;
+    //  this.otherNextChLinkXPaths = newSer.otherNextChLinkXPaths;
+    //  this.titleXPath = newSer.titleXPath;
+    //  this.reviewStatus = newSer.reviewStatus;
+    //}
 
-    public void DTOMapper(SerialDTO newSerial)
+    public void CompleteSerialMapper(CompleteSerial newSerial)
     {
       this.title = newSerial.title;
       this.status = newSerial.status;

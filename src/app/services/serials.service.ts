@@ -63,6 +63,13 @@ export class SerialsService {
     return this.http.patch(this.apiUrl + id + "/approve", reviewStatus, {headers})
   }
 
+  //Test TODO delete
+  saveImage(proposedSerial:any){
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.post(this.apiUrl + "images/", proposedSerial)
+  }
+
   // private handleError(error: HttpErrorResponse) {
   //   let errorMessage:any = "An unknown error occurred!";
   //   if (error.status === 400) {

@@ -49,23 +49,38 @@ namespace WT_API.Services
       List<HtmlNode> possibleNextNodes = new List<HtmlNode>();
       List<HtmlNode> wrongNextNodes = new List<HtmlNode>();
 
+
+      Chapter addedCh = new Chapter();
+      //TODO check if this is needed at all, on 1) new serial, and 2) serial missing 1 chapter
       //add first chapter
-      var (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
-      if (success)
-      {
-        lastChapter = addedCh;
-        chapterCount++;
-      }
-      else
-      {
-        return (0, chapterCount);
-      }
+      //Chapter? lastStoredChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+
+      //var (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
+      //if (success)
+      //{
+      //  lastChapter = addedCh;
+      //  chapterCount++;
+      //}
+      //else
+      //{
+      //  return (0, chapterCount);
+      //}
 
       //last working link's inner-text
-      string nextChInnerText = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath).InnerText;
+      string? nextChInnerText;
+      try
+      {
+        HtmlNode node = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
+        nextChInnerText = node?.InnerText;
+      }
+      catch(Exception)
+      {
+        nextChInnerText = null;
+      }
 
       while (true)
       {
+        bool success = false;
         nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
         if (nextCH != null)
         {
@@ -112,31 +127,56 @@ namespace WT_API.Services
             }
             if (nextCH == null)
             {
-              Console.WriteLine("Trying inner-text search...");
-              List<HtmlNode> allNodes = htmlDoc.DocumentNode.Descendants().Where(nd => nd.Attributes.Contains("href")).ToList();
-              foreach (HtmlNode node in allNodes)
+              if (nextChInnerText != null)
               {
-                if (node.InnerText.Trim() == nextChInnerText.Trim())
+                Console.WriteLine("Trying inner-text search...");
+                List<HtmlNode> allNodes = htmlDoc.DocumentNode.Descendants().Where(nd => nd.Attributes.Contains("href")).ToList();
+                foreach (HtmlNode node in allNodes)
                 {
-                  possibleNextNodes.Add(node);
-                  nextCH = node;
-                  break;
+                  if (node.InnerText.Trim() == nextChInnerText.Trim())
+                  {
+                    possibleNextNodes.Add(node);
+                    nextCH = node;
+                    break;
+                  }
                 }
               }
               if (nextCH == null)
               {
-                //marking last chapter as isLastChapter
+                //adding last chapter
+                //making sure last chapter is not added again
+                if (currentUrl != startUrl)
+                {
+                  (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
+                }
+                //we care about succes, in case the last page we navigated to wasnt a valid chapter (defined by finding chapter title at xpath, in AddChapter())
+                if (success)
+                {
+                  lastChapter = addedCh;
+                  chapterCount++;
+                }
                 if (lastChapter != null)
                 {
                   lastChapter.isLastChapter = true;
                   lastChapter.reviewStatus = false;
+                  Console.WriteLine($"{chapterCount} new chapter(s) added");
+                  //adding dynamically found xpaths to serial
+                  if (possibleNextNodes.Count > 0)
+                  {
+                    Serial modifiedSerial = await _context.Serials.FindAsync(serial.id);
+                    List<string> possibleXPaths = new List<string>();
+                    foreach (HtmlNode node in possibleNextNodes)
+                    {
+                      possibleXPaths.Add(node.XPath);
+                    }
+                    modifiedSerial.otherNextChLinkXPaths.Concat(possibleXPaths);
+                  }
+                  _context.SaveChanges();
                 }
                 else
                 {
                   Console.WriteLine("No new chapters were added");
                 }
-                Console.WriteLine($"{chapterCount} chapters added");
-                _context.SaveChanges();
                 return (1, chapterCount);
               }
             }
@@ -156,17 +196,25 @@ namespace WT_API.Services
         Console.WriteLine(nextCHURL);
         nextChInnerText = nextCH.InnerText;
         response = await client.GetAsync(nextCHURL);
-        string tbCheckedUrl = nextCHURL;
+        string tbCheckedUrl = "";
         if (nextCHURL[0] == '/')
         {
           tbCheckedUrl = client.BaseAddress.ToString().TrimEnd(new Char[] { '/' }) + nextCHURL;
+        }
+        else
+        {
+          tbCheckedUrl = nextCHURL;
         }
         pageContent = await CheckUrl(response, tbCheckedUrl);
         currentUrl = tbCheckedUrl;
 
         //adding chapter
-        (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
-        //in case navigating to next page is successful, but that page isnt a valid chapter (defined by finding chapter title at xpath)
+        //making sure if there are no more chapters, the last chapter is not added again (might be unnecessary, cant be fucked rn)
+        if (currentUrl != startUrl)
+        {
+          (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
+        }
+        //we care about succes, in case navigating to next page is successful, but that page isnt a valid chapter (defined by finding chapter title at xpath)
         if (success)
         {
           lastChapter = addedCh;
@@ -185,7 +233,7 @@ namespace WT_API.Services
             {
               possibleXPaths.Add(node.XPath);
             }
-            modifiedSerial.otherNextChLinkXPaths.Concat(possibleXPaths).Distinct().ToList();
+            modifiedSerial.otherNextChLinkXPaths.Concat(possibleXPaths);
           }
           _context.SaveChanges();
           return (1, chapterCount);
@@ -323,6 +371,7 @@ namespace WT_API.Services
       else return (2, 0);
     }
 
+    //Add chapter, as chapter of serial
     private (bool, Chapter) AddChapter(HtmlDocument htmlDoc, Serial serial, string currentUrl)
     {
       Chapter tbAddedCh = new Chapter();

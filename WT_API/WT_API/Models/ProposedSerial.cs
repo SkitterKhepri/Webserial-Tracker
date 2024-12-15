@@ -7,7 +7,7 @@ namespace WT_API.Models
     public string home {  get; set; }
     public string firstCh {  get; set; }
     public SerialStatuses status { get; set; }
-    public IFormFile? banerUpload { get; set; } = null;
+    public IFormFile? bannerUpload { get; set; } = null;
 
     public ProposedSerial() { }
   }
