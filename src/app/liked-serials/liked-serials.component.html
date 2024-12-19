@@ -1,5 +1,9 @@
 <p class="image-upload-container btn btn-bwm border border-primary m-3 p-3">
     <span class="m-1">Select Image</span>
-    <input #imageInput type="file" accept="image/*">
+    <input #imageInput (change)="fileSelect($event)" type="file" accept="image/*">
 </p>
-<div class="btn btn-info" (click)="saveImage(imageInput)">Save Image</div>
+<div class="m-2" style="width: 75%; max-width: 75%;">
+    <img [src]="image" class="my-2 me-2" style="max-width: 100%; height: auto; max-height: 100%;" alt="nothing yet">
+    <br>
+    <div class="btn btn-info" (click)="saveImage(imageInput)">Save Image</div>
+</div>

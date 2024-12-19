@@ -9,6 +9,7 @@ import { SerialsService } from '../services/serials.service';
 export class LikedSerialsComponent {
 
   testProposedSerial:any = {}
+  image = "assets/img/placeholder.png"
 
   constructor (private serServ:SerialsService){}
 
@@ -28,5 +29,17 @@ export class LikedSerialsComponent {
     formData.append("bannerUpload", image.files[0])
     console.log(formData)
     this.serServ.saveImage(formData).subscribe()
+  }
+
+  fileSelect(event:any){
+    if (event.target != null){
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.onloadend = (ev:any) => {
+        console.log(ev.target)
+        this.image = ev.target['result']
+      }
+    }
+    
   }
 }
