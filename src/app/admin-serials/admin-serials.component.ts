@@ -18,6 +18,7 @@ export class AdminSerialsComponent {
   modifying:boolean = false
   addingChs:boolean = false
   deleting:boolean = false
+  loadingSerials:boolean = false
 
 
   constructor(private serServ:SerialsService, private authorServ:AuthorsService){
@@ -25,10 +26,11 @@ export class AdminSerialsComponent {
   }
 
   getSerials(){
+    this.loadingSerials = true
     this.reviewedSerials = []
     this.unReviewedSerials = []
-    this.serServ.getSerials().subscribe(
-      (serials:any)=> {
+    this.serServ.getSerials().subscribe({
+      next: (serials:any) => {
         serials.forEach((serial:any) => {
           if(serial.reviewStatus){
             this.reviewedSerials.push(serial)
@@ -37,8 +39,12 @@ export class AdminSerialsComponent {
             this.unReviewedSerials.push(serial)
           }
         });
+      },
+      error: (response:any) => {
+        console.log("getting serials failed: " + response)
+        this.loadingSerials = false
       }
-    )
+    })
   }
 
   modifySerial(serial:any){

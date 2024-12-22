@@ -11,6 +11,7 @@ import { StorageService } from '../services/storage.service';
 export class AdminUsersComponent {
 
   users:any[] = []
+  gettingUsers:boolean = false
 
   constructor(private usersServ:UsersService,private storage:StorageService, private router:Router){
     this.getCurrentUserClaims()
@@ -22,9 +23,14 @@ export class AdminUsersComponent {
   }
 
   getUsers(){
-    this.usersServ.getUsers().subscribe(
-      (uss:any) => this.users = uss
-    )
+    this.gettingUsers = true
+    this.usersServ.getUsers().subscribe({
+      next: (uss:any) => {this.users = uss},
+      error: (response:any) => {
+        console.log("Error loading user data " + response)
+        this.gettingUsers = false
+      }
+    })
   }
 
   getCurrentUserClaims(){

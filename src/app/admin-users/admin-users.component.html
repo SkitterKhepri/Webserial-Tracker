@@ -3,6 +3,10 @@
         <app-nav-bar></app-nav-bar>
     </div>
     <div class="container users">
+        <div *ngIf="gettingUsers" class="d-flex align-items-center me-5 mb-2" role="status">
+            <div class="me-1">Loading User Data...</div>
+            <div class="spinner-border text-success spinner-border-sm"></div>
+        </div>
         <div class="row align-items-center" *ngFor="let user of users">
             <div class="col mb-2">
                 <div id="title" class="form-control w-100">{{user.userName}}</div>

@@ -33,7 +33,7 @@
         {{ errorMessage }}
       </div>
       <div *ngIf="isLoading" class="mt-2" role="status">
-        <div class="me-1">Loading...</div>
+        <div class="me-1">Registering...</div>
         <div class="spinner-border text-success spinner-border-sm"></div>
       </div>
       <button type="button" *ngIf="!isLoading" class="btn btn-primary btn-block mb-4" (click)="register(newUser, pass1.value, pass2.value)">Register</button>

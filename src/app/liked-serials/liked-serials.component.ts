@@ -9,37 +9,80 @@ import { SerialsService } from '../services/serials.service';
 export class LikedSerialsComponent {
 
   testProposedSerial:any = {}
-  image = "assets/img/placeholder.png"
+  image:HTMLImageElement = new Image()
+  imageDataUri:any = null
+  imagePath:any = "assets/img/placeholder.png"
 
   constructor (private serServ:SerialsService){}
 
-  saveImage(image:any){
-    let formData = new FormData()
-    this.testProposedSerial.title = "WG"
-    this.testProposedSerial.authorName = "WB"
-    this.testProposedSerial.home = "https://en.wikipedia.org/wiki/Adam_Weishaupt"
-    this.testProposedSerial.firstCh = "https://www.youtube.com/watch?v=gz1FZpWHMgE"
-    this.testProposedSerial.status = 1
-    this.testProposedSerial.bannerUpload = image
-    formData.append("title", this.testProposedSerial.title)
-    formData.append("authorName", this.testProposedSerial.authorName)
-    formData.append("home", this.testProposedSerial.home)
-    formData.append("firstCh", this.testProposedSerial.firstCh)
-    formData.append("status", this.testProposedSerial.status)
-    formData.append("bannerUpload", image.files[0])
-    console.log(formData)
-    this.serServ.saveImage(formData).subscribe()
+  saveImage(imageInput:any){
+    if(this.imageDataUri != null){
+      let formData = new FormData()
+      formData.append("title", "WG")
+      formData.append("authorName", "WB")
+      formData.append("home", "https://en.wikipedia.org/wiki/Adam_Weishaupt")
+      formData.append("firstCh", "https://www.youtube.com/watch?v=gz1FZpWHMgE")
+      formData.append("status", "1")
+      this.resizeImg(this.imageDataUri).then(
+        (resizedImg:any) => {
+          formData.append("bannerUpload", resizedImg)
+          this.serServ.saveImage(formData).subscribe()
+        }
+      )
+    }
   }
 
-  fileSelect(event:any){
+  fileSelect(event:any, displayedImage:HTMLImageElement){
     if (event.target != null){
       const reader = new FileReader()
       reader.readAsDataURL(event.target.files[0])
       reader.onloadend = (ev:any) => {
-        console.log(ev.target)
-        this.image = ev.target['result']
+        this.imagePath = ev.target["result"]
+        this.imageDataUri = ev.target["result"]
+        this.image = displayedImage
       }
     }
-    
   }
+
+  resizeImg(imageDataUri:any) : Promise<File | null>{
+    return new Promise((resolve) => {
+      let img = new Image()
+      img.src = imageDataUri
+      
+      let canvas = document.createElement("canvas")
+      let context = canvas.getContext("2d")
+  
+      img.onload = () => {
+        let newW
+        let newH
+        if(img.width >= img.height){
+          let resizeVal = 700 / img.width
+          newW = 700
+          newH = img.height * resizeVal
+        }
+        else{
+          let resizeVal = 700 / img.height
+          newH = 700
+          newW = img.width * resizeVal
+        }
+        canvas.width = newW
+        canvas.height = newH
+  
+        context?.drawImage(img, 0, 0, newW, newH)
+        canvas.toBlob((blob: Blob | null) => {
+          if (blob) {
+            const returnFile = new File([blob], "uploadImg", { type: "image/png" });
+            console.log(returnFile);
+            resolve(returnFile)
+          }
+          else{
+            console.log("fucky")
+            resolve(null)
+          }
+        }, "image/png")}
+    })
+  }
+  
+  
+
 }

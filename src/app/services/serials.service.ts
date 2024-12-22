@@ -67,7 +67,7 @@ export class SerialsService {
   saveImage(proposedSerial:any){
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.post(this.apiUrl + "images/", proposedSerial)
+    return this.http.post(this.apiUrl + "images/", proposedSerial, {headers})
   }
 
   // private handleError(error: HttpErrorResponse) {

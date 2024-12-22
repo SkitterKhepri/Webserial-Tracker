@@ -32,13 +32,16 @@ export class AuthServiceService {
     this.route.navigate(['/login'], {state: {sessionExp : true}})
   }
 
+  noAdminClaims(){
+    this.route.navigate(['/home'])
+  }
   
-  isSessionExpired(): boolean {
+  isSessionExpired(): boolean {    
     const loginTime = this.storage.getItem('loginTime');
-    if (loginTime) {
+    if (loginTime == null){return true}
+    if (loginTime != null) {
       const currentTime = new Date().getTime();
       const timeElapsed = currentTime - JSON.parse(loginTime);
-
       if (timeElapsed > this.seessionTime) {
         return true;
       }

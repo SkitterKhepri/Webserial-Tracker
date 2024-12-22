@@ -1,9 +1,12 @@
-<p class="image-upload-container btn btn-bwm border border-primary m-3 p-3">
-    <span class="m-1">Select Image</span>
-    <input #imageInput (change)="fileSelect($event)" type="file" accept="image/*">
-</p>
-<div class="m-2" style="width: 75%; max-width: 75%;">
-    <img [src]="image" class="my-2 me-2" style="max-width: 100%; height: auto; max-height: 100%;" alt="nothing yet">
-    <br>
-    <div class="btn btn-info" (click)="saveImage(imageInput)">Save Image</div>
+<div class="container p-2">
+    <div class="input-group mb-3 text-items-center">
+        <label class="input-group-text" for="fileInput">Upload</label>
+        <input #imageInput type="file" accept="image/*" (change)="fileSelect($event, imageDisplay)" class="form-control" id="fileInput">
+    </div>
+    <div class="container">
+        <div class="m-2" style="width: 25%; height: 25%;">
+            <img [src]="imagePath" #imageDisplay class="my-2 me-2 mw-100 mh-100" alt="nothing yet">
+        </div>
+    </div>
+    <div class="btn btn-info" [ngClass]="{'disabled' : imageDataUri == null}" (click)="saveImage(imageInput)">Save Image</div>
 </div>

@@ -4,8 +4,12 @@
     </div>
     <div class="container serials">
         <h3>Waiting for review:</h3>
-        <div class="ms-4" *ngIf="unReviewedSerials.length == 0">
+        <div class="ms-4" *ngIf="unReviewedSerials.length == 0 && !loadingSerials">
             <h5>---None left!---</h5>
+        </div>
+        <div *ngIf="loadingSerials" class="d-flex align-items-center me-5 mb-2" role="status">
+            <div class="me-1">Loading Serials...</div>
+            <div class="spinner-border text-success spinner-border-sm"></div>
         </div>
         <div class="row align-items-center ms-2" *ngFor="let serial of unReviewedSerials">
             <div class="col mb-2">
@@ -144,6 +148,10 @@
             </div>
         </div>
         <h3>Reviewed Serials:</h3>
+        <div *ngIf="loadingSerials" class="d-flex align-items-center me-5 mb-2" role="status">
+            <div class="me-1">Loading Serials...</div>
+            <div class="spinner-border text-success spinner-border-sm"></div>
+        </div>
         <div class="row align-items-center ms-2" *ngFor="let serial of reviewedSerials">
             <div class="col mb-2">
                 <div id="title" class="form-control w-100 title-true">{{serial.title}}</div>

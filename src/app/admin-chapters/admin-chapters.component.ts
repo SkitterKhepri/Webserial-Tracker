@@ -1,7 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { ChaptersService } from '../services/chapters.service';
 import { SerialsService } from '../services/serials.service';
-import { Serial } from '../models';
 
 @Component({
   selector: 'app-admin-chapters',
@@ -12,6 +11,7 @@ export class AdminChaptersComponent implements AfterViewInit {
 
   serials: any[] = [];
   serialIds: any[] = [];
+  loadingSerials:boolean = false
 
   constructor(private chServ: ChaptersService, private serServ: SerialsService, private changeDT: ChangeDetectorRef) {
     this.getSerials();
@@ -20,14 +20,6 @@ export class AdminChaptersComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.changeDT.detectChanges();
   }
-
-  // getChapters() {
-  //   this.chServ.getChapters().subscribe((chapters: any) => {
-  //     this.chapters = chapters;
-  //     this.groupChaptersBySerial();
-  //     this.changeDT.detectChanges();
-  //   });
-  // }
 
   groupChapters(serial:any) {
     let processedSerial:any = {}
@@ -47,11 +39,18 @@ export class AdminChaptersComponent implements AfterViewInit {
   }
 
   getSerials() {
-    this.serServ.getSerials().subscribe((serials: any) => {
-      serials.forEach((serial:any) => {
-        this.serials.push(this.groupChapters(serial))
-      });
-      this.changeDT.detectChanges();
+    this.loadingSerials = true
+    this.serServ.getSerials().subscribe({
+      next: (serials: any) => {
+        serials.forEach((serial:any) => {
+          this.serials.push(this.groupChapters(serial))
+        });
+        this.changeDT.detectChanges();
+      },
+      error: (response:any) => {
+        console.log("Error loading serial data " + response)
+        this.loadingSerials = false
+      }
     });
   }
 

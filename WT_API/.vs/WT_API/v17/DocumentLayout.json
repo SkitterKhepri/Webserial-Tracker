@@ -188,7 +188,7 @@
               "RelativeDocumentMoniker": "WT_API\\Controllers\\SerialsController.cs",
               "ToolTip": "E:\\Idegen\\Coding\\Webserial-Tracker\\WT_API\\WT_API\\Controllers\\SerialsController.cs",
               "RelativeToolTip": "WT_API\\Controllers\\SerialsController.cs",
-              "ViewState": "AQIAAGwBAAAAAAAAAAAmwHEBAAAFAAAA",
+              "ViewState": "AQIAAGwBAAAAAAAAAAAmwHwBAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-24T19:30:39.544Z",
               "IsPinned": true,
@@ -302,8 +302,7 @@
               "RelativeToolTip": "WT_API\\Models\\ProposedSerial.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-25T16:56:05.906Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-25T16:56:05.906Z"
             },
             {
               "$type": "Document",
