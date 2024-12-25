@@ -87,6 +87,28 @@
                     </div>
                 </div>
             </div>
+            <div class="row my-2">
+                <div class="col-auto">
+                    <div class="card bg-warning mw-100">
+                        <div class="card-header mt-1">
+                            <strong class="text-primary">Upload cover/banner image:</strong>
+                        </div>
+                        <div class="card-body m-0 p-1">
+                            <div class="input-group">
+                                <input #imageInput type="file" accept="image/*" (change)="fileSelect($event, imageDisplay)" class="form-control" id="fileInput">
+                            </div>
+                        </div>
+                        <div class="card-body p-2">
+                            <div class="d-flex justify-content-center">
+                                <img [src]="imagePath" #imageDisplay class="img-fluid imgPrev" alt="nothing yet">
+                            </div>
+                            <small class="text-center d-block mt-2">
+                                Uploaded images will be resized and saved in .png format.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row my-2 align-items-center">
                 <div class="col my-1">
                     <div class="alert alert-info text-primary">Fields marked by <b class="text-danger">*</b> are required to add a new serial.</div>

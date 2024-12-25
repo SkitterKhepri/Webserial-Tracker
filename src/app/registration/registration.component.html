@@ -22,12 +22,12 @@
 
       <div class="form-outline mb-2 p-2">
         <label class="form-label" for="password">Password</label>
-        <input #pass1 type="password" id="password" [ngClass]="{'border border-danger' : !passMatch}" class="form-control" required/>
+        <input #pass1 type="password" id="password" (blur)="pass2.value != '' ? passwordCheck(pass1.value, pass2.value) : null" [ngClass]="{'border border-danger' : !passMatch}" class="form-control" required/>
       </div>
       <label *ngIf="!passMatch" class="form-label text-danger">The passwords must match</label>
       <div class="form-outline mb-2 p-2">
         <label class="form-label" for="confirm-password">Repeat your password</label>
-        <input #pass2 type="password" id="confirm-password" [ngClass]="{'border border-danger' : !passMatch}" class="form-control" required/>
+        <input #pass2 type="password" id="confirm-password" (blur)="pass1.value != '' ? passwordCheck(pass1.value, pass2.value) : null" [ngClass]="{'border border-danger' : !passMatch}" class="form-control" required/>
       </div>
       <div *ngIf="errorMessage" class="alert alert-danger mt-2">
         {{ errorMessage }}

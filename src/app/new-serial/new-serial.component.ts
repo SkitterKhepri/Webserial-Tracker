@@ -22,6 +22,11 @@ export class NewSerialComponent {
     "status": "",
     "reviewStatus": false
   }
+
+  image:HTMLImageElement = new Image()
+  imageDataUri:any = null
+  imagePath:any = "assets/img/placeholder.png"
+
   isProposing = false
   errorProposing = false
   constructor(private serServ:SerialsService){}
@@ -48,5 +53,58 @@ export class NewSerialComponent {
       }
     })
     this.newSerial = {}
+  }
+
+  //Image handling
+
+  fileSelect(event:any, displayedImage:HTMLImageElement){
+    if (event.target != null){
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.onloadend = (ev:any) => {
+        this.imagePath = ev.target["result"]
+        this.imageDataUri = ev.target["result"]
+        this.image = displayedImage
+      }
+    }
+  }
+
+  resizeImg(imageDataUri:any) : Promise<File | null>{
+    return new Promise((resolve) => {
+      let img = new Image()
+      img.src = imageDataUri
+      
+      let canvas = document.createElement("canvas")
+      let context = canvas.getContext("2d")
+  
+      img.onload = () => {
+        let newW
+        let newH
+        if(img.width >= img.height){
+          let resizeVal = 700 / img.width
+          newW = 700
+          newH = img.height * resizeVal
+        }
+        else{
+          let resizeVal = 700 / img.height
+          newH = 700
+          newW = img.width * resizeVal
+        }
+        canvas.width = newW
+        canvas.height = newH
+  
+        context?.drawImage(img, 0, 0, newW, newH)
+        canvas.toBlob((blob: Blob | null) => {
+          if (blob) {
+            const returnFile = new File([blob], "uploadImg", { type: "image/png" });
+            console.log(returnFile);
+            resolve(returnFile)
+          }
+          else{
+            console.log("fucky")
+            resolve(null)
+          }
+        }, "image/png")}
+    })
   }
 }

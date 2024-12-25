@@ -24,8 +24,8 @@ export class RegistrationComponent implements OnDestroy {
 
 
   register(user:any, pass1:any, pass2:any){
-    if(this.passwordCheck(pass1, pass2)){
-      this.passMatch = true
+    this.passwordCheck(pass1, pass2)
+    if(this.passMatch){
       this.newUser.password = pass1
       if (user.email.includes('@') && user.email.includes('.')) {
         this.validEmail = true
@@ -49,16 +49,13 @@ export class RegistrationComponent implements OnDestroy {
         this.validEmail = false
       }
     }
-    else{
-      this.passMatch = false
-    }
   }
 
-  passwordCheck(pass1:string, pass2:string) : boolean{
+  passwordCheck(pass1:string, pass2:string){
     if(pass1 === pass2){
-      return true 
+      this.passMatch = true 
     }
-    else{ return false }
+    else{ this.passMatch = false }
   }
 
 
