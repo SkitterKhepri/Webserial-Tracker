@@ -1145,3 +1145,15 @@ E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\WT_API.pdb
 E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\WT_API.genruntimeconfig.cache
 E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\obj\Debug\net6.0\ref\WT_API.dll
 E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\SixLabors.ImageSharp.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\MailKit.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\MimeKit.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\System.Formats.Asn1.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\Google.Apis.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\Google.Apis.Auth.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\Google.Apis.Core.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\System.CodeDom.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\System.Management.dll
+E:\Idegen\Coding\Webserial-Tracker\WT_API\WT_API\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Management.dll

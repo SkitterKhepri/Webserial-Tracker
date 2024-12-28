@@ -20,8 +20,6 @@ namespace WT_API.Services
       this.userManager = userManager;
       this.roleManager = roleManager;
       _configuration = configuration;
-
-
     }
 
     public async Task<(int, List<UserWithClaims>)> UserList()
@@ -77,35 +75,19 @@ namespace WT_API.Services
         return (0, "Delete user failed! Please check user details and try again.");
       return (1, "Deleted user successfully!");
     }
+
     public async Task<(int, string)> ChangePassword(ChangePasswordModel model)
     {
       var user = await userManager.FindByIdAsync(model.Id);
       if (user == null)
         return (0, "User not found");
 
-      //await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-      await userManager.RemovePasswordAsync(user);
-      var result = await userManager.AddPasswordAsync(user, model.NewPassword);
-      if (!result.Succeeded)
-        return (0, "Password update failed! Please check user details and try again.");
-      return (1, "Password update successfully!");
-    }
-
-    public async Task<(int, string)> ChangeMyPassword(ChangePasswordModel model)
-    {
-      var user = await userManager.FindByIdAsync(model.Id);
-      if (user == null)
-        return (0, "User not found");
-
       var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
-
-      //await userManager.RemovePasswordAsync(user);
-      //var result = await userManager.AddPasswordAsync(user, model.NewPassword);
       if (!result.Succeeded)
         return (0, "Password update failed! Please check user details and try again.");
-      return (1, "Password update successfully!");
+      return (1, "Password updated successfully!");
     }
+
     public async Task<(int, string)> Update(UpdateModel model)
     {
       var user = await userManager.FindByIdAsync(model.Id);
@@ -118,6 +100,7 @@ namespace WT_API.Services
         return (0, "User update failed! Please check user details and try again.");
       return (1, "User update successfully!");
     }
+
     public async Task<(int, string)> Register(RegistrationModel model)
     {
       var userExists = await userManager.FindByNameAsync(model.Username);
@@ -170,12 +153,29 @@ namespace WT_API.Services
       {
         authClaims.Add(new Claim(ClaimTypes.Role, userRole));
       }
-      string token = GenerateToken(authClaims);
+      string token = GenerateLoginToken(authClaims);
       return (1, user, token);
     }
 
 
-    private string GenerateToken(IEnumerable<Claim> claims)
+    public async Task<(int, string)> ResetPassword(User user, ResetPassDTO resetDTO)
+    {
+      User currentUser = await userManager.FindByIdAsync(user.Id);
+      var result = await userManager.ResetPasswordAsync(user, resetDTO.token, resetDTO.password);
+
+      if (result.Succeeded)
+      {
+        return (1, "Succesfully reset password");
+      }
+      else if (result.Errors.Any(error => error.Code == "InvalidToken"))
+      {
+        return (0, "Token expired. Maybe, fucked if i know");
+      }
+      return (0, "Couldn't reset password");
+    }
+
+
+    private string GenerateLoginToken(IEnumerable<Claim> claims)
     {
       var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"]));
       var _TokenExpiryTimeInHour = Convert.ToInt64(_configuration["JWTKey:TokenExpiryTimeInHour"]);

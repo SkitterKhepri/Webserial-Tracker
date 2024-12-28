@@ -55,5 +55,17 @@ export class UsersService {
     }
     return throwError(() => new Error(errorMessage));
   }
+
+  resetPassReq(id:string){
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.head(this.apiUrl + "user/password/resetReq/" + id, {headers})
+  }
+
+  resetPassword(resetPassDTO:any, id:string){
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    return this.http.post(this.apiUrl + "user/password/reset/" + id, resetPassDTO, {headers})
+  }
 }
 

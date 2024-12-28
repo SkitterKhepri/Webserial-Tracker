@@ -17,6 +17,9 @@ export class LogInComponent implements OnDestroy {
   isLoading:boolean = false
   sessionExp:boolean = false
 
+  sendingEmail:boolean = false
+  fError:string = ""
+
   constructor(private userServ:UsersService, private http:HttpClient, private storage:StorageService, private router:Router){
     this.userServ.justReg.subscribe((reg:any) => this.justReg = reg)
 
@@ -45,6 +48,17 @@ export class LogInComponent implements OnDestroy {
         this.isLoading = false
       }
       
+    })
+  }
+
+  forgotten(email:string){
+    this.sendingEmail = true
+    this.userServ.resetPassReq(email).subscribe({
+      error: (error:any) => {
+        this.fError = error.message
+        this.sendingEmail = false
+      },
+      complete: () => this.sendingEmail = false
     })
   }
 

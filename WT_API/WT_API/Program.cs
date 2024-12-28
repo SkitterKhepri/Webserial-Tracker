@@ -13,20 +13,24 @@ builder.Services.AddDbContext<Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnString") ?? throw new InvalidOperationException("Connection string 'ConnString' not found.")));
 
 
-// Add services to the container.
-
-builder.Services.AddTransient<IAuthService, AuthService>();
+// Add services to the container
 
 builder.Services.AddControllers();
 
 builder.Services.AddTransient<ScrapingService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<EmailService>();
 //builder.Services.AddHttpClient<ScrapingServiceHtmlAgilityPack>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddIdentity<User, IdentityRole>(options => options.Password.RequireNonAlphanumeric = false)
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+  options.Password.RequireNonAlphanumeric = false;
+  options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
+})
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 // Adding Authentication  
@@ -51,6 +55,11 @@ builder.Services.AddAuthentication(options =>
     ClockSkew = TimeSpan.Zero,
     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"]))
   };
+});
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+{
+  options.TokenLifespan = TimeSpan.FromMinutes(20);
 });
 
 var app = builder.Build();

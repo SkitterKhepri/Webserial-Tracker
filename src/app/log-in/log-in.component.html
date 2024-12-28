@@ -34,14 +34,49 @@
         <button *ngIf="!isLoading" type="submit" class="btn btn-primary btn-block mb-4" (click)="login({username : username.value, password : password.value})">Login</button>
         <div class="text-center">
           <div class="row">
-            <div class="col-1">
+            <div class="col-2">
               <button type="button" class="btn btn-info btn-block mb-3 ms-1" [routerLink]="['/home']">Back</button>
             </div>
-            <div class="col mb-3 ms-2 text-center">
+            <div class="col-7 mb-3 ms-2 text-center">
               <p>Not a member? <a [routerLink]="['/register']">Register</a></p>
+            </div>
+            <div class="col">
+              <a type="button" data-bs-toggle="modal" data-bs-target="#forgotten" class="btn btn-secondary btn-sm ms-1">Forgotten password</a>
             </div>
           </div>
         </div>
     </form>
+  </div>
+  <div class="modal fade" id="forgotten" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Forgotten password</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            If you have forgotten your password, please enter your email address below, and a password reset email will be sent to you.
+          </div>
+          <div class="form-floating mt-3 m-2">
+            <input #email type="email" class="form-control" id="email" placeholder="email@address.com">
+            <label for="email">Email</label>
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-2">
+            {{ errorMessage }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div *ngIf="sendingEmail" role="status">
+            <div class="me-1">Sending email...</div>
+            <div class="spinner-border text-success spinner-border-sm"></div>
+          </div>
+          <div *ngIf="!sendingEmail">
+            <button type="button" (click)="forgotten(email.value)" class="btn btn-primary">Request email</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

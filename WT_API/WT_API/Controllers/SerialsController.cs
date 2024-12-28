@@ -150,7 +150,7 @@ namespace WT_API.Controllers
       if (compSerial.banerUpload != null)
       {
         IFormFile banner = compSerial.banerUpload;
-        string path = @"..\img";
+        string path = @"..\assets\img";
         string imgPath = Path.Combine(path, compSerial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
 
         Directory.CreateDirectory(path);
@@ -220,7 +220,7 @@ namespace WT_API.Controllers
       if (newSerial.banerUpload != null)
       {
         IFormFile banner = newSerial.banerUpload;
-        string path = @"..\img";
+        string path = @"..\assets\img";
         string imgPath = Path.Combine(path, newSerial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
 
         Directory.CreateDirectory(path);
@@ -280,7 +280,7 @@ namespace WT_API.Controllers
       if (newSerial.bannerUpload != null)
       {
         IFormFile banner = newSerial.bannerUpload;
-        string path = @"..\img";
+        string path = @"..\assets\img";
         string imgPath = Path.Combine(path, newSerial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
 
         Directory.CreateDirectory(path);
@@ -353,7 +353,7 @@ namespace WT_API.Controllers
     [HttpGet("images/{fileName}")]
     public IActionResult GetImage(string serialTitle)
     {
-      string filePath = Path.Combine("..", "img", $"{serialTitle}.png");
+      string filePath = Path.Combine("..", "assets", "img", $"{serialTitle}.png");
 
       if (!System.IO.File.Exists(filePath))
       {

@@ -46,9 +46,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.68.0, )"
+            },
             "HtmlAgilityPack": {
               "target": "Package",
               "version": "[1.11.61, )"
+            },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.9.0, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",

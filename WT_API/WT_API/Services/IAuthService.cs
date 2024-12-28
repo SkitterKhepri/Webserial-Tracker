@@ -8,7 +8,6 @@ namespace WT_API.Services
         Task<(int, string)> Register(RegistrationModel model);
         Task<(int, string)>Update(UpdateModel model); 
         Task<(int, string)>ChangePassword(ChangePasswordModel model);
-        Task<(int, string)>ChangeMyPassword(ChangePasswordModel model);
         Task<(int, string)>DeleteUser(string id);
         Task<(int, User?, string)> Login(LoginModel model);
 
@@ -17,8 +16,7 @@ namespace WT_API.Services
         Task<(int, IList<string>)> UserClaim(string id);
 
         Task<(int, string)> SetClaims(RolesModel id);
-
-
+        Task<(int, string)> ResetPassword(User user, ResetPassDTO resetDTO);
 
     }
 }

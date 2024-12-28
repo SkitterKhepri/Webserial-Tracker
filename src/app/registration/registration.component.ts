@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent implements OnDestroy {
+export class RegistrationComponent {
 
   newUser:any = {
     "username" : "",
@@ -24,12 +24,12 @@ export class RegistrationComponent implements OnDestroy {
 
 
   register(user:any, pass1:any, pass2:any){
+    this.isLoading = true
     this.passwordCheck(pass1, pass2)
     if(this.passMatch){
       this.newUser.password = pass1
       if (user.email.includes('@') && user.email.includes('.')) {
         this.validEmail = true
-        this.isLoading = true
         this.userServ.register(user).subscribe({
           next: ()=>{
             this.userServ.justReg.next(true)
@@ -56,11 +56,5 @@ export class RegistrationComponent implements OnDestroy {
       this.passMatch = true 
     }
     else{ this.passMatch = false }
-  }
-
-
-  ngOnDestroy(): void {
-      this.passMatch = true
-      this.validEmail = true
   }
 }
