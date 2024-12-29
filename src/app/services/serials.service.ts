@@ -13,8 +13,10 @@ export class SerialsService {
 
   readonly apiUrl = 'https://localhost:7286/Serials/'
 
+  //TODO undo this
   getSerials() : Observable<any>{
-    return this.http.get(this.apiUrl)
+    return this.http.get("/assets/test_serial.json")
+    // return this.http.get(this.apiUrl)
   }
 
   getSerial(id:any){
@@ -70,11 +72,4 @@ export class SerialsService {
     return this.http.post(this.apiUrl + "images/", proposedSerial, {headers})
   }
 
-  // private handleError(error: HttpErrorResponse) {
-  //   let errorMessage:any = "An unknown error occurred!";
-  //   if (error.status === 400) {
-  //     (typeof(error.error) == "string") ? errorMessage = error.error : errorMessage = "Bad Request: Invalid data.";
-  //   }
-  //   return throwError(() => new Error(errorMessage));
-  // }
 }

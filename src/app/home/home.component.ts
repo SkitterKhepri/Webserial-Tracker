@@ -26,8 +26,6 @@ export class HomeComponent {
   constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
     private chServ:ChaptersService, private authorServ:AuthorsService){
     this.getSerials()
-    // this.getChapters()
-    // this.getAuthors()
   }
 
 
@@ -51,19 +49,6 @@ export class HomeComponent {
     })
   }
 
-  // getChapters(){
-  //   this.reviewedSerialChapters = []
-  //   this.chServ.getChapters().subscribe(
-  //     (chapters:any) => {
-  //       chapters.forEach((chapter:any) => {
-  //         if(this.reviewedSerialIds.includes(chapter.serialId)){
-  //           this.reviewedSerialChapters.push(chapter)
-  //         }
-  //       });
-  //     }
-  //   )
-  // }
-
   getSerial(id:any){
     return this.reviewedSerials.find((ser:any) => ser.id == id)
   }
@@ -84,8 +69,7 @@ export class HomeComponent {
       next: (uCh:any) => {
         console.log(uCh + " chapters were added")
         this.getSerials()
-        // this.getChapters()
-        this.isUpdating = false
+        // this.isUpdating = false
       },
       error: (response) => {
         console.log("updating shat itself: " + response)

@@ -17,6 +17,8 @@ namespace WT_API.Services
 
         Task<(int, string)> SetClaims(RolesModel id);
         Task<(int, string)> ResetPassword(User user, ResetPassDTO resetDTO);
+        Task<string> GenerateResetToken(User user);
+        
 
     }
 }

@@ -5,3 +5,6 @@
     background-color: lightgreen;
     color: black;
 }
+body{
+    overflow:visible;
+}

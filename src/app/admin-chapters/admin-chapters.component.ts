@@ -18,7 +18,7 @@ export class AdminChaptersComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.changeDT.detectChanges();
+    // this.changeDT.detectChanges();
   }
 
   groupChapters(serial:any) {
@@ -45,12 +45,13 @@ export class AdminChaptersComponent implements AfterViewInit {
         serials.forEach((serial:any) => {
           this.serials.push(this.groupChapters(serial))
         });
-        this.changeDT.detectChanges();
+        // this.changeDT.detectChanges();
       },
       error: (response:any) => {
         console.log("Error loading serial data " + response)
         this.loadingSerials = false
-      }
+      },
+      complete: () => this.loadingSerials = false
     });
   }
 

@@ -105,7 +105,11 @@ namespace WT_API.Services
     {
       var userExists = await userManager.FindByNameAsync(model.Username);
       if (userExists != null)
-        return (0, "User already exists");
+        return (0, "User with same name already exists");
+
+      userExists = await userManager.FindByEmailAsync(model.Email);
+      if (userExists != null)
+        return (0, "User with this email already exists");
 
       User user = new()
       {
@@ -191,6 +195,11 @@ namespace WT_API.Services
       var tokenHandler = new JwtSecurityTokenHandler();
       var token = tokenHandler.CreateToken(tokenDescriptor);
       return tokenHandler.WriteToken(token);
+    }
+
+    public async Task<string> GenerateResetToken(User user)
+    {
+      return await userManager.GeneratePasswordResetTokenAsync(user);
     }
   }
 }

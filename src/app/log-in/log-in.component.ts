@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LogInComponent implements OnDestroy {
 
-  justReg:boolean = false
+  redirectFrom:string = ""
   errorMessage:String = ""
   isLoading:boolean = false
   sessionExp:boolean = false
@@ -21,8 +21,7 @@ export class LogInComponent implements OnDestroy {
   fError:string = ""
 
   constructor(private userServ:UsersService, private http:HttpClient, private storage:StorageService, private router:Router){
-    this.userServ.justReg.subscribe((reg:any) => this.justReg = reg)
-
+    this.userServ.justReg.subscribe((reg:any) => this.redirectFrom = reg)
     const navigation = router.getCurrentNavigation()
     if (navigation?.extras.state){
       this.sessionExp = navigation.extras.state['sessionExp']

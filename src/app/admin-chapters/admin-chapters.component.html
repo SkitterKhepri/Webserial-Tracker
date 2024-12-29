@@ -1,192 +1,190 @@
 <div class="conatiner-fluid main">
-    <div class="navBar">
-        <app-nav-bar></app-nav-bar>
-    </div>
     <div class="container-fluid chapters">
         <div *ngIf="loadingSerials" class="d-flex align-items-center me-5 mb-2" role="status">
             <div class="me-1">Loading Serials...</div>
             <div class="spinner-border text-success spinner-border-sm"></div>
         </div>
-        <div class="row align-items-center" *ngFor="let serial of serials">
-            <div class="col mb-2">
-                <div id="title" class="form-control w-100 bg-success-subtle">{{serial.title}}</div>
-            </div>
-            <div class="col-auto mb-2">
-                <button class="btn btn-secondary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + serial.id" type="button">
-                    <i class="bi bi-chevron-down"></i>
-                </button>
-            </div>
-            <div>
-                <div class="collapse my-2" [id]="'collapse' + serial.id">
-                    <h3>Last Chapter(s)</h3>
-                    <div class="row align-items-center chapter-container" *ngFor="let chapter of serial.lastChapters">
-                        <div class="col mb-2">
-                            <div id="title" class="form-control w-100 bg-danger-subtle">{{chapter.title}}</div>
-                        </div>
-                        <div class="col-auto mb-2">
-                            <button class="btn btn-secondary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + chapter.id" type="button">
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
-                        </div>
-                        <div class="collapse" [id]="'collapse' + chapter.id">
-                            <div class="container border border-info-subtle border-3 rounded-2">
-                                <div class="row align-items-center my-1 p-1">
-                                    <div class="col-auto border border-2">
-                                        <p class="m-1">{{chapter.id}}</p>
-                                    </div>
-                                    <div class="col-auto">
-                                        <label for="title">Title:</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" id="title" class="form-control" [(ngModel)]="chapter.title">
-                                    </div>
-                                    <div class="col-auto">
-                                        <label for="authorId">Serial Id:</label>
-                                    </div>
-                                    <div class="col-auto border border-2">
-                                        <p class="m-1">{{chapter.serialId}}</p>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p class="m-1">Serial's Title:</p>
-                                    </div>
-                                    <div class="col-md-3 flex-grow-1">
-                                        <input #authorName type="text" id="serialName" class="form-control" [value]="selectSerial(chapter.serialId)?.title">
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="titleXP">Link:</label>
-                                    </div>
-                                    <div class="col-md-6 flex-grow-1">
-                                        <input type="text" class="form-control" [(ngModel)]="chapter.link">
-                                    </div>
-                                    <div class="col-auto">
-        
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-check form-switch d-flex align-items-center">
-                                            <input class="form-check-input me-2" type="checkbox" role="switch" id="isLastChapter" [(ngModel)]="chapter.isLastChapter">
-                                            <label class="form-check-label" for="isLastChapter">isLastChapter value: <div class="text-primary">{{chapter.isLastChapter}}</div></label>
-                                        </div>  
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="XPath1">Next Chapter XPath:</label>
-                                    </div>
-                                    <div class="col-md-8 flex-grow-1">
-                                        <input type="text" id="XPath1" class="form-control" [(ngModel)]="chapter.nextChLinkXPath">
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="XPath2">Secondary Next Chapter XPath:</label>
-                                    </div>
-                                    <div class="col-md-8 flex-grow-1">
-                                        <input type="text" id="XPath2" class="form-control" [(ngModel)]="chapter.secondaryNextChLinkXPath">
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="XPath3">Other Next Chapter XPath:</label>
-                                    </div>
-                                    <div class="col-md-8 flex-grow-1">
-                                        <input type="text" id="XPath3" class="form-control" [(ngModel)]="chapter.otherNextChLinkXPaths">
-                                    </div>
-                                </div>
-                                <div class="row my-1 align-items-center">
-                                    <div class="col flex-grow-1 my-1">
-                                        <button class="btn btn-success form-control" (click)="updateChapter(chapter)">Update</button>
-                                    </div>
-                                    <div class="col flex-grow-1 my-1">
-                                        <button class="btn btn-danger form-control" (click)="deleteChapter(chapter.id)">Delete</button>
+        <div class="accordion" id="serialAccordion">
+            <div class="accordion-item p-2" *ngFor="let serial of serials">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed bg-success-subtle" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#serial' + serial.id" aria-expanded="false" [attr.aria-controls]="'serial' + serial.id">
+                        {{serial.title}}
+                    </button>
+                </h2>
+                <div [id]="'serial' + serial.id" class="accordion-collapse collapse" data-bs-parent="#serialAccordion">
+                    <div class="accordion-body">
+                        <h3>Last Chapter(s):</h3>
+                        <div class="accordion" [id]="serial.id + '_lastChaptersAcc'">
+                            <div class="accordion-item" *ngFor="let chapter of serial.lastChapters">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-danger-subtle" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#serial' + serial.id + 'chapter' + chapter.id" aria-expanded="false" [attr.aria-controls]="'serial' + serial.id + 'chapter' + chapter.id">
+                                        {{chapter.title}}
+                                    </button>
+                                </h2>
+                                <div [id]="'serial' + serial.id + 'chapter' + chapter.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + serial.id + '_lastChaptersAcc'">
+                                    <div class="accordion-body">
+                                        <div class="container border border-info-subtle border-3 rounded-2">
+                                            <div class="row align-items-center my-1 p-1">
+                                                <div class="col-auto border border-2">
+                                                    <p class="m-1">{{chapter.id}}</p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <label for="title">Title:</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" id="title" class="form-control" [(ngModel)]="chapter.title">
+                                                </div>
+                                                <div class="col-auto">
+                                                    <label for="authorId">Serial Id:</label>
+                                                </div>
+                                                <div class="col-auto border border-2">
+                                                    <p class="m-1">{{chapter.serialId}}</p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p class="m-1">Serial's Title:</p>
+                                                </div>
+                                                <div class="col-md-3 flex-grow-1">
+                                                    <input #authorName type="text" id="serialName" class="form-control" [value]="selectSerial(chapter.serialId)?.title">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="titleXP">Link:</label>
+                                                </div>
+                                                <div class="col-md-6 flex-grow-1">
+                                                    <input type="text" class="form-control" [(ngModel)]="chapter.link">
+                                                </div>
+                                                <div class="col-auto">
+                    
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-check form-switch d-flex align-items-center">
+                                                        <input class="form-check-input me-2" type="checkbox" role="switch" id="isLastChapter" [(ngModel)]="chapter.isLastChapter">
+                                                        <label class="form-check-label" for="isLastChapter">isLastChapter value: <div class="text-primary">{{chapter.isLastChapter}}</div></label>
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="XPath1">Next Chapter XPath:</label>
+                                                </div>
+                                                <div class="col-md-8 flex-grow-1">
+                                                    <input type="text" id="XPath1" class="form-control" [(ngModel)]="chapter.nextChLinkXPath">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="XPath2">Secondary Next Chapter XPath:</label>
+                                                </div>
+                                                <div class="col-md-8 flex-grow-1">
+                                                    <input type="text" id="XPath2" class="form-control" [(ngModel)]="chapter.secondaryNextChLinkXPath">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="XPath3">Other Next Chapter XPath:</label>
+                                                </div>
+                                                <div class="col-md-8 flex-grow-1">
+                                                    <input type="text" id="XPath3" class="form-control" [(ngModel)]="chapter.otherNextChLinkXPaths">
+                                                </div>
+                                            </div>
+                                            <div class="row my-1 align-items-center">
+                                                <div class="col flex-grow-1 my-1">
+                                                    <button class="btn btn-success form-control" (click)="updateChapter(chapter)">Update</button>
+                                                </div>
+                                                <div class="col flex-grow-1 my-1">
+                                                    <button class="btn btn-danger form-control" (click)="deleteChapter(chapter.id)">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <h3>Other Chapters</h3>
-                    <div class="row align-items-center chapter-container" *ngFor="let chapter of serial.otherChapters">
-                        <div class="col mb-2">
-                            <div id="title" class="form-control w-100 bg-primary-subtle">{{chapter.title}}</div>
-                        </div>
-                        <div class="col-auto mb-2">
-                            <button class="btn btn-secondary" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + chapter.id" type="button">
-                                <i class="bi bi-chevron-down"></i>
-                            </button>
-                        </div>
-                        <div class="collapse" [id]="'collapse' + chapter.id">
-                            <div class="container border border-info-subtle border-3 rounded-2">
-                                <div class="row align-items-center my-1 p-1">
-                                    <div class="col-auto border border-2">
-                                        <p class="m-1">{{chapter.id}}</p>
-                                    </div>
-                                    <div class="col-auto">
-                                        <label for="title">Title:</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" id="title" class="form-control" [(ngModel)]="chapter.title">
-                                    </div>
-                                    <div class="col-auto">
-                                        <label for="authorId">Serial Id:</label>
-                                    </div>
-                                    <div class="col-auto border border-2">
-                                        <p class="m-1">{{chapter.serialId}}</p>
-                                    </div>
-                                    <div class="col-auto">
-                                        <p class="m-1">Serial's Title:</p>
-                                    </div>
-                                    <div class="col-md-3 flex-grow-1">
-                                        <input #serialTitle type="text" id="serialName" class="form-control" readonly [value]="selectSerial(chapter.serialId)?.title">
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="titleXP">Link:</label>
-                                    </div>
-                                    <div class="col-md-6 flex-grow-1">
-                                        <input type="text" class="form-control" [(ngModel)]="chapter.link">
-                                    </div>
-                                    <div class="col-auto">
-        
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-check form-switch d-flex align-items-center">
-                                            <input class="form-check-input me-2" type="checkbox" role="switch" id="isLastChapter" [(ngModel)]="chapter.isLastChapter">
-                                            <label class="form-check-label" for="isLastChapter">isLastChapter value: <div class="text-primary">{{chapter.isLastChapter}}</div></label>
-                                        </div>  
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="XPath1">Next Chapter XPath:</label>
-                                    </div>
-                                    <div class="col-md-8 flex-grow-1">
-                                        <input type="text" id="XPath1" class="form-control" [(ngModel)]="chapter.nextChLinkXPath">
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="XPath2">Secondary Next Chapter XPath:</label>
-                                    </div>
-                                    <div class="col-md-8 flex-grow-1">
-                                        <input type="text" id="XPath2" class="form-control" [(ngModel)]="chapter.secondaryNextChLinkXPath">
-                                    </div>
-                                </div>
-                                <div class="row align-items-center my-1">
-                                    <div class="col-auto">
-                                        <label for="XPath3">Other Next Chapter XPath:</label>
-                                    </div>
-                                    <div class="col-md-8 flex-grow-1">
-                                        <input type="text" id="XPath3" class="form-control" [(ngModel)]="chapter.otherNextChLinkXPaths">
-                                    </div>
-                                </div>
-                                <div class="row my-1 align-items-center">
-                                    <div class="col flex-grow-1 my-1">
-                                        <button class="btn btn-success form-control" (click)="updateChapter(chapter)">Update</button>
-                                    </div>
-                                    <div class="col flex-grow-1 my-1">
-                                        <button class="btn btn-danger form-control" (click)="deleteChapter(chapter.id)">Delete</button>
+                        <h3>Other Chapters:</h3>
+                        <div class="accordion" [id]="serial.id + '_otherChaptersAcc'">
+                            <div class="accordion-item" *ngFor="let chapter of serial.otherChapters">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed bg-primary-subtle" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#serial' + serial.id + 'chapter' + chapter.id" aria-expanded="false" [attr.aria-controls]="'serial' + serial.id + 'chapter' + chapter.id">
+                                        {{chapter.title}}
+                                    </button>
+                                </h2>
+                                <div [id]="'serial' + serial.id + 'chapter' + chapter.id" class="accordion-collapse collapse" [attr.data-bs-parent]="'#' + serial.id + '_otherChaptersAcc'">
+                                    <div class="accordion-body">
+                                        <div class="container border border-info-subtle border-3 rounded-2">
+                                            <div class="row align-items-center my-1 p-1">
+                                                <div class="col-auto border border-2">
+                                                    <p class="m-1">{{chapter.id}}</p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <label for="title">Title:</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" id="title" class="form-control" [(ngModel)]="chapter.title">
+                                                </div>
+                                                <div class="col-auto">
+                                                    <label for="authorId">Serial Id:</label>
+                                                </div>
+                                                <div class="col-auto border border-2">
+                                                    <p class="m-1">{{chapter.serialId}}</p>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <p class="m-1">Serial's Title:</p>
+                                                </div>
+                                                <div class="col-md-3 flex-grow-1">
+                                                    <input #authorName type="text" id="serialName" class="form-control" [value]="selectSerial(chapter.serialId)?.title">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="titleXP">Link:</label>
+                                                </div>
+                                                <div class="col-md-6 flex-grow-1">
+                                                    <input type="text" class="form-control" [(ngModel)]="chapter.link">
+                                                </div>
+                                                <div class="col-auto">
+                    
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-check form-switch d-flex align-items-center">
+                                                        <input class="form-check-input me-2" type="checkbox" role="switch" id="isLastChapter" [(ngModel)]="chapter.isLastChapter">
+                                                        <label class="form-check-label" for="isLastChapter">isLastChapter value: <div class="text-primary">{{chapter.isLastChapter}}</div></label>
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="XPath1">Next Chapter XPath:</label>
+                                                </div>
+                                                <div class="col-md-8 flex-grow-1">
+                                                    <input type="text" id="XPath1" class="form-control" [(ngModel)]="chapter.nextChLinkXPath">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="XPath2">Secondary Next Chapter XPath:</label>
+                                                </div>
+                                                <div class="col-md-8 flex-grow-1">
+                                                    <input type="text" id="XPath2" class="form-control" [(ngModel)]="chapter.secondaryNextChLinkXPath">
+                                                </div>
+                                            </div>
+                                            <div class="row align-items-center my-1">
+                                                <div class="col-auto">
+                                                    <label for="XPath3">Other Next Chapter XPath:</label>
+                                                </div>
+                                                <div class="col-md-8 flex-grow-1">
+                                                    <input type="text" id="XPath3" class="form-control" [(ngModel)]="chapter.otherNextChLinkXPaths">
+                                                </div>
+                                            </div>
+                                            <div class="row my-1 align-items-center">
+                                                <div class="col flex-grow-1 my-1">
+                                                    <button class="btn btn-success form-control" (click)="updateChapter(chapter)">Update</button>
+                                                </div>
+                                                <div class="col flex-grow-1 my-1">
+                                                    <button class="btn btn-danger form-control" (click)="deleteChapter(chapter.id)">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

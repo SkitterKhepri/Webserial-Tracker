@@ -1,7 +1,4 @@
 <div class="conatiner main">
-    <div class="navBar">
-        <app-nav-bar></app-nav-bar>
-    </div>
     <div class="container newSerial my-2">
         <h4>New Serial:</h4>
         <div class="container border bg-secondary-subtle border-info-subtle border-3 rounded-2 ">
@@ -41,16 +38,16 @@
                 </div>
                 <div class="col-md-8 flex-grow-1">
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="radiobtn" id="completed" autocomplete="off" #complete [(ngModel)]="newSerial.status" [value]="0">
+                        <input type="radio" class="btn-check" name="radiobtn" id="completed" autocomplete="off" #complete [(ngModel)]="newSerial.status" [value]="1">
                         <label class="btn btn-outline-primary" for="completed">Completed</label>
                     
-                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" autocomplete="off" #ongoing [(ngModel)]="newSerial.status" [value]="1">
+                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" autocomplete="off" #ongoing [(ngModel)]="newSerial.status" [value]="2">
                         <label class="btn btn-outline-primary" for="ongoing">Ongoing</label>
                     
-                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" autocomplete="off" #hiatus [(ngModel)]="newSerial.status" [value]="2">
+                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" autocomplete="off" #hiatus [(ngModel)]="newSerial.status" [value]="3">
                         <label class="btn btn-outline-primary" for="hiatus">Hiatus</label>
 
-                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" autocomplete="off" #abandoned [(ngModel)]="newSerial.status" [value]="3">
+                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" autocomplete="off" #abandoned [(ngModel)]="newSerial.status" [value]="4">
                         <label class="btn btn-outline-primary" for="abandoned">Abandoned</label>
                     </div>
                 </div>

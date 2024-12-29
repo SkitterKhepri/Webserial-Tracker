@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { SerialsService } from '../services/serials.service';
 import { AuthorsService } from '../services/authors.service';
 import { SerialStatuses } from '../enums/serial-statuses.enum';
+import { NavBarComponent } from "../nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-admin-serials',
   templateUrl: './admin-serials.component.html',
   styleUrls: ['./admin-serials.component.css']
 })
-export class AdminSerialsComponent {
+export class AdminSerialsComponent implements AfterViewInit {
 
   serials:any = []
   unReviewedSerials:any = []
@@ -20,8 +21,11 @@ export class AdminSerialsComponent {
   deleting:boolean = false
   loadingSerials:boolean = false
 
+  ngAfterViewInit() {
+    this.changeDT.detectChanges();
+  }
 
-  constructor(private serServ:SerialsService, private authorServ:AuthorsService){
+  constructor(private serServ:SerialsService, private authorServ:AuthorsService, private changeDT: ChangeDetectorRef){
     this.getSerials()
   }
 
@@ -39,9 +43,13 @@ export class AdminSerialsComponent {
             this.unReviewedSerials.push(serial)
           }
         });
+        this.changeDT.detectChanges();
       },
       error: (response:any) => {
         console.log("getting serials failed: " + response)
+        this.loadingSerials = false
+      },
+      complete: () => {
         this.loadingSerials = false
       }
     })
@@ -65,9 +73,7 @@ export class AdminSerialsComponent {
         this.modifying = false
       },
       error: (res:any) => console.log(res),
-      complete: () => {
-        this.modifying = false
-      }
+      complete: () => this.modifying = false
     })
   }
 
@@ -98,9 +104,11 @@ export class AdminSerialsComponent {
         console.log(res)
         this.approving = false
       },
-      complete: () => {
-        this.approving = false
-      }
+      complete: () => this.approving = false
     })
+  }
+
+  test(a:any){
+    console.log(a)
   }
 }

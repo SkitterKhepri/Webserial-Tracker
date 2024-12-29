@@ -1,14 +1,14 @@
 <div class="conatiner main">
-  <div class="navBar">
-      <app-nav-bar></app-nav-bar>
-  </div>
   <div class="text-center">
     <h2 class="fw-semibold">
       Login
     </h2>
   </div>
-  <div *ngIf="justReg" class=" m-5 pt-3 text-success-emphasis text-center bg-success-subtle border border-success rounded-3">
+  <div *ngIf="redirectFrom == 'reg'" class=" m-5 pt-3 text-success-emphasis text-center bg-success-subtle border border-success rounded-3">
     <p>You have succesfully registered!</p>
+  </div>
+  <div *ngIf="redirectFrom == 'reset'" class=" m-5 pt-3 text-success-emphasis text-center bg-success-subtle border border-success rounded-3">
+    <p>Password changed succesfully! You can now login.</p>
   </div>
   <div *ngIf="sessionExp" class=" m-5 pt-3 text-warning-emphasis text-center bg-warning-subtle border border-warning rounded-3">
     <p>Session expired. Please login to continue!</p>

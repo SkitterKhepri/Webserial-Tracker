@@ -17,7 +17,7 @@ namespace WT_API.Services
       _context = context;
     }
     
-    public async Task<(int, int)> AddSerialChapters(Serial serial, string startUrl = null)
+    public async Task<(int, int)> AddSerialChapters(Serial serial, string? startUrl = null)
     {
 
       if (startUrl == null)
@@ -32,41 +32,48 @@ namespace WT_API.Services
       client.BaseAddress = new Uri("https://" + fullUri.Host);
       HttpResponseMessage response = await client.GetAsync(startUrl);
 
-      string pageContent = await CheckUrl(response, startUrl);
+      string pageContent = "";
+      string? redirectedLink = null;
+
+      (pageContent, redirectedLink) = await CheckUrl(response, startUrl);
 
       HtmlDocument htmlDoc = new HtmlDocument();
       htmlDoc.LoadHtml(pageContent);
 
-      HtmlNode? nextCH;
+      HtmlNode? nextCH = null;
       string nextCHURL;
-      string currentUrl = startUrl;
       int chapterCount = 0;
-      Chapter lastChapter = null;
+      Chapter? lastChapter = null;
 
+      string currentUrl = redirectedLink == null ? startUrl : redirectedLink;
       string prevUrl = startUrl;
+      string? prev2Url = null;
+      string? prev3Url = null;
       bool firstLoop = true;
 
-      List<HtmlNode> possibleNextNodes = new List<HtmlNode>();
-      List<HtmlNode> wrongNextNodes = new List<HtmlNode>();
+      List<string> possibleNextNodes = new List<string>();
+      List<string> wrongNextNodes = new List<string>();
 
 
       Chapter addedCh = new Chapter();
-      //TODO check if this is needed at all, on 1) new serial, and 2) serial missing 1 chapter
+      bool success = false;
+
       //add first chapter
-      //Chapter? lastStoredChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+      Chapter? lastStoredChapter = _context.Chapters.Where(ch => ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
 
-      //var (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
-      //if (success)
-      //{
-      //  lastChapter = addedCh;
-      //  chapterCount++;
-      //}
-      //else
-      //{
-      //  return (0, chapterCount);
-      //}
+      (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
+      if (success)
+      {
+        lastChapter = addedCh;
+        chapterCount++;
+      }
+      else
+      {
+        Console.WriteLine("No new chapters were added");
+        return (0, chapterCount);
+      }
 
-      //last working link's inner-text
+      //Next ch link's inner-text, later updated to last working links'
       string? nextChInnerText;
       try
       {
@@ -80,83 +87,94 @@ namespace WT_API.Services
 
       while (true)
       {
-        bool success = false;
-        nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
-        if (nextCH != null)
+        success = false;
+        foreach(string possibleNextCh in possibleNextNodes)
         {
-          if (wrongNextNodes.Contains(nextCH) || (nextCH.Attributes["href"].Value == prevUrl && !firstLoop))
+          if((possibleNextCh != prevUrl || possibleNextCh != prev2Url || possibleNextCh != prev3Url) && !wrongNextNodes.Contains(possibleNextCh))
           {
-            nextCH = null;
+            nextCH = htmlDoc.DocumentNode.SelectSingleNode(possibleNextCh);
+            break;
           }
         }
 
         if (nextCH == null)
         {
-          if (serial.secondaryNextChLinkXPath != null)
+          Console.WriteLine("Trying primary nexch xpath...");
+          nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
+          if (nextCH != null)
           {
-            Console.WriteLine("Trying secondary XPath...");
-            nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
-            if (nextCH != null)
+            if (wrongNextNodes.Contains(nextCH.XPath) || ((nextCH.Attributes["href"].Value == prevUrl || nextCH.Attributes["href"].Value == prev2Url || nextCH.Attributes["href"].Value == prev3Url) && !firstLoop))
             {
-              if (wrongNextNodes.Contains(nextCH) || (nextCH.Attributes["href"].Value == prevUrl && !firstLoop))
-              {
-                nextCH = null;
-              }
+              nextCH = null;
             }
           }
-
           if (nextCH == null)
           {
-            if (serial.otherNextChLinkXPaths != null)
+            if (serial.secondaryNextChLinkXPath != null)
             {
-              Console.WriteLine("Trying other XPaths...");
-              foreach (string xpath in serial.otherNextChLinkXPaths)
+              Console.WriteLine("Trying secondary XPath...");
+              nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
+              if (nextCH != null)
               {
-                nextCH = htmlDoc.DocumentNode.SelectSingleNode(xpath);
-                if (nextCH != null)
+                if (wrongNextNodes.Contains(nextCH.XPath) || ((nextCH.Attributes["href"].Value == prevUrl || nextCH.Attributes["href"].Value == prev2Url || nextCH.Attributes["href"].Value == prev3Url) && !firstLoop))
                 {
-                  if (!wrongNextNodes.Contains(nextCH) && nextCH.Attributes.Contains("href"))
-                  {
-                    if (nextCH.Attributes["href"].Value != prevUrl)
-                    {
-                      break;
-                    }
-                  }
+                  nextCH = null;
                 }
               }
             }
+
             if (nextCH == null)
             {
-              if (nextChInnerText != null)
+              if (serial.otherNextChLinkXPaths != null)
               {
-                Console.WriteLine("Trying inner-text search...");
-                List<HtmlNode> allNodes = htmlDoc.DocumentNode.Descendants().Where(nd => nd.Attributes.Contains("href")).ToList();
-                foreach (HtmlNode node in allNodes)
+                Console.WriteLine("Trying other XPaths...");
+                foreach (string xpath in serial.otherNextChLinkXPaths)
                 {
-                  if (node.InnerText.Trim() == nextChInnerText.Trim())
+                  nextCH = htmlDoc.DocumentNode.SelectSingleNode(xpath);
+                  if (nextCH != null)
                   {
-                    possibleNextNodes.Add(node);
-                    nextCH = node;
-                    break;
+                    if (!wrongNextNodes.Contains(nextCH.XPath) && nextCH.Attributes.Contains("href"))
+                    {
+                      if (nextCH.Attributes["href"].Value != prevUrl || nextCH.Attributes["href"].Value != prev2Url || nextCH.Attributes["href"].Value != prev3Url)
+                      {
+                        Console.WriteLine($"Found next ch in otherXpaths, leads to: {nextCH.Attributes["href"].Value}");
+                        break;
+                      }
+                    }
                   }
+                  nextCH = null;
                 }
               }
               if (nextCH == null)
               {
-                //adding last chapter
-                //making sure last chapter is not added again
-                if (currentUrl != startUrl)
+                if (nextChInnerText != null)
                 {
-                  (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
+                  Console.WriteLine("Trying inner-text search...");
+                  List<HtmlNode> allNodes = htmlDoc.DocumentNode.Descendants().Where(nd => nd.Attributes.Contains("href")).ToList();
+                  foreach (HtmlNode node in allNodes)
+                  {
+                    if (node.InnerText.Trim() == nextChInnerText.Trim() && (node.Attributes["href"].Value != prevUrl || node.Attributes["href"].Value != prev2Url || node.Attributes["href"].Value != prev3Url))
+                    {
+                      possibleNextNodes.Add(node.XPath);
+                      nextCH = node;
+                      break;
+                    }
+                  }
                 }
-                //we care about succes, in case the last page we navigated to wasnt a valid chapter (defined by finding chapter title at xpath, in AddChapter())
-                if (success)
+                if (nextCH == null)
                 {
-                  lastChapter = addedCh;
-                  chapterCount++;
-                }
-                if (lastChapter != null)
-                {
+                  //adding last chapter before returning
+                  //making sure first chapter is not added again
+                  if (!firstLoop)
+                  {
+                    (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
+                    //we care about succes here, in case the last page we navigated to wasnt a valid chapter (defined by finding chapter title at xpath, in AddChapter())
+                    if (success)
+                    {
+                      lastChapter = addedCh;
+                      chapterCount++;
+                    }
+                  }
                   lastChapter.isLastChapter = true;
                   lastChapter.reviewStatus = false;
                   Console.WriteLine($"{chapterCount} new chapter(s) added");
@@ -164,20 +182,11 @@ namespace WT_API.Services
                   if (possibleNextNodes.Count > 0)
                   {
                     Serial modifiedSerial = await _context.Serials.FindAsync(serial.id);
-                    List<string> possibleXPaths = new List<string>();
-                    foreach (HtmlNode node in possibleNextNodes)
-                    {
-                      possibleXPaths.Add(node.XPath);
-                    }
-                    modifiedSerial.otherNextChLinkXPaths.Concat(possibleXPaths);
+                    (modifiedSerial.otherNextChLinkXPaths ??= new List<string>()).AddRange(possibleNextNodes);
                   }
                   _context.SaveChanges();
+                  return (1, chapterCount);
                 }
-                else
-                {
-                  Console.WriteLine("No new chapters were added");
-                }
-                return (1, chapterCount);
               }
             }
           }
@@ -190,127 +199,147 @@ namespace WT_API.Services
         }
         catch (NullReferenceException)
         {
-          wrongNextNodes.Add(nextCH);
+          wrongNextNodes.Add(nextCH.XPath);
           continue;
         }
-        Console.WriteLine(nextCHURL);
+        Console.WriteLine($"Next ch url found: ------{nextCHURL}");
         nextChInnerText = nextCH.InnerText;
         response = await client.GetAsync(nextCHURL);
-        string tbCheckedUrl = "";
+        string nextFullUrl = "";
         if (nextCHURL[0] == '/')
         {
-          tbCheckedUrl = client.BaseAddress.ToString().TrimEnd(new Char[] { '/' }) + nextCHURL;
+          nextFullUrl = client.BaseAddress.ToString().TrimEnd(new Char[] { '/' }) + nextCHURL;
         }
         else
         {
-          tbCheckedUrl = nextCHURL;
+          nextFullUrl = nextCHURL;
         }
-        pageContent = await CheckUrl(response, tbCheckedUrl);
-        currentUrl = tbCheckedUrl;
 
-        //adding chapter
-        //making sure if there are no more chapters, the last chapter is not added again (might be unnecessary, cant be fucked rn)
-        if (currentUrl != startUrl)
+        (pageContent, redirectedLink) = await CheckUrl(response, nextFullUrl);
+        nextFullUrl = redirectedLink ?? nextFullUrl;
+
+        //After the first loop, adding current chapter
+        if (!firstLoop)
         {
           (success, addedCh) = AddChapter(htmlDoc, serial, currentUrl);
-        }
-        //we care about succes, in case navigating to next page is successful, but that page isnt a valid chapter (defined by finding chapter title at xpath)
-        if (success)
-        {
-          lastChapter = addedCh;
-          chapterCount++;
-        }
-        else
-        {
-          lastChapter.isLastChapter = true;
-          lastChapter.reviewStatus = false;
-          //adding dynamically found xpaths to serial
-          if (possibleNextNodes.Count > 0)
-          {
-            Serial modifiedSerial = await _context.Serials.FindAsync(serial.id);
-            List<string> possibleXPaths = new List<string>();
-            foreach (HtmlNode node in possibleNextNodes)
-            {
-              possibleXPaths.Add(node.XPath);
-            }
-            modifiedSerial.otherNextChLinkXPaths.Concat(possibleXPaths);
-          }
-          _context.SaveChanges();
-          return (1, chapterCount);
-        }
 
+          //we care about success, in case navigating to next page is successful, but that page isnt a valid chapter (defined by finding chapter title at xpath, in AddChapter)
+          if (success)
+          {
+            lastChapter = addedCh;
+            chapterCount++;
+          }
+          else
+          {
+            lastChapter.isLastChapter = true;
+            lastChapter.reviewStatus = false;
+            //adding dynamically found xpaths to serial
+            if (possibleNextNodes.Count > 0)
+            {
+              Serial modifiedSerial = await _context.Serials.FindAsync(serial.id);
+              (modifiedSerial.otherNextChLinkXPaths ??= new List<string>()).AddRange(possibleNextNodes);
+            }
+            _context.SaveChanges();
+            return (1, chapterCount);
+          }
+        }
+        
         //load next chapter page
         htmlDoc.LoadHtml(pageContent);
+        //really fucking hate this, but need it b/c of twig 5-9
+        prev3Url = prev2Url;
+        prev2Url = prevUrl;
+        prevUrl = currentUrl;
+        currentUrl = nextFullUrl;
         firstLoop = false;
       }
     }
 
 
-    public static async Task<string> CheckUrl(HttpResponseMessage response, string link)
+    public static async Task<(string, string?)> CheckUrl(HttpResponseMessage response, string link)
     {
       string pageContent = "";
       HttpClient client2 = new HttpClient();
+      int retrys = 0;
+      string? redirectLink = null;
 
-      if (response.IsSuccessStatusCode)
+      while (true)
       {
-        pageContent = await response.Content.ReadAsStringAsync();
-      }
-      //this one is for redirects, not a solution for every possible redirect <-TODO, but works for TGAB -- docs
-      else if (response.StatusCode == HttpStatusCode.MovedPermanently)
-      {
-        Uri? redirectLink = response.Headers.Location;
-        if (redirectLink != null)
+        if(retrys > 10) { break; }
+        if (response.IsSuccessStatusCode)
         {
-          HttpResponseMessage newResponse = await client2.GetAsync(redirectLink);
-          newResponse.EnsureSuccessStatusCode();
-          pageContent = await newResponse.Content.ReadAsStringAsync();
+          pageContent = await response.Content.ReadAsStringAsync();
+          break;
         }
-      }
-      //this one is handling 429 "too many requests" rate limiting issues, probably imperfectly, for Katalepsis -- docs
-      else if (response.StatusCode == HttpStatusCode.TooManyRequests)
-      {
-        Console.WriteLine("Too many requests. Waiting...");
-        bool rateLimited = true;
-        int rateOfLimit = 1;
-
-        while(rateLimited) {
-          if (response.Headers.TryGetValues("Retry-After", out IEnumerable<string> values))
+        //this one is for redirects, works for TGAB -- docs
+        else if ((int)response.StatusCode >= 300 && (int)response.StatusCode <= 399)
+        {
+          Uri? redirectLinkUri = response.Headers.Location;
+          if (redirectLinkUri != null)
           {
-            if (int.TryParse(values.FirstOrDefault(), out int retryAfterSeconds))
+            HttpResponseMessage newResponse = await client2.GetAsync(redirectLinkUri);
+            response = newResponse;
+            redirectLink = redirectLinkUri.ToString();
+            retrys++;
+            continue;
+          }
+        }
+        //this one is handling 429 "too many requests" rate limiting issues, probably imperfectly, for Katalepsis -- docs
+        else if (response.StatusCode == HttpStatusCode.TooManyRequests)
+        {
+          Console.WriteLine("Too many requests. Waiting...");
+          bool rateLimited = true;
+          int rateOfLimit = 1;
+
+          while (rateLimited)
+          {
+            if (response.Headers.TryGetValues("Retry-After", out IEnumerable<string> values))
             {
-              Console.WriteLine("Rate limit exceeded, retrying after provided amount of time...");
-              await Task.Delay(retryAfterSeconds * 1000);
+              if (int.TryParse(values.FirstOrDefault(), out int retryAfterSeconds))
+              {
+                Console.WriteLine("Rate limit exceeded, retrying after provided amount of time...");
+                await Task.Delay(retryAfterSeconds * 1000);
+              }
+              else
+              {
+                Console.WriteLine($"invalid Retry-After value, waiting {rateOfLimit} seconds");
+                await Task.Delay(1000 * rateOfLimit);
+                rateOfLimit++;
+              }
             }
             else
             {
-              Console.WriteLine($"invalid Retry-After value, waiting {rateOfLimit} seconds");
+              Console.WriteLine($"no retry-after, waiting {rateOfLimit} second");
               await Task.Delay(1000 * rateOfLimit);
               rateOfLimit++;
             }
+            response = await client2.GetAsync(link);
+            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            {
+              Console.WriteLine("Still rate-limited. Waiting...");
+            }
+            else
+            {
+              rateLimited = false;
+            }
           }
-          else
+
+          try
           {
-            Console.WriteLine($"no retry-after, waiting {rateOfLimit} second");
-            await Task.Delay(1000 * rateOfLimit);
-            rateOfLimit++;
+            response.EnsureSuccessStatusCode();
+            pageContent = await response.Content.ReadAsStringAsync();
+            break;
           }
-          response = await client2.GetAsync(link);
-          if (response.StatusCode == HttpStatusCode.TooManyRequests)
+          catch
           {
-            Console.WriteLine("Still rate-limited. Waiting...");
-          }
-          else
-          {
-            rateLimited = false;
+            retrys++;
+            continue;
           }
         }
-
-        response.EnsureSuccessStatusCode();
-        pageContent = await response.Content.ReadAsStringAsync();
       }
 
       client2.Dispose();
-      return pageContent;
+      return (pageContent, redirectLink);
     }
 
     //Update all serials

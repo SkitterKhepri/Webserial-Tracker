@@ -19,17 +19,28 @@ export class AdminNewserialComponent {
 
   image:HTMLImageElement = new Image()
   imageDataUri:any = null
-  imagePath:any = "assets/img/sveta.jpg"
+  imagePath:any = "assets/img/placeholder.png"
 
   constructor(private serServ:SerialsService, private userServ : UsersService, private authServ : AuthServiceService){}
 
-  addSerial(authorName:any){
+  addSerial(){
     this.isAdding = true
     let formData = new FormData()
-    formData.append("serial", this.newSerial)
-    if(authorName == ""){
-      authorName = "unknown"
+    formData.append("title", this.newSerial.title)
+    formData.append("status", this.newSerial.status)
+    formData.append("firstCh", this.newSerial.firstCh)
+    formData.append("home", this.newSerial.home)
+    formData.append("nextChLinkXPath", this.newSerial.nextChLinkXPath)
+    formData.append("secondaryNextChLinkXPath", this.newSerial.secondaryNextChLinkXPath)
+    formData.append("otherNextChLinkXPaths", this.newSerial.otherNextChLinkXPaths)
+    formData.append("titleXPath", this.newSerial.titleXPath)
+    formData.append("reviewStatus", "true")
+    // formData.append("serial", this.newSerial)
+    if(this.newSerial.authorName == ""){
+      this.newSerial.authorName = "unknown"
     }
+    formData.append("authorName", this.newSerial.authorName)
+    console.log(formData)
     this.serServ.addSerial(formData).subscribe({
       next: () => {
         this.isAdding = false

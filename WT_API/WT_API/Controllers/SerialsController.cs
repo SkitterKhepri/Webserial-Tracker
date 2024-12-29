@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
+using System.IO;
 
 namespace WT_API.Controllers
 {
@@ -36,6 +37,7 @@ namespace WT_API.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<SerialDTO>>> GetSerials()
     {
+      System.IO.File.WriteAllText(Path.Combine("..\\assets\\img", "test.txt"), "Test write permission");
       if (_context.Serials == null)
       {
         return NotFound();
@@ -78,7 +80,7 @@ namespace WT_API.Controllers
       Serial serial = await _context.Serials.FindAsync(id);
 
       SerialDTO serialDTO = new SerialDTO(serial);
-      
+
       serialDTO.chapters = await _context.Chapters.Where((ch) => ch.serialId == serialDTO.id).ToListAsync();
       serialDTO.author = await _context.Authors.FindAsync(serialDTO.authorId);
 
@@ -104,7 +106,7 @@ namespace WT_API.Controllers
         return NotFound();
       }
       var (result, updatedChs) = await _scraper.UpdateSerial(id);
-      if(result == 2)
+      if (result == 2)
       {
         return StatusCode(StatusCodes.Status406NotAcceptable, "Serial awaiting approval");
       }
@@ -118,7 +120,7 @@ namespace WT_API.Controllers
 
     [HttpPut("{id}")]
     //[Authorize(Roles = "SAdmin,Admin")] //TODO need
-    public async Task<IActionResult> PutSerial(int id, CompleteSerial compSerial)
+    public async Task<IActionResult> PutSerial(int id, [FromForm] CompleteSerial compSerial)
     {
       if (id != compSerial.id)
       {
@@ -147,21 +149,30 @@ namespace WT_API.Controllers
       }
 
       //banner image saving
-      if (compSerial.banerUpload != null)
+      if (compSerial.bannerUpload != null)
       {
-        IFormFile banner = compSerial.banerUpload;
+        IFormFile banner = compSerial.bannerUpload;
         string path = @"..\assets\img";
-        string imgPath = Path.Combine(path, compSerial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
 
         Directory.CreateDirectory(path);
 
-        using (Stream fileStream = banner.OpenReadStream())
-        using (Image image = Image.Load(fileStream))
+        string oldBanner = Path.Combine(path, NormaliseSerialTitle(serial.title), ".png");
+        if (System.IO.File.Exists(oldBanner))
         {
-          image.Save(imgPath, new PngEncoder());
+          System.IO.File.Delete(oldBanner);
         }
 
-        serial.bannerPath = imgPath;
+        string newImgPath = Path.Combine(path, NormaliseSerialTitle(compSerial.title) + ".png");
+
+        using (Stream fileStream = banner.OpenReadStream())
+        {
+          using (Image image = Image.Load(fileStream))
+          {
+            image.Save(newImgPath, new PngEncoder());
+          }
+        }
+
+        serial.bannerPath = newImgPath;
       }
 
       serial.CompleteSerialMapper(compSerial);
@@ -217,30 +228,38 @@ namespace WT_API.Controllers
       }
 
       //banner image saving
-      if (newSerial.banerUpload != null)
+      if (newSerial.bannerUpload != null)
       {
-        IFormFile banner = newSerial.banerUpload;
+        IFormFile banner = newSerial.bannerUpload;
         string path = @"..\assets\img";
-        string imgPath = Path.Combine(path, newSerial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
-
         Directory.CreateDirectory(path);
 
-        using (Stream fileStream = banner.OpenReadStream())
-        using (Image image = Image.Load(fileStream))
+        string oldBanner = Path.Combine(path, NormaliseSerialTitle(serial.title), ".png");
+        if (System.IO.File.Exists(oldBanner))
         {
-          image.Save(imgPath, new PngEncoder());
+          System.IO.File.Delete(oldBanner);
         }
 
-        serial.bannerPath = imgPath;
+        string newImgPath = Path.Combine(path, NormaliseSerialTitle(newSerial.title) + ".png");
+
+        using (Stream fileStream = banner.OpenReadStream())
+        {
+          using (Image image = Image.Load(fileStream))
+          {
+            image.Save(newImgPath, new PngEncoder());
+          }
+        }
+
+        serial.bannerPath = newImgPath;
       }
 
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
 
       //Adding chapters
-      var (result, addedChs) = (0, 0);      
+      var (result, addedChs) = (0, 0);
       (result, addedChs) = await _scraper.AddSerialChapters(serial);
-      
+
 
       return Ok(new { serial.title, addedChs });
     }
@@ -257,7 +276,7 @@ namespace WT_API.Controllers
       if (_context.Serials.Where(ser => ser.title == newSerial.title).Any())
       {
         Console.WriteLine("Serial with same title already in DB");
-        return StatusCode(StatusCodes.Status417ExpectationFailed, "Serial already added");
+        return StatusCode(StatusCodes.Status417ExpectationFailed, "Serial already added/proposed");
       }
 
       Serial serial = new Serial(newSerial);
@@ -281,22 +300,31 @@ namespace WT_API.Controllers
       {
         IFormFile banner = newSerial.bannerUpload;
         string path = @"..\assets\img";
-        string imgPath = Path.Combine(path, newSerial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
 
         Directory.CreateDirectory(path);
 
-        using (Stream fileStream = banner.OpenReadStream())
-        using (Image image = Image.Load(fileStream))
+        string oldBanner = Path.Combine(path, NormaliseSerialTitle(serial.title), ".png");
+        if (System.IO.File.Exists(oldBanner))
         {
-          image.Save(imgPath, new PngEncoder());
+          System.IO.File.Delete(oldBanner);
         }
 
-        serial.bannerPath = imgPath;
+        string newImgPath = Path.Combine(path, NormaliseSerialTitle(newSerial.title) + ".png");
+
+        using (Stream fileStream = banner.OpenReadStream())
+        {
+          using (Image image = Image.Load(fileStream))
+          {
+            image.Save(newImgPath, new PngEncoder());
+          }
+        }
+
+        serial.bannerPath = newImgPath;
       }
 
       _context.Serials.Add(serial);
       await _context.SaveChangesAsync();
-      
+
       return Ok();
     }
 
@@ -321,13 +349,24 @@ namespace WT_API.Controllers
       {
         _context.Chapters.Remove(chapter);
       }
+
+      //author delete if they have no more serials
+
       Author author = await _context.Authors.FindAsync(serial.authorId);
       List<Serial> authorWorks = await _context.Serials.Where(ser => ser.authorId == author.id).ToListAsync();
-      if(authorWorks.Count == 1)
+      if (authorWorks.Count == 1)
       {
         _context.Authors.Remove(author);
       }
       await _context.SaveChangesAsync();
+
+      //image delete
+      string path = @"..\assets\img";
+      string oldBanner = Path.Combine(path, NormaliseSerialTitle(serial.title) + ".png");
+      if (System.IO.File.Exists(oldBanner))
+      {
+        System.IO.File.Delete(oldBanner);
+      }
 
       return NoContent();
     }
@@ -343,6 +382,26 @@ namespace WT_API.Controllers
         return NotFound();
 
       serial.reviewStatus = review.reviewStatus;
+
+      _context.SaveChanges();
+
+      return StatusCode(StatusCodes.Status202Accepted);
+    }
+
+    [HttpPost("/Serials/like")]
+    //[Authorize] //TODO need
+    public async Task<IActionResult> LikeUnLike(string userId, int serId)
+    {
+      LikedSerial? like = await _context.LikedSerials.Where(like => like.userId == userId && like.serialId == serId).FirstOrDefaultAsync();
+
+      if (like == null) {
+        like = new LikedSerial();
+        like.serialId = serId;
+        like.userId = userId;
+        _context.LikedSerials.Add(like);
+      }
+
+      _context.LikedSerials.Remove(like);
 
       _context.SaveChanges();
 
@@ -368,11 +427,11 @@ namespace WT_API.Controllers
     [HttpPost("images/")]
     public IActionResult SaveImage([FromForm] ProposedSerial serial)
     {
-      if(serial.bannerUpload != null)
+      if (serial.bannerUpload != null)
       {
         IFormFile banner = serial.bannerUpload;
         string path = @"..\img";
-        string imgPath = Path.Combine(path, serial.title.Trim().Replace(' ', '_').Replace(':', '_') + ".png");
+        string imgPath = Path.Combine(path, NormaliseSerialTitle(serial.title) + ".png");
 
         Directory.CreateDirectory(path);
 
@@ -386,7 +445,7 @@ namespace WT_API.Controllers
         return Ok();
       }
       return StatusCode(405);
-      
+
     }
 
     private string GetMimeType(string fileName)
@@ -406,5 +465,11 @@ namespace WT_API.Controllers
     {
       return (_context.Serials?.Any(e => e.id == id)).GetValueOrDefault();
     }
+
+    private string NormaliseSerialTitle(string title)
+    {
+      return title.Trim().Replace(' ', '_').Replace(':', '_');
+    }
+
   }
 }

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class UsersService {
 
-  justReg:any = new BehaviorSubject(false)
+  justReg:any = new BehaviorSubject("")
 
   constructor(private http : HttpClient, private storage:StorageService) {}
 

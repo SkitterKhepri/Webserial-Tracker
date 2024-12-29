@@ -32,7 +32,7 @@ export class RegistrationComponent {
         this.validEmail = true
         this.userServ.register(user).subscribe({
           next: ()=>{
-            this.userServ.justReg.next(true)
+            this.userServ.justReg.next("reg")
             this.router.navigate(['/login'])
             this.newUser = {}
           },

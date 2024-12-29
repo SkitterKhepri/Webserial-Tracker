@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
+using System.Web;
 
 namespace WT_API.Controllers
 {
@@ -158,11 +159,13 @@ namespace WT_API.Controllers
       User currentUser = await _userManager.FindByEmailAsync(email);
       if (currentUser == null)
       {
+        //TODO have this, not reveal no email caveman
+        //return StatusCode(StatusCodes.Status500InternalServerError, "Email service couldn't send email");
         return NotFound("User doesn't exist");
       }
 
-      string token = await _userManager.GeneratePasswordResetTokenAsync(currentUser);
-      string resetLink = $"http://localhost:4200/resetPassword?token={token}&id={currentUser.Id}";
+      string urlToken = HttpUtility.UrlEncode(await _authService.GenerateResetToken(currentUser));
+      string resetLink = $"http://localhost:4200/resetPassword?token={urlToken}&id={currentUser.Id}";
       string htmlTemplate = System.IO.File.ReadAllText("..\\assets\\email\\passReset.html");
       string emailBody = htmlTemplate
         .Replace("{{name}}", currentUser.UserName)
@@ -191,7 +194,7 @@ namespace WT_API.Controllers
 
       if (result == 1)
       {
-        return Ok($"{message}");
+        return Ok(new {message = $"{message}" });
       }
       return BadRequest(message);
     }
