@@ -199,8 +199,7 @@
               "ViewState": "AQIAAFsBAAAAAAAAAAD4v28BAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-24T19:30:39.544Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -210,7 +209,7 @@
               "RelativeDocumentMoniker": "WT_API\\Services\\ScrapingService.cs",
               "ToolTip": "E:\\Idegen\\Coding\\Webserial-Tracker\\WT_API\\WT_API\\Services\\ScrapingService.cs",
               "RelativeToolTip": "WT_API\\Services\\ScrapingService.cs",
-              "ViewState": "AQIAAFAAAAAAAAAAAAApwAABAAAAAAAA",
+              "ViewState": "AQIAAJEAAAAAAAAAAAAiwJUAAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-02T17:33:52.837Z",
               "IsPinned": true,
@@ -227,8 +226,7 @@
               "ViewState": "AQIAALMAAAAAAAAAAAApwMQAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-29T11:52:05.935Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -254,8 +252,7 @@
               "ViewState": "AQIAAEMAAAAAAAAAAAA5wHAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-29T11:13:45.546Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -271,8 +268,7 @@
               "RelativeToolTip": "WT_API\\Program.cs",
               "ViewState": "AQIAAD0AAAAAAAAAAADwv1cAAAAKAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-13T12:11:00.759Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-07-13T12:11:00.759Z"
             },
             {
               "$type": "Document",
@@ -296,8 +292,7 @@
               "RelativeToolTip": "WT_API\\Models\\CompleteSerial.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAADAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-02T16:49:30.908Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-02T16:49:30.908Z"
             },
             {
               "$type": "Document",
@@ -342,8 +337,7 @@
               "RelativeToolTip": "WT_API\\Controllers\\AuthenticationController.cs",
               "ViewState": "AQIAACwAAAAAAAAAAAAAwDQAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-29T11:51:53.81Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-29T11:51:53.81Z"
             },
             {
               "$type": "Document",

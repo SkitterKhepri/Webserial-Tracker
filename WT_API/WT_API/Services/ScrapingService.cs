@@ -16,8 +16,8 @@ namespace WT_API.Services
     {
       _context = context;
     }
-    
-    public async Task<(int, int)> AddSerialChapters(Serial serial, string? startUrl = null)
+
+    public async Task<(int, int)> AddSerialChapters(Serial serial, string? startUrl = null, string? prevChURL = null)
     {
 
       if (startUrl == null)
@@ -46,12 +46,16 @@ namespace WT_API.Services
       Chapter? lastChapter = null;
 
       string currentUrl = redirectedLink == null ? startUrl : redirectedLink;
-      string prevUrl = startUrl;
+      string? prevUrl = prevChURL == null ? null : prevChURL;
+
+      //TODO delete
+      prevUrl = "https://twigserial.wordpress.com/2015/05/28/lips-sealed-3-4/";
+
       string? prev2Url = null;
       string? prev3Url = null;
       bool firstLoop = true;
 
-      List<string> possibleNextNodes = new List<string>();
+      List<string> possibleNextNodesXpath = new List<string>();
       List<string> wrongNextNodes = new List<string>();
 
 
@@ -88,11 +92,12 @@ namespace WT_API.Services
       while (true)
       {
         success = false;
-        foreach(string possibleNextCh in possibleNextNodes)
+        foreach(string possibleNextChXPath in possibleNextNodesXpath)
         {
-          if((possibleNextCh != prevUrl || possibleNextCh != prev2Url || possibleNextCh != prev3Url) && !wrongNextNodes.Contains(possibleNextCh))
+          string? nextUrl = htmlDoc.DocumentNode.SelectSingleNode(possibleNextChXPath)?.Attributes["href"]?.Value;
+          if ((nextUrl != prevUrl && nextUrl != prev2Url && nextUrl != prev3Url) && !wrongNextNodes.Contains(possibleNextChXPath))
           {
-            nextCH = htmlDoc.DocumentNode.SelectSingleNode(possibleNextCh);
+            nextCH = htmlDoc.DocumentNode.SelectSingleNode(possibleNextChXPath);
             break;
           }
         }
@@ -103,7 +108,7 @@ namespace WT_API.Services
           nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.nextChLinkXPath);
           if (nextCH != null)
           {
-            if (wrongNextNodes.Contains(nextCH.XPath) || ((nextCH.Attributes["href"].Value == prevUrl || nextCH.Attributes["href"].Value == prev2Url || nextCH.Attributes["href"].Value == prev3Url) && !firstLoop))
+            if (wrongNextNodes.Contains(nextCH.XPath) || nextCH.Attributes["href"].Value == prevUrl || nextCH.Attributes["href"].Value == prev2Url || nextCH.Attributes["href"].Value == prev3Url)
             {
               nextCH = null;
             }
@@ -116,7 +121,7 @@ namespace WT_API.Services
               nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
               if (nextCH != null)
               {
-                if (wrongNextNodes.Contains(nextCH.XPath) || ((nextCH.Attributes["href"].Value == prevUrl || nextCH.Attributes["href"].Value == prev2Url || nextCH.Attributes["href"].Value == prev3Url) && !firstLoop))
+                if (wrongNextNodes.Contains(nextCH.XPath) && ((nextCH.Attributes["href"].Value == prevUrl && nextCH.Attributes["href"].Value == prev2Url && nextCH.Attributes["href"].Value == prev3Url) && !firstLoop))
                 {
                   nextCH = null;
                 }
@@ -135,7 +140,8 @@ namespace WT_API.Services
                   {
                     if (!wrongNextNodes.Contains(nextCH.XPath) && nextCH.Attributes.Contains("href"))
                     {
-                      if (nextCH.Attributes["href"].Value != prevUrl || nextCH.Attributes["href"].Value != prev2Url || nextCH.Attributes["href"].Value != prev3Url)
+                      if (nextCH.Attributes["href"].Value != prevUrl && nextCH.Attributes["href"].Value != prev2Url && nextCH.Attributes["href"].Value != prev3Url &&
+                      nextCH.Attributes["href"].Value != currentUrl)
                       {
                         Console.WriteLine($"Found next ch in otherXpaths, leads to: {nextCH.Attributes["href"].Value}");
                         break;
@@ -147,20 +153,20 @@ namespace WT_API.Services
               }
               if (nextCH == null)
               {
-                if (nextChInnerText != null)
+                Console.WriteLine("Trying inner-text and rel search...");
+                List<HtmlNode> allNodes = htmlDoc.DocumentNode.Descendants().Where(nd => nd.Attributes.Contains("href")).ToList();
+                foreach (HtmlNode node in allNodes)
                 {
-                  Console.WriteLine("Trying inner-text search...");
-                  List<HtmlNode> allNodes = htmlDoc.DocumentNode.Descendants().Where(nd => nd.Attributes.Contains("href")).ToList();
-                  foreach (HtmlNode node in allNodes)
+                  if (node.InnerText?.Trim() == nextChInnerText?.Trim() || node.Attributes["rel"]?.Value == "next")
                   {
-                    if (node.InnerText.Trim() == nextChInnerText.Trim() && (node.Attributes["href"].Value != prevUrl || node.Attributes["href"].Value != prev2Url || node.Attributes["href"].Value != prev3Url))
+                    if(node.Attributes["href"].Value != prevUrl && node.Attributes["href"].Value != prev2Url && node.Attributes["href"].Value != prev3Url)
                     {
-                      possibleNextNodes.Add(node.XPath);
+                      possibleNextNodesXpath.Add(node.XPath);
                       nextCH = node;
                       break;
                     }
                   }
-                }
+                } 
                 if (nextCH == null)
                 {
                   //adding last chapter before returning
@@ -174,15 +180,16 @@ namespace WT_API.Services
                       lastChapter = addedCh;
                       chapterCount++;
                     }
+                    else { Console.WriteLine("Adding chapter failed - 1"); }
                   }
                   lastChapter.isLastChapter = true;
                   lastChapter.reviewStatus = false;
                   Console.WriteLine($"{chapterCount} new chapter(s) added");
                   //adding dynamically found xpaths to serial
-                  if (possibleNextNodes.Count > 0)
+                  if (possibleNextNodesXpath.Count > 0)
                   {
                     Serial modifiedSerial = await _context.Serials.FindAsync(serial.id);
-                    (modifiedSerial.otherNextChLinkXPaths ??= new List<string>()).AddRange(possibleNextNodes);
+                    (modifiedSerial.otherNextChLinkXPaths ??= new List<string>()).AddRange(possibleNextNodesXpath);
                   }
                   _context.SaveChanges();
                   return (1, chapterCount);
@@ -217,7 +224,7 @@ namespace WT_API.Services
 
         (pageContent, redirectedLink) = await CheckUrl(response, nextFullUrl);
         nextFullUrl = redirectedLink ?? nextFullUrl;
-
+        if(redirectedLink == nextFullUrl) { Console.WriteLine("Redirect happened"); }
         //After the first loop, adding current chapter
         if (!firstLoop)
         {
@@ -231,13 +238,14 @@ namespace WT_API.Services
           }
           else
           {
+            Console.WriteLine("Adding chapter failed - 2");
             lastChapter.isLastChapter = true;
             lastChapter.reviewStatus = false;
             //adding dynamically found xpaths to serial
-            if (possibleNextNodes.Count > 0)
+            if (possibleNextNodesXpath.Count > 0)
             {
               Serial modifiedSerial = await _context.Serials.FindAsync(serial.id);
-              (modifiedSerial.otherNextChLinkXPaths ??= new List<string>()).AddRange(possibleNextNodes);
+              (modifiedSerial.otherNextChLinkXPaths ??= new List<string>()).AddRange(possibleNextNodesXpath);
             }
             _context.SaveChanges();
             return (1, chapterCount);
@@ -252,6 +260,13 @@ namespace WT_API.Services
         prevUrl = currentUrl;
         currentUrl = nextFullUrl;
         firstLoop = false;
+        redirectedLink = null;
+        nextCH = null;
+        if(currentUrl == prevUrl)
+        {
+          Console.WriteLine("Not moved, prev and current urls match, terminating...");
+          return (0, 999);
+        }
       }
     }
 
@@ -337,7 +352,6 @@ namespace WT_API.Services
           }
         }
       }
-
       client2.Dispose();
       return (pageContent, redirectLink);
     }
@@ -351,8 +365,9 @@ namespace WT_API.Services
       foreach (Serial serial in serials)
       {
         if (serial.reviewStatus) {
-          Chapter? lastChapter = _context.Chapters.Where(ch => ch.isLastChapter).OrderByDescending(ch => ch.id).FirstOrDefault();
-          
+          Chapter? lastChapter = _context.Chapters.Where(ch => ch.isLastChapter == true && ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+          Chapter? prevChapter = _context.Chapters.Where(ch => ch.isLastChapter == false && ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+
           string lastLink;
           if (lastChapter == null)
           {
@@ -366,7 +381,7 @@ namespace WT_API.Services
             }
             lastLink = lastChapter.link;
           }
-          var (result, chCount) = await AddSerialChapters(serial, lastLink);
+          var (result, chCount) = await AddSerialChapters(serial, lastLink, prevChapter?.link);
           finalChCount += chCount;
         }
       }
@@ -384,7 +399,9 @@ namespace WT_API.Services
       }
       if (serial.reviewStatus) {
 
-        Chapter? lastChapter = _context.Chapters.OrderByDescending(ch => ch.id).FirstOrDefault(ch => ch.serialId == serial.id);
+        Chapter? lastChapter = _context.Chapters.Where(ch => ch.isLastChapter == true && ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+        Chapter? prevChapter = _context.Chapters.Where(ch => ch.isLastChapter == false && ch.serialId == serial.id).OrderByDescending(ch => ch.id).FirstOrDefault();
+
         string lastLink;
         if (lastChapter == null)
         {
@@ -395,7 +412,7 @@ namespace WT_API.Services
           lastLink = lastChapter.link;
         }
 
-        return await AddSerialChapters(serial, lastLink);
+        return await AddSerialChapters(serial, lastLink, prevChapter?.link);
       }
       else return (2, 0);
     }
