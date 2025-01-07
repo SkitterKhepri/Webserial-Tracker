@@ -115,8 +115,9 @@ namespace WT_API.Services
           }
           if (nextCH == null)
           {
-            if (serial.secondaryNextChLinkXPath != null)
+            if (serial.secondaryNextChLinkXPath != null && serial.secondaryNextChLinkXPath != "")
             {
+              if(serial.secondaryNextChLinkXPath == "") { Console.WriteLine("nem null..."); }
               Console.WriteLine("Trying secondary XPath...");
               nextCH = htmlDoc.DocumentNode.SelectSingleNode(serial.secondaryNextChLinkXPath);
               if (nextCH != null)
@@ -130,12 +131,14 @@ namespace WT_API.Services
 
             if (nextCH == null)
             {
-              if (serial.otherNextChLinkXPaths != null)
+              if (serial.otherNextChLinkXPaths != null && serial.otherNextChLinkXPaths.Count() != 0)
               {
                 Console.WriteLine("Trying other XPaths...");
                 foreach (string xpath in serial.otherNextChLinkXPaths)
                 {
-                  nextCH = htmlDoc.DocumentNode.SelectSingleNode(xpath);
+                  if(xpath != null) {
+                    nextCH = htmlDoc.DocumentNode.SelectSingleNode(xpath);
+                  }
                   if (nextCH != null)
                   {
                     if (!wrongNextNodes.Contains(nextCH.XPath) && nextCH.Attributes.Contains("href"))

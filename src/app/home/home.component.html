@@ -17,9 +17,10 @@
                 <div class="col-5" *ngFor="let chapter of reviewedSerialChapters | slice:-5">
                     <div class="col">
                       <div class="card p-1 h-100 w-100">
+                        <img [src]="'https://localhost:7286/Serials/images/' + getSerial(chapter.serialId)!.title" class="card-img-top">
                         <div class="card-body">
                           <h5 class="card-title">
-                              <a class="link-opacity-75-hover" href="{{chapter?.link}}" target="_blank">{{chapter?.title}}</a>
+                              <a class="link-opacity-75-hover" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
                           </h5>
                           <p>--------------</p>
                           <ng-container *ngIf="getSerial(chapter?.serialId) as serial">
@@ -40,6 +41,7 @@
                 <div class="col-5" *ngFor="let serial of reviewedSerials | slice:-5">
                     <div class="col">
                         <div class="card p-1 h-100 w-100">
+                          <img [src]="'https://localhost:7286/Serials/images/' + serial.title" class="card-img-top">
                           <div class="card-body">
                             <h5 class="card-title">
                               <a class="link-opacity-75-hover" href="{{serial.home}}" target="_blank">{{serial.title}}</a>

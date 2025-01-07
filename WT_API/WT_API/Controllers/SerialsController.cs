@@ -37,7 +37,6 @@ namespace WT_API.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<SerialDTO>>> GetSerials()
     {
-      System.IO.File.WriteAllText(Path.Combine("..\\assets\\img", "test.txt"), "Test write permission");
       if (_context.Serials == null)
       {
         return NotFound();
@@ -409,18 +408,34 @@ namespace WT_API.Controllers
     }
 
     //Get's serialTitle serial's cover image
-    [HttpGet("images/{fileName}")]
+    [HttpGet("images/{serialTitle}")]
     public IActionResult GetImage(string serialTitle)
     {
-      string filePath = Path.Combine("..", "assets", "img", $"{serialTitle}.png");
+      string normalSerTit = NormaliseSerialTitle(serialTitle);
+      string filePath = Path.Combine("..", "assets", "img", $"{normalSerTit}.png");
 
-      if (!System.IO.File.Exists(filePath))
+      FileInfo fileInfo = new FileInfo(filePath);
+
+      if (!fileInfo.Exists)
       {
         return NotFound();
       }
 
-      var image = System.IO.File.OpenRead(filePath);
-      return File(image, GetMimeType(image.Name));
+      string eTag = fileInfo.LastWriteTimeUtc.Ticks.ToString();
+
+      if (Request.Headers["If-None-Match"] == eTag)
+      {
+        return StatusCode(StatusCodes.Status304NotModified);
+      }
+
+      FileStream image = fileInfo.OpenRead();
+      string mimeType = "image/" + fileInfo.Extension.TrimStart('.').ToLower();
+
+      Response.Headers["ETag"] = eTag;
+      Response.Headers["Cache-Control"] = "public, max-age=1800";
+      Response.Headers["Response-Type"] = "blob";
+
+      return File(image, mimeType);
     }
 
     //TEST TODO delete
@@ -468,7 +483,7 @@ namespace WT_API.Controllers
 
     private string NormaliseSerialTitle(string title)
     {
-      return title.Trim().Replace(' ', '_').Replace(':', '_');
+      return title.Trim().Replace(' ', '_').Replace(':', '_').Replace('-', '_').ToLower();
     }
 
   }

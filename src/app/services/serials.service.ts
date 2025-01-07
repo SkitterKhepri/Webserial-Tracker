@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -15,8 +15,8 @@ export class SerialsService {
 
   //TODO undo this
   getSerials() : Observable<any>{
-    return this.http.get("/assets/test_serial.json")
-    // return this.http.get(this.apiUrl)
+    // return this.http.get("/assets/test_serial.json")
+    return this.http.get(this.apiUrl)
   }
 
   getSerial(id:any){
@@ -65,11 +65,8 @@ export class SerialsService {
     return this.http.patch(this.apiUrl + id + "/approve", reviewStatus, {headers})
   }
 
-  //Test TODO delete
-  saveImage(proposedSerial:any){
-    const token = this.storage.getItem("token")
-    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.post(this.apiUrl + "images/", proposedSerial, {headers})
-  }
-
+  // getImage(serialTitle:string){
+  //   // let headers = new HttpHeaders({ "If-None-Match" : })
+  //   return this.http.get(this.apiUrl + "images/" + serialTitle, {responseType : 'blob', observe : "response"})
+  // }
 }
