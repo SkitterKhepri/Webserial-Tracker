@@ -4,6 +4,7 @@ import { BaseService } from '../services/base.service';
 import { UsersService } from '../services/users.service';
 import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-log-in',
@@ -20,7 +21,7 @@ export class LogInComponent implements OnDestroy {
   sendingEmail:boolean = false
   fError:string = ""
 
-  constructor(private userServ:UsersService, private http:HttpClient, private storage:StorageService, private router:Router){
+  constructor(private userServ:UsersService, private http:HttpClient, private storage:StorageService, private router:Router, private authServ:AuthService){
     this.userServ.justReg.subscribe((reg:any) => this.redirectFrom = reg)
     const navigation = router.getCurrentNavigation()
     if (navigation?.extras.state){
@@ -39,7 +40,7 @@ export class LogInComponent implements OnDestroy {
         this.storage.setItem("loginTime", JSON.stringify(new Date().getTime()))
         this.isLoading = false
       },
-      error: (error) => {
+      error: (error:any) => {
         this.errorMessage = error.message
         this.isLoading = false
       },
@@ -52,7 +53,7 @@ export class LogInComponent implements OnDestroy {
 
   forgotten(email:string){
     this.sendingEmail = true
-    this.userServ.resetPassReq(email).subscribe({
+    this.authServ.resetPassReq(email).subscribe({
       error: (error:any) => {
         this.fError = error.message
         this.sendingEmail = false

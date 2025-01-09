@@ -24,7 +24,7 @@
                           </h5>
                           <p>--------------</p>
                           <ng-container *ngIf="getSerial(chapter?.serialId) as serial">
-                            <a class="link-opacity-50-hover" href="{{serial.home}}">
+                            <a class="link-opacity-50-hover" [routerLink]="['/serialDetails/' + serial.id]">
                               <h6 class="">{{serial.title}}</h6>
                             </a>
                             <p class="">by {{serial.author.name}}</p>
@@ -44,7 +44,7 @@
                           <img [src]="'https://localhost:7286/Serials/images/' + serial.title" class="card-img-top">
                           <div class="card-body">
                             <h5 class="card-title">
-                              <a class="link-opacity-75-hover" href="{{serial.home}}" target="_blank">{{serial.title}}</a>
+                              <a class="link-opacity-75-hover" [routerLink]="['/serialDetails/' + serial.id]">{{serial.title}}</a>
                               <p class="">by {{serial.author.name}}</p>
                             </h5>
                             <ng-container *ngIf="getSerialChaptersCount(serial.id) as chNum">

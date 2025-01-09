@@ -2,12 +2,14 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Injectable } from '@angular/core';
 import { Observable, catchError, tap, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
+import { UsersService } from './users.service';
+import { AuthService } from './auth-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SerialsService {
-  constructor(private http : HttpClient, private storage:StorageService) {
+  constructor(private http : HttpClient, private storage:StorageService, private authServ:AuthService) {
     // this.getSerials()
   }
 
@@ -15,8 +17,8 @@ export class SerialsService {
 
   //TODO undo this
   getSerials() : Observable<any>{
-    // return this.http.get("/assets/test_serial.json")
-    return this.http.get(this.apiUrl)
+    return this.http.get("/assets/test_serial.json")
+    // return this.http.get(this.apiUrl)
   }
 
   getSerial(id:any){
@@ -65,8 +67,19 @@ export class SerialsService {
     return this.http.patch(this.apiUrl + id + "/approve", reviewStatus, {headers})
   }
 
-  // getImage(serialTitle:string){
-  //   // let headers = new HttpHeaders({ "If-None-Match" : })
-  //   return this.http.get(this.apiUrl + "images/" + serialTitle, {responseType : 'blob', observe : "response"})
+  likeSerial(id:any){
+    const token = this.storage.getItem("token")
+    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+    let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
+    return this.http.post(this.apiUrl + "like", like, {headers})
+  }
+
+  //TODO do
+  // isLiked(id:any){
+  //   const token = this.storage.getItem("token")
+  //   const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+  //   let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
+  //   return this.http.get(this.apiUrl + "like", like, {headers})
   // }
+
 }

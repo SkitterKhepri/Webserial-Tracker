@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { CanActivateFn } from '@angular/router';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthService } from '../services/auth-service.service';
 
 export const adminGuard: CanActivateFn = (route, state) => {
-  const authServ = inject(AuthServiceService)
+  const authServ = inject(AuthService)
 
   if(authServ.getCurrentClaims() == null){
     authServ.noAdminClaims()

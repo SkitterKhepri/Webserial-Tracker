@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthService } from '../services/auth-service.service';
 import { SerialsService } from '../services/serials.service';
 import { UsersService } from '../services/users.service';
 import { Serial } from '../models';
@@ -21,7 +21,7 @@ export class AdminNewserialComponent {
   imageDataUri:any = null
   imagePath:any = "assets/img/placeholder.png"
 
-  constructor(private serServ:SerialsService, private userServ : UsersService, private authServ : AuthServiceService){}
+  constructor(private serServ:SerialsService, private userServ : UsersService, private authServ : AuthService){}
 
   addSerial(){
     this.isAdding = true
@@ -34,6 +34,7 @@ export class AdminNewserialComponent {
     formData.append("secondaryNextChLinkXPath", this.newSerial.secondaryNextChLinkXPath)
     formData.append("otherNextChLinkXPaths", this.newSerial.otherNextChLinkXPaths)
     formData.append("titleXPath", this.newSerial.titleXPath)
+    formData.append("description", this.newSerial.description)
     formData.append("reviewStatus", "true")
     // formData.append("serial", this.newSerial)
     if(this.newSerial.authorName == ""){

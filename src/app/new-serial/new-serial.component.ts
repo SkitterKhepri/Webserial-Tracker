@@ -4,7 +4,7 @@ import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SerialsService } from '../services/serials.service';
 import { SerialStatuses } from '../enums/serial-statuses.enum';
 import { UsersService } from '../services/users.service';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-new-serial',

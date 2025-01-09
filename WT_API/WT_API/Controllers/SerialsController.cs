@@ -391,7 +391,12 @@ namespace WT_API.Controllers
     //[Authorize] //TODO need
     public async Task<IActionResult> LikeUnLike(string userId, int serId)
     {
-      LikedSerial? like = await _context.LikedSerials.Where(like => like.userId == userId && like.serialId == serId).FirstOrDefaultAsync();
+      if(!SerialExists(serId) || !UserExists(userId))
+      {
+        return NotFound("Serial or user not found, dumbass");
+      }
+
+      LikedSerial? like = await _context.LikedSerials.FindAsync(userId, serId);
 
       if (like == null) {
         like = new LikedSerial();
@@ -399,8 +404,10 @@ namespace WT_API.Controllers
         like.userId = userId;
         _context.LikedSerials.Add(like);
       }
-
-      _context.LikedSerials.Remove(like);
+      else
+      {
+        _context.LikedSerials.Remove(like);
+      }
 
       _context.SaveChanges();
 
@@ -479,6 +486,11 @@ namespace WT_API.Controllers
     private bool SerialExists(int id)
     {
       return (_context.Serials?.Any(e => e.id == id)).GetValueOrDefault();
+    }
+
+    private bool UserExists(string id)
+    {
+      return (_context.Users?.Any(u => u.Id == id)).GetValueOrDefault();
     }
 
     private string NormaliseSerialTitle(string title)

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SearchService } from '../services/search.service';
 import { UsersService } from '../services/users.service';
 import { StorageService } from '../services/storage.service';
-import { AuthServiceService } from '../services/auth-service.service';
+import { AuthService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -13,7 +13,7 @@ export class NavBarComponent {
 
   selectedSearch:any = "ser"
 
-  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService, private authServ : AuthServiceService){}
+  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService, private authServ : AuthService){}
 
   search(searchType:any, input:any){
     this.seaServ.emptyResults()

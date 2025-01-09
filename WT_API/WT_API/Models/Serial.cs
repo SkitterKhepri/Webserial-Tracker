@@ -21,6 +21,7 @@ namespace WT_API.Models
     public string? secondaryNextChLinkXPath { get; set; }
     public string? otherNextChLinkXPathsJSONString { get; set; }
     public string? titleXPath { get; set; }
+    public string? description { get; set; }
     [DefaultValue(false)]
     public bool reviewStatus { get; set; }
 
@@ -56,6 +57,7 @@ namespace WT_API.Models
       this.secondaryNextChLinkXPath = newSerial.secondaryNextChLinkXPath;
       this.otherNextChLinkXPaths = newSerial.otherNextChLinkXPaths;
       this.titleXPath = newSerial.titleXPath;
+      this.description = newSerial.description;
       this.reviewStatus = newSerial.reviewStatus;
     }
 

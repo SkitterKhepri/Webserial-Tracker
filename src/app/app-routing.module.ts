@@ -14,6 +14,7 @@ import { adminGuard } from './guard/admin.guard';
 import { AdminNewserialComponent } from './admin-newserial/admin-newserial.component';
 import { LikedSerialsComponent } from './liked-serials/liked-serials.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { SerialDetailsComponent } from './serial-details/serial-details.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -33,6 +34,7 @@ const routes: Routes = [
   // {path: 'adminNewSerial', canActivate: [authGuard, adminGuard], component: AdminNewserialComponent},
   {path: 'adminNewSerial', component: AdminNewserialComponent},
   {path: 'resetPassword', component: PasswordResetComponent},
+  {path: 'serialDetails/:id', component: SerialDetailsComponent},
   {path: '', component: HomeComponent}
 ];
 

@@ -19,6 +19,7 @@ import { AdminChaptersComponent } from './admin-chapters/admin-chapters.componen
 import { AdminNewserialComponent } from './admin-newserial/admin-newserial.component';
 import { LikedSerialsComponent } from './liked-serials/liked-serials.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { SerialDetailsComponent } from './serial-details/serial-details.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     AdminChaptersComponent,
     AdminNewserialComponent,
     LikedSerialsComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    SerialDetailsComponent
   ],
   imports: [
     BrowserModule,

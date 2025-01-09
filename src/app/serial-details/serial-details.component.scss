@@ -1,0 +1,23 @@
+#imageDisplay{
+    width: 16rem;
+    height: 24rem;
+}
+
+#description{
+    // max-height: 24rem;
+    // overflow: hidden;
+}
+
+.collapse {
+    &:not(.show) {
+      height: 24rem;
+      display: contents;
+    }
+}
+.collapsing{
+    height: 24rem;
+}
+
+.clickable{
+    cursor: pointer;
+}

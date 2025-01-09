@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WT_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d01020e8bce33fe8c9af3259816f9980afd2217c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e77b71f90d827783716bd67f33e80dfebcfc25d")]
 [assembly: System.Reflection.AssemblyProductAttribute("WT_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WT_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

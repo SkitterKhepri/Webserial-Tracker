@@ -5,21 +5,28 @@ using WT_API.Models;
 
 namespace WT_API.Data
 {
-    
-    public class Context : IdentityDbContext<User>
+
+  public class Context : IdentityDbContext<User>
+  {
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-          optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WT_API;Trusted_Connection=True;MultipleActiveResultSets=true");
-        }
+      optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WT_API;Trusted_Connection=True;MultipleActiveResultSets=true");
+    }
 
-        public Context() { }
+    public Context() { }
 
-        public Context(DbContextOptions<Context> options) : base(options) { }
-       
-        public DbSet<Models.Serial> Serials { get; set; }
-        public DbSet<Models.Chapter> Chapters { get; set; }
-        public DbSet<Models.Author> Authors { get; set; }
-        public DbSet<Models.LikedSerial> LikedSerials { get; set; }
+    public Context(DbContextOptions<Context> options) : base(options) { }
+
+    public DbSet<Models.Serial> Serials { get; set; }
+    public DbSet<Models.Chapter> Chapters { get; set; }
+    public DbSet<Models.Author> Authors { get; set; }
+    public DbSet<Models.LikedSerial> LikedSerials { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+
+      modelBuilder.Entity<LikedSerial>().HasKey(ls => new { ls.userId, ls.serialId });
+    }
   }
 }
