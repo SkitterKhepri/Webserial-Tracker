@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SearchService } from '../services/search.service';
+import { FilterService } from '../services/filter.service';
 import { UsersService } from '../services/users.service';
 import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth-service.service';
@@ -13,25 +13,25 @@ export class NavBarComponent {
 
   selectedSearch:any = "ser"
 
-  constructor(private seaServ:SearchService,private storage:StorageService, private userServ:UsersService, private authServ : AuthService){}
+  constructor(private filter:FilterService,private storage:StorageService, private userServ:UsersService, private authServ : AuthService){}
 
   search(searchType:any, input:any){
-    this.seaServ.emptyResults()
+    this.filter.emptyResults()
     switch (searchType) {
       case "ser":
-        this.seaServ.searchSerial(input)
+        this.filter.searchSerial(input)
         break
 
       case "ch":
-        this.seaServ.searchChapter(input)
+        this.filter.searchChapter(input)
         break
         
       case "au":
-        this.seaServ.searchAuthor(input)
+        this.filter.searchAuthor(input)
         break
         
       default:
-        this.seaServ.searchSerial(input)
+        this.filter.searchSerial(input)
     }
   }
 

@@ -35,9 +35,10 @@ export class LogInComponent implements OnDestroy {
       next: (loggedUser:any) => {
         this.storage.setItem("token", loggedUser.token)
         this.router.navigate(['/home'])
-        this.storage.setItem("userClaims", JSON.stringify(loggedUser.roles))
+        this.storage.setItem("userClaims", loggedUser.roles)
         this.storage.setItem("user", loggedUser.user)
-        this.storage.setItem("loginTime", JSON.stringify(new Date().getTime()))
+        this.storage.setItem("loginTime", new Date().getTime())
+        this.storage.setItem("likes", loggedUser.likes)
         this.isLoading = false
       },
       error: (error:any) => {

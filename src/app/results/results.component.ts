@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from '../services/search.service';
+import { FilterService } from '../services/filter.service';
 import { SerialsService } from '../services/serials.service';
 import { ChaptersService } from '../services/chapters.service';
 import { AuthorsService } from '../services/authors.service';
@@ -9,67 +9,27 @@ import { AuthorsService } from '../services/authors.service';
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.css']
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent {
 
-  reviewedSerials:any[] = []
+  filteredSerials:any[] = []
 
-  ngOnInit(): void {
+
+  constructor(private filter:FilterService, private serServ:SerialsService, private chServ:ChaptersService, private authorServ:AuthorsService){}
+
+  //order-bys
+  updateRecencyOrder(ascending:boolean){
+    this.filteredSerials.sort((a:any, b:any) =>{
+      let maxX = Math.max(...a.chapters.map((chapter:any) => chapter.id));
+      let maxY = Math.max(...b.chapters.map((chapter:any) => chapter.id));
+      return ascending ? maxX - maxY : maxY - maxX
+    })
   }
 
-  searchedSer:any
-  searchedCh:any
-  searchedAu: { [key: string]: any[] } = {}
-
-
-  constructor(private search:SearchService, private serServ:SerialsService, private chServ:ChaptersService, private authorServ:AuthorsService){
-    
-    this.getSerials()
-    
-    this.serResults()
-    this.chResults()
-    this.auResults()
-  }
-  getSerials(){
-    this.serServ.getSerials().subscribe(
-      (serials:any)=> {
-        serials.forEach((serial:any) => {
-          if(serial.reviewStatus){
-            this.reviewedSerials.push(serial)
-          }  
-        });
-      }
-    )
-  }
-
-  getSerial(id:any) :any {
-    return this.reviewedSerials.find((ser:any) => ser.id ==id)
-  }
-
-  getSerialChaptersCount(id:any){
-    let serial = this.getSerial(id)
-    if (serial != undefined){
-      return serial.chapters.length
-    }
-    else{
-      return null
-    }
-  }
-
-  serResults(){
-    this.search.serResults.subscribe(
-      (res:any) => this.searchedSer = res
-    )
-  }
-
-  chResults(){
-    this.search.chResults.subscribe(
-      (res:any) => this.searchedCh = res
-    )
-  }
-
-  auResults(){
-    this.search.auResults.subscribe(
-      (res:any) => this.searchedAu = res
-    )
+  chNumOrder(ascending:boolean){
+    this.filteredSerials.sort((a:any, b:any) =>{
+      let aNum = a.chapters.length
+      let bNum = b.chapters.length
+      return ascending ? aNum - bNum : bNum - aNum
+    })
   }
 }

@@ -22,7 +22,6 @@ export class RegistrationComponent {
 
   constructor(private userServ:UsersService, private router:Router){}
 
-
   register(user:any, pass1:any, pass2:any){
     this.isLoading = true
     this.passwordCheck(pass1, pass2)
@@ -32,8 +31,6 @@ export class RegistrationComponent {
         this.validEmail = true
         this.userServ.register(user).subscribe({
           next: ()=>{
-            this.userServ.justReg.next("reg")
-            this.router.navigate(['/login'])
             this.newUser = {}
           },
           error: (error) => {
@@ -42,6 +39,8 @@ export class RegistrationComponent {
           },
           complete: () => {
             this.isLoading = false
+            this.userServ.justReg.next("reg")
+            this.router.navigate(['/login'])
           }
         })
       }

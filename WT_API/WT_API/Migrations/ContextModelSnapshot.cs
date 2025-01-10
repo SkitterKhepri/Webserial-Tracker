@@ -169,7 +169,7 @@ namespace WT_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Authors");
+                    b.ToTable("Authors", (string)null);
                 });
 
             modelBuilder.Entity("WT_API.Models.Chapter", b =>
@@ -212,7 +212,7 @@ namespace WT_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Chapters");
+                    b.ToTable("Chapters", (string)null);
                 });
 
             modelBuilder.Entity("WT_API.Models.LikedSerial", b =>
@@ -225,7 +225,7 @@ namespace WT_API.Migrations
 
                     b.HasKey("userId", "serialId");
 
-                    b.ToTable("LikedSerials");
+                    b.ToTable("LikedSerials", (string)null);
                 });
 
             modelBuilder.Entity("WT_API.Models.Serial", b =>
@@ -276,7 +276,7 @@ namespace WT_API.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Serials");
+                    b.ToTable("Serials", (string)null);
                 });
 
             modelBuilder.Entity("WT_API.Models.User", b =>

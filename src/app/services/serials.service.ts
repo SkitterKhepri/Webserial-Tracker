@@ -4,12 +4,13 @@ import { Observable, catchError, tap, throwError } from 'rxjs';
 import { StorageService } from './storage.service';
 import { UsersService } from './users.service';
 import { AuthService } from './auth-service.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SerialsService {
-  constructor(private http : HttpClient, private storage:StorageService, private authServ:AuthService) {
+  constructor(private http : HttpClient, private storage:StorageService, private authServ:AuthService, private userServ:UsersService, private router:Router) {
     // this.getSerials()
   }
 
@@ -68,18 +69,21 @@ export class SerialsService {
   }
 
   likeSerial(id:any){
-    const token = this.storage.getItem("token")
+    if(this.authServ.getCurrentUser() != null){
+      const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
     let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
     return this.http.post(this.apiUrl + "like", like, {headers})
+    }
+    else{
+      this.userServ.justReg.next("reg")
+      this.router.navigate(['/login'])
+      return null
+    }
   }
 
-  //TODO do
-  // isLiked(id:any){
-  //   const token = this.storage.getItem("token")
-  //   const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-  //   let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
-  //   return this.http.get(this.apiUrl + "like", like, {headers})
-  // }
+  isLiked(serId:any){
+    return this.storage.getItem("likes").contains(serId)
+  }
 
 }

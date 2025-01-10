@@ -1,0 +1,24 @@
+.cardCover{
+    width: 9rem;
+    height: 12rem;
+}
+.card{
+    height: 12rem;
+    width: 24rem;
+}
+
+.cardBody{
+    width: 96% !important;
+}
+
+.cardText{
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    line-clamp: 4 !important;
+    -webkit-line-clamp: 4 !important;
+    overflow: hidden;
+}
+
+.clickable{
+    cursor: pointer;
+}

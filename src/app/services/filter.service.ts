@@ -7,7 +7,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class FilterService {
 
   reviewedSerials:any = []
   reviewedSerialChapters:any = []
@@ -18,7 +18,7 @@ export class SearchService {
   chResults = new BehaviorSubject([])
   auResults = new BehaviorSubject({})
 
-  constructor(private serServ:SerialsService, private chServ:ChaptersService, private auServ:AuthorsService) {
+  constructor(private serServ:SerialsService) {
     this.getData()
   }
 
@@ -39,6 +39,50 @@ export class SearchService {
         })
       }
     )
+  }
+
+  //TODO
+  //filter:
+  statusFil(statusNum:number[]){
+    let filteredSer:any = []
+    statusNum.forEach(
+      (serStat:number) => {
+        filteredSer = filteredSer.concat(this.reviewedSerials.filter((serial:any) => serial.status == serStat))
+      }
+    )
+    return filteredSer
+  }
+
+  //ranges
+  chNumFil(){
+
+  }
+
+  auNameFil(name:any){
+    let filteredSer = this.reviewedSerials.filter(
+      (serial:any) => {
+        serial.author.name == name
+      }
+    )
+    return filteredSer
+  }
+
+  serTitleFil(title:any){
+    let filteredSer = this.reviewedSerials.filter(
+      (serial:any) => {
+        serial.title == title
+      }
+    )
+    return filteredSer
+  }
+
+  //order-bys
+  updateRecencyOrder(ascending:boolean){
+
+  }
+
+  chNumOrder(ascending:boolean){
+
   }
 
   auSerials(auId:any){

@@ -1,6 +1,66 @@
 <div class="conatiner main">
-    <h4 class="m-2">Search Results:</h4>
-    <div class="container">
+    <h4 class="m-1">Search Results:</h4>
+
+
+    <div class="container ms-4 p-0">
+        <div class="row">
+            <div class="col-sm-4 m-2" *ngFor="let serial of filteredSerials">
+                <div class="card overflow-hidden border border-4 rounded-4">
+                    <div class="row h-100 pt-0">
+                        <div class="col-auto p-0">
+                            <img src="assets/img/twigheader5.png" class="clickable cardCover card-img-top" [alt]="serial.title">
+                        </div>
+                        <div class="col h-100 m-0 p-0 ps-1 overflow-hidden">
+                            <div class="cardBody p-0 mb-0 h-100 w-100 card-body">
+                                <h5 class="card-title">{{serial.title}}</h5>
+                                <small>By {{serial.author.name}}</small>
+                                <div class="cardText card-text text-break">{{serial.description}}</div>
+                                <div>
+                                    <a class="clickable link-opacity-75-hover" [href]="serial.home" >Start reading!</a>
+                                    <a class="clickable float-end link-opacity-75-hover pe-3" [routerLink]="['/serialDetails/' + serial.id]">More...</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- 
+    <div class="card  border border-4 rounded-4">
+        <div class="row h-100 pt-0">
+            <div class="col-auto p-0">
+                <img src="assets/img/sveta.jpg" class="clickable cardCover card-img-top" alt="...">
+            </div>
+            <div class="col h-100 m-0 p-0 overflow-hidden border border-primary">
+                <div class="p-0 mb-0 card-body border border-success">
+                    <div class="row bg-secondary p-0">
+                        <h5 class="card-title">serial.title</h5>
+                    </div>
+                    <div class="row bg-secondary-subtle">
+                        <small>By serial.author.name</small>
+                    </div>
+                    <div class="row h-50 pe-3">
+                        <div class="card-text text-break">lmagdsnglahdgzhawsssssssssssssssssssssssssssssssssssssssssss  ssssssssssssssssssss ss ss ssssssssssssssssss  ssssssssssssssssssssssss fsf sdsfsfsfsdsdsfsfafafasfasfbgaskhjfgaskfdlghaslfgaslfgéskfhaaasssssssdfulzgegh</div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-start">
+                            <a class="clickable link-opacity-75-hover" href="serial.home" >Start reading!</a>
+                        </div>
+                        <div class="col text-end">
+                            <a class="clickable link-opacity-75-hover pe-3">More...</a> [routerLink]="['/serialDetails/' + serial.id]"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+
+    <!-- <div class="container">
 
         <div *ngIf="searchedCh != []">
             <div *ngFor="let chapter of searchedCh">
@@ -54,5 +114,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
