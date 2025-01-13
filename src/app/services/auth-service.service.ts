@@ -14,7 +14,7 @@ export class AuthService {
 
   private readonly apiUrl = 'https://localhost:7286/api/'
 
-  constructor(private http : HttpClient, private storage:StorageService, private route : Router, private userServ : UsersService) { }
+  constructor(private http : HttpClient, private storage:StorageService, private router : Router, private userServ : UsersService) { }
 
   getCurrentClaims(){
     return JSON.parse(this.storage.getItem("userClaims"))
@@ -25,17 +25,25 @@ export class AuthService {
   }
 
   logOut(){
-    this.storage.clear()
-    this.route.navigate(['/home'])
+    this.storage.remove("token")
+    this.storage.remove("user")
+    this.storage.remove("userClaims")
+    this.storage.remove("loginTime")
+    this.storage.remove("likes")
+    this.router.navigate(['/home'])
   }
 
   logoutGoLogin(){
-    this.storage.clear()
-    this.route.navigate(['/login'], {state: {sessionExp : true}})
+    this.storage.remove("token")
+    this.storage.remove("user")
+    this.storage.remove("userClaims")
+    this.storage.remove("loginTime")
+    this.storage.remove("likes")
+    this.router.navigate(['/login'], {state: {sessionExp : true}})
   }
 
   noAdminClaims(){
-    this.route.navigate(['/home'])
+    this.router.navigate(['/home'])
   }
   
   isSessionExpired(): boolean {    

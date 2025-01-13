@@ -34,12 +34,12 @@ export class LogInComponent implements OnDestroy {
     this.userServ.logIn(user).subscribe({
       next: (loggedUser:any) => {
         this.storage.setItem("token", loggedUser.token)
-        this.router.navigate(['/home'])
         this.storage.setItem("userClaims", loggedUser.roles)
         this.storage.setItem("user", loggedUser.user)
         this.storage.setItem("loginTime", new Date().getTime())
         this.storage.setItem("likes", loggedUser.likes)
         this.isLoading = false
+        this.router.navigate(['/home'])
       },
       error: (error:any) => {
         this.errorMessage = error.message

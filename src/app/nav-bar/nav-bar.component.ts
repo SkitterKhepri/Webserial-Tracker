@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FilterService } from '../services/filter.service';
-import { UsersService } from '../services/users.service';
-import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth-service.service';
+import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,27 +12,17 @@ import { AuthService } from '../services/auth-service.service';
 export class NavBarComponent {
 
   selectedSearch:any = "ser"
+  // lastSearched:string = ""
 
-  constructor(private filter:FilterService,private storage:StorageService, private userServ:UsersService, private authServ : AuthService){}
+  constructor(private filter:FilterService, private router:Router, private authServ : AuthService, private storage:StorageService){
+    // this.lastSearched = storage.getItem("filters")[this.selectedSearch] ? storage.getItem("filters")[this.selectedSearch] : ""
+  }
 
   search(searchType:any, input:any){
-    this.filter.emptyResults()
-    switch (searchType) {
-      case "ser":
-        this.filter.searchSerial(input)
-        break
-
-      case "ch":
-        this.filter.searchChapter(input)
-        break
-        
-      case "au":
-        this.filter.searchAuthor(input)
-        break
-        
-      default:
-        this.filter.searchSerial(input)
-    }
+    this.storage.remove("filters")
+    let filters = { [searchType] : input }
+    this.storage.setItem("filters", filters)
+    this.router.navigate(['/results'])
   }
 
   logOut(){

@@ -13,11 +13,14 @@ export class StorageService {
 
   getItem(key:any) {
     const stored = localStorage.getItem(key)
-    return stored ? JSON.parse(stored) : null
+    if(stored){
+      return JSON.parse(stored)
+    }
+    return null
   }
 
-  clear() {
-    localStorage.clear();
+  remove(key:any) {
+    localStorage.removeItem(key);
   }
 
 }
