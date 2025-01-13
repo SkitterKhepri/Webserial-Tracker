@@ -1,7 +1,43 @@
 <div class="conatiner main">
+    <!-- <div *ngIf="areThereFilters(currentFilters)" class="container p-0"> -->
+    <div *ngIf="true" class="container-fluid p-0 mx-0 ">
+        <div class="bg-secondary-subtle m-2 pt-1 pb-2 pe-2 text-end rounded-5">
+            <div class="hstack gap-2">
+                <div class="p-2 text-nowrap">Current filters:</div>
+                <div class="vr"></div>
+                <div *ngIf="currentFilters.ser" class="d-flex align-items-center p-0">
+                    <span class="text-nowrap">Serial title</span>
+                    <input class="titleInput form-control form-control-sm ms-1" type="text" [value]="currentFilters.ser">
+                    <i class="bi bi-x-circle ms-1"></i>
+                </div>
+                <div *ngIf="currentFilters.ser && currentFilters.au" class="vr"></div>
+                <div *ngIf="currentFilters.au" class="p-2 d-flex align-items-center">
+                    <span class="text-nowrap">Author name:</span>
+                    <input class="auInput form-control form-control-sm ms-1" type="text" [value]="currentFilters.au">
+                    <i class="bi bi-x-circle ms-1"></i>
+                </div>
+                <div *ngIf="(currentFilters.ser || currentFilters.au) && currentFilters.chNum" class="vr"></div>
+                <div *ngIf="currentFilters.chNum?.from || currentFilters.chNum?.to" class="p-2 d-flex align-items-center">
+                    <span class="text-nowrap">Chapters:</span>
+                    <input class="filterInput form-control form-control-sm ms-1" disabled type="text" 
+                    [value]="currentFilters.chNum.from ? (currentFilters.chNum.to ? currentFilters.chNum.from + ' - ' + currentFilters.chNum.to : currentFilters.chNum.from + ' - ...') : (currentFilters.chNum.to ? '... - ' + currentFilters.chNum.to : '...')">
+                    <i class="bi bi-x-circle ms-1"></i>
+                </div>
+                <div *ngIf="(currentFilters.ser || currentFilters.au || currentFilters.chNum) && currentFilters.status" class="vr"></div>
+                <div *ngIf="currentFilters.status" class="d-flex align-items-center">
+                    <span>Status:</span>
+                    <select class="filterSelect form-select form-select-sm ms-1" aria-label="Small select example">
+                        <option [selected]="currentFilters.status == complete.value" #complete value="1">Complete</option>
+                        <option [selected]="currentFilters.status == ongoing.value" #ongoing value="2">Ongoing</option>
+                        <option [selected]="currentFilters.status == hiatus.value" #hiatus value="3">Hiatus</option>
+                        <option [selected]="currentFilters.status == abandoned.value" #abandoned value="4">Abandoned</option>
+                    </select>
+                    <i class="bi bi-x-circle ms-1"></i>
+                </div>
+            </div>
+        </div>
+    </div>
     <h4 class="m-1">Search Results:</h4>
-
-
     <div class="container ms-4 p-0">
         <div class="row">
             <div class="col-sm-4 m-2" *ngFor="let serial of filteredSerials">
@@ -26,93 +62,4 @@
             </div>
         </div>
     </div>
-<!-- 
-    <div class="card  border border-4 rounded-4">
-        <div class="row h-100 pt-0">
-            <div class="col-auto p-0">
-                <img src="assets/img/sveta.jpg" class="clickable cardCover card-img-top" alt="...">
-            </div>
-            <div class="col h-100 m-0 p-0 overflow-hidden border border-primary">
-                <div class="p-0 mb-0 card-body border border-success">
-                    <div class="row bg-secondary p-0">
-                        <h5 class="card-title">serial.title</h5>
-                    </div>
-                    <div class="row bg-secondary-subtle">
-                        <small>By serial.author.name</small>
-                    </div>
-                    <div class="row h-50 pe-3">
-                        <div class="card-text text-break">lmagdsnglahdgzhawsssssssssssssssssssssssssssssssssssssssssss  ssssssssssssssssssss ss ss ssssssssssssssssss  ssssssssssssssssssssssss fsf sdsfsfsfsdsdsfsfafafasfasfbgaskhjfgaskfdlghaslfgaslfgéskfhaaasssssssdfulzgegh</div>
-                    </div>
-                    <div class="row">
-                        <div class="col text-start">
-                            <a class="clickable link-opacity-75-hover" href="serial.home" >Start reading!</a>
-                        </div>
-                        <div class="col text-end">
-                            <a class="clickable link-opacity-75-hover pe-3">More...</a> [routerLink]="['/serialDetails/' + serial.id]"
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-
-
-
-
-    <!-- <div class="container">
-
-        <div *ngIf="searchedCh != []">
-            <div *ngFor="let chapter of searchedCh">
-                <div id="'chapter' + {{chapter.id}}" class="card p-1 h-100 w-100 m-2">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                          <a class="link-opacity-75-hover" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
-                      </h5>
-                      <p>--------------</p>
-                      <ng-container *ngIf="getSerial(chapter.serialId) as serial">
-                        <a class="link-opacity-50-hover" href="{{serial.home}}">
-                          <h6 class="">{{serial.title}}</h6>
-                        </a>
-                        <p class="">by {{serial.author.name}}</p>
-                      </ng-container>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div *ngIf="searchedSer != []">
-            <div *ngFor="let serial of searchedSer">
-                <div id="'serial' + {{serial.id}}" class="card p-1 h-100 w-100 m-2">
-                    <div class="card-body">
-                      <h5 class="card-title">
-                        <a class="link-opacity-75-hover" href="{{serial.home}}" target="_blank">{{serial.title}}</a>
-                        <p class="">by {{serial.author.name}}</p>
-                      </h5>
-                      <ng-container *ngIf="getSerialChaptersCount(serial.id) as chNum">
-                          <p>with {{chNum}} chapters</p>
-                      </ng-container>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div *ngIf="searchedAu != {}">
-            <div *ngFor="let author of searchedAu | keyvalue">
-                <div id="'author' + {{author.key}}" class="card p-1 h-100 w-100 m-2">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            {{author.key}}
-                        </h5>
-                        <p>Works:</p>
-                        <div *ngFor="let serial of author.value">
-                            <a class="link-opacity-50-hover" href="{{serial.home}}">
-                                <h6 class="">{{serial.title}}</h6>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>

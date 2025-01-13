@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FilterService } from '../services/filter.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
+import { SerialsService } from '../services/serials.service';
 
 @Component({
   selector: 'app-results',
@@ -10,16 +11,49 @@ import { StorageService } from '../services/storage.service';
 })
 export class ResultsComponent implements OnInit{
 
+  reviewedSerials:any[] = []
+  authors:any[] = []
+  reviewedSerialChapters:any[] = []
   filteredSerials:any[] = []
+
+  currentFilters:any = null
 
   routerSubscription:any
   
 
-  constructor(private filterServ:FilterService, private storage:StorageService, private router:Router){}
+  constructor(private serServ:SerialsService, private filterServ:FilterService, private storage:StorageService, private router:Router){
+
+  }
   
+  getData(){
+    this.reviewedSerials = []
+    this.serServ.getSerials().subscribe(
+      (serials:any)=> {
+        serials.forEach((serial:any) => {
+          if(serial.reviewStatus){
+            this.reviewedSerials.push(serial)
+            this.authors.push(serial.author)
+            serial.chapters.forEach((ch:any) => {
+              this.reviewedSerialChapters.push(ch)
+            });
+          }
+        })
+        this.filterSerials()
+      }
+    )
+
+    this.currentFilters.au = "Wildbow"
+    this.currentFilters.chNum = {}
+    this.currentFilters.chNum.from = "100"
+    this.currentFilters.chNum.to = "200"
+    this.currentFilters.status = "1"
+
+  }
+
 
   ngOnInit(): void {
-    this.filterSerials()
+    this.currentFilters = this.storage.getItem("filters")
+    this.getData()
     this.routerSubscription = this.router.events.subscribe((event:any) => {
       if (event instanceof NavigationEnd && event.url === '/results') {
         this.refreshResults();
@@ -28,12 +62,13 @@ export class ResultsComponent implements OnInit{
   }
 
   private refreshResults(): void {
+    this.currentFilters = this.storage.getItem("filters")
     this.filterSerials()
   }
 
   filterSerials(updateO?:boolean , serialO?:boolean, chO?:boolean){
     const filters = this.storage.getItem("filters");
-    this.filteredSerials = this.filterServ.filterSerials(filters)
+    this.filteredSerials = this.filterServ.filterSerials(filters, this.reviewedSerials)
     if(updateO !== undefined){
       this.updateRecencyOrder(updateO)
     }
@@ -67,5 +102,9 @@ export class ResultsComponent implements OnInit{
       let bNum = b.chapters.length
       return ascending ? aNum - bNum : bNum - aNum
     })
+  }
+
+  areThereFilters(currFil:any){
+    return currFil == "{\"ser\":\"\"}"
   }
 }

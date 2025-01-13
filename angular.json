@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Webserial_tracker:build:production"
+              "buildTarget": "Webserial_tracker:build:production"
             },
             "development": {
-              "browserTarget": "Webserial_tracker:build:development"
+              "buildTarget": "Webserial_tracker:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -75,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Webserial_tracker:build"
+            "buildTarget": "Webserial_tracker:build"
           }
         },
         "test": {

@@ -9,54 +9,22 @@ import { BehaviorSubject, Subject } from 'rxjs';
 })
 export class FilterService {
 
-  reviewedSerials:any = []
-  reviewedSerialChapters:any = []
-  reviewedSerialIds:any = []
-  authors:any = []
-
-  // serResults = new BehaviorSubject([])
-  // chResults = new BehaviorSubject([])
-  // auResults = new BehaviorSubject({})
-
-  constructor(private serServ:SerialsService) {
-    this.getData()
-  }
-
-  getData(){
-    this.reviewedSerials = []
-    this.reviewedSerialIds = []
-    this.serServ.getSerials().subscribe(
-      (serials:any)=> {
-        serials.forEach((serial:any) => {
-          if(serial.reviewStatus){
-            this.reviewedSerials.push(serial)
-            this.reviewedSerialIds.push(serial.id)
-            this.authors.push(serial.author)
-            serial.chapters.forEach((ch:any) => {
-              this.reviewedSerialChapters.push(ch)
-            });
-          }
-        })
-      }
-    )
-  }
-
+  constructor(private serServ:SerialsService) {}
 
   //filter:
-  filterSerials(filters:any){
-    let tbFiltered = this.reviewedSerials
+  filterSerials(filters:any, tbFilteredSerials:any){
     let filteredSerials:any = null
     if(filters.ser != undefined){
       if(filteredSerials == null){
-        filteredSerials = this.serTitleFil(filters.ser, tbFiltered)
+        filteredSerials = this.serTitleFil(filters.ser, tbFilteredSerials as Array<{}>)
       }
       else{
-        filteredSerials = this.serTitleFil(filters.ser, filteredSerials)
+        filteredSerials = this.serTitleFil(filters.ser, filteredSerials as Array<{}>)
       }
     }
     if(filters.au != undefined){
       if(filteredSerials == null){
-        filteredSerials = this.auNameFil(filters.au, tbFiltered)
+        filteredSerials = this.auNameFil(filters.au, tbFilteredSerials)
       }
       else{
         filteredSerials = this.auNameFil(filters.au, filteredSerials)
@@ -64,7 +32,7 @@ export class FilterService {
     }
     if(filters.status !== undefined){
       if(filteredSerials == null){
-        filteredSerials = this.statusFil(filters.status, tbFiltered)
+        filteredSerials = this.statusFil(filters.status, tbFilteredSerials)
       }
       else{
         filteredSerials = this.statusFil(filters.status, filteredSerials)
@@ -72,15 +40,15 @@ export class FilterService {
     }
     if(filters.chNum !== undefined){
       if(filteredSerials == null){
-        filteredSerials = this.chNumFil(filters.chNum, tbFiltered)
+        filteredSerials = this.chNumFil(tbFilteredSerials, filters.chNum.from, filters.chNum.to)
       }
       else{
-        filteredSerials = this.chNumFil(filters.chNum, filteredSerials)
+        filteredSerials = this.chNumFil(filteredSerials, filters.chNum.from, filters.chNum.to)
       }
     }
 
     if(filteredSerials == null){
-      return tbFiltered
+      return tbFilteredSerials
     }
     else{
       return filteredSerials
@@ -98,27 +66,22 @@ export class FilterService {
     return filteredSer
   }
 
-  private chNumFil(serialArray:any, range?:any, from?:number, to?:number){
+  private chNumFil(serialArray:any, from?:number, to?:number){
     let filteredSer = serialArray.filter(
       (serial:any) => {
-        if(from == null && to == null){
-          if(serial.chapters.length > range.start && serial.chapters.length < range.end){
+        if(from != undefined && to == undefined){
+          if(serial.chapters.length >= from){
             filteredSer.push(serial)
           }
-          else if(from != null && to == null){
-            if(serial.chapters.length > from){
-              filteredSer.push(serial)
-            }
+        }
+        else if (from == undefined && to != undefined){
+          if(serial.chapters.length <= to){
+            filteredSer.push(serial)
           }
-          else if (from == null &&to != null){
-            if(serial.chapters.length < to){
-              filteredSer.push(serial)
-            }
-          }
-          else if(from != null && to != null){
-            if(serial.chapters.length > from && serial.chapters.length < to){
-              filteredSer.push(serial)
-            }
+        }
+        else if(from != undefined && to != undefined){
+          if(serial.chapters.length >= from && serial.chapters.length <= to){
+            filteredSer.push(serial)
           }
         }
       }
@@ -135,28 +98,14 @@ export class FilterService {
     return filteredSer
   }
 
-  private serTitleFila(titleSearch:any, serialArray:any){
-    console.log(titleSearch)
-    console.log(serialArray)
-    let filteredSer:any
+  private serTitleFil(titleSearch:any, serialArray:any){
+    let filteredSer:any[] = []
     serialArray.forEach((serial:any) => {
-      console.log(serial)
-      console.log(titleSearch)
-      // if(serial.title.toLowerCase().includes(titleSearch.toLowerCase())){
-      //   filteredSer.push(serial)
-      // }
+      if(serial.title.toLowerCase().includes(titleSearch.toLowerCase())){
+        filteredSer.push(serial)
+      }
     });
-    console.log(filteredSer)
     return filteredSer
-  }
-
-  private serTitleFil(titleSearch:any, serialArray:any[]){
-    if(Array.isArray(serialArray)){
-      console.log(serialArray.length)
-    }
-    // console.log(Array.isArray(serialArray))
-    // console.log(serialArray.length)
-    // console.log(serialArray)
   }
 
   // auSerials(auId:any){

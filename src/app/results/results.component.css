@@ -22,3 +22,18 @@
 .clickable{
     cursor: pointer;
 }
+
+.titleInput{
+    display: inline !important;
+    width: 70% !important;
+}
+
+.auInput{
+    display: inline !important;
+    width: 70% !important;
+}
+
+.filterSelect{
+    display: inline !important;
+    width: 100% !important;
+}
