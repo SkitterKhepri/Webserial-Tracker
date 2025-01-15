@@ -70,16 +70,16 @@
                 </div>
                 <div class="col-md-8 flex-grow-1">
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="radiobtn" id="completed" autocomplete="off" (ngModelChange)="isDataMissing()" #complete [(ngModel)]="newSerial.status" value="1">
+                        <input type="radio" class="btn-check" name="radiobtn" id="completed" (ngModelChange)="isDataMissing()" #complete [(ngModel)]="newSerial.status" value="1">
                         <label class="btn btn-outline-primary" for="completed">Completed</label>
                     
-                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" autocomplete="off" (ngModelChange)="isDataMissing()" #ongoing [(ngModel)]="newSerial.status" value="2">
+                        <input type="radio" class="btn-check" name="radiobtn" id="ongoing" (ngModelChange)="isDataMissing()" #ongoing [(ngModel)]="newSerial.status" value="2">
                         <label class="btn btn-outline-primary" for="ongoing">Ongoing</label>
                     
-                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" autocomplete="off" (ngModelChange)="isDataMissing()" #hiatus [(ngModel)]="newSerial.status" value="3">
+                        <input type="radio" class="btn-check" name="radiobtn" id="hiatus" (ngModelChange)="isDataMissing()" #hiatus [(ngModel)]="newSerial.status" value="3">
                         <label class="btn btn-outline-primary" for="hiatus">Hiatus</label>
 
-                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" autocomplete="off" (ngModelChange)="isDataMissing()" #abandoned [(ngModel)]="newSerial.status" value="4">
+                        <input type="radio" class="btn-check" name="radiobtn" id="abandoned" (ngModelChange)="isDataMissing()" #abandoned [(ngModel)]="newSerial.status" value="4">
                         <label class="btn btn-outline-primary" for="abandoned">Abandoned</label>
                     </div>
                 </div>

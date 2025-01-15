@@ -2,9 +2,14 @@
     width: 9rem;
     height: 12rem;
 }
-.card{
+
+.cardWrapper{
     height: 12rem;
     width: 24rem;
+}
+
+.main{
+    max-width: 100vw!important;
 }
 
 .cardBody{
@@ -36,4 +41,9 @@
 .filterSelect{
     display: inline !important;
     width: 100% !important;
+}
+
+#filters{
+    position: fixed;
+    right: 0;
 }

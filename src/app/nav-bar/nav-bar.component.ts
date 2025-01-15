@@ -3,6 +3,7 @@ import { FilterService } from '../services/filter.service';
 import { AuthService } from '../services/auth-service.service';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
+import { Filters } from '../models/filters';
 
 @Component({
   selector: 'app-nav-bar',
@@ -19,8 +20,9 @@ export class NavBarComponent {
   }
 
   search(searchType:any, input:any){
-    this.storage.remove("filters")
-    let filters = { [searchType] : input }
+    let searchKey = searchType as keyof Filters
+    let filters = new Filters()
+    filters[searchKey] = input ? input : null
     this.storage.setItem("filters", filters)
     this.router.navigate(['/results'])
   }

@@ -1,53 +1,185 @@
-<div class="conatiner main">
-    <!-- <div *ngIf="areThereFilters(currentFilters)" class="container p-0"> -->
-    <div *ngIf="true" class="container-fluid p-0 mx-0 ">
+<div class="container main">
+    <div *ngIf="areThereFilters(currentFilters)" class="container-fluid p-0 mx-0 ">
         <div class="bg-secondary-subtle m-2 pt-1 pb-2 pe-2 text-end rounded-5">
-            <div class="hstack gap-2">
-                <div class="p-2 text-nowrap">Current filters:</div>
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="p-2 text-nowrap">Current filters:</div>
+                </div>
                 <div class="vr"></div>
-                <div *ngIf="currentFilters.ser" class="d-flex align-items-center p-0">
+                <div *ngIf="currentFilters.ser" #ser id="ser" class="d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
                     <span class="text-nowrap">Serial title</span>
                     <input class="titleInput form-control form-control-sm ms-1" type="text" [value]="currentFilters.ser">
-                    <i class="bi bi-x-circle ms-1"></i>
+                    <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(ser.id)"></i>
                 </div>
-                <div *ngIf="currentFilters.ser && currentFilters.au" class="vr"></div>
-                <div *ngIf="currentFilters.au" class="p-2 d-flex align-items-center">
+                <div *ngIf="currentFilters.au" #au id="au" class="p-2 d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
                     <span class="text-nowrap">Author name:</span>
                     <input class="auInput form-control form-control-sm ms-1" type="text" [value]="currentFilters.au">
-                    <i class="bi bi-x-circle ms-1"></i>
+                    <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(au.id)"></i>
                 </div>
-                <div *ngIf="(currentFilters.ser || currentFilters.au) && currentFilters.chNum" class="vr"></div>
-                <div *ngIf="currentFilters.chNum?.from || currentFilters.chNum?.to" class="p-2 d-flex align-items-center">
+                <div *ngIf="currentFilters.chNum?.from || currentFilters.chNum?.to" #chNum id="chNum" class="p-2 d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
                     <span class="text-nowrap">Chapters:</span>
                     <input class="filterInput form-control form-control-sm ms-1" disabled type="text" 
                     [value]="currentFilters.chNum.from ? (currentFilters.chNum.to ? currentFilters.chNum.from + ' - ' + currentFilters.chNum.to : currentFilters.chNum.from + ' - ...') : (currentFilters.chNum.to ? '... - ' + currentFilters.chNum.to : '...')">
-                    <i class="bi bi-x-circle ms-1"></i>
+                    <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(chNum.id)"></i>
                 </div>
-                <div *ngIf="(currentFilters.ser || currentFilters.au || currentFilters.chNum) && currentFilters.status" class="vr"></div>
-                <div *ngIf="currentFilters.status" class="d-flex align-items-center">
-                    <span>Status:</span>
-                    <select class="filterSelect form-select form-select-sm ms-1" aria-label="Small select example">
-                        <option [selected]="currentFilters.status == complete.value" #complete value="1">Complete</option>
-                        <option [selected]="currentFilters.status == ongoing.value" #ongoing value="2">Ongoing</option>
-                        <option [selected]="currentFilters.status == hiatus.value" #hiatus value="3">Hiatus</option>
-                        <option [selected]="currentFilters.status == abandoned.value" #abandoned value="4">Abandoned</option>
-                    </select>
-                    <i class="bi bi-x-circle ms-1"></i>
+                <div *ngIf="currentFilters.status[0]" #status id="status" class="d-flex border-end border-secondary ms-1 pe-2 py-1 ps-1">
+                    <span class="me-2">Status:</span>
+                    <div class="form-check form-check-inline align-self-center">
+                        <input #complete [checked]="currentFilters.status.includes(parseNum(complete.id))" class="form-check-input" type="checkbox" [id]="1" [value]="1">
+                        <label class="form-check-label" for="completed">Completed</label>
+                    </div>
+                    <div class="form-check form-check-inline align-self-center">
+                        <input #ongoing [checked]="currentFilters.status.includes(parseNum(ongoing.id))" class="form-check-input" type="checkbox" [id]="2" [value]="2">
+                        <label class="form-check-label" for="ongoing">Ongoing</label>
+                    </div>
+                    <div class="form-check form-check-inline align-self-center">
+                        <input #hiatus [checked]="currentFilters.status.includes(parseNum(hiatus.id))" class="form-check-input" type="checkbox" [id]="3" [value]="3">
+                        <label class="form-check-label" for="hiatus">Hiatus</label>
+                    </div>
+                    <div class="form-check form-check-inline align-self-center">
+                        <input #abandoned [checked]="currentFilters.status.includes(parseNum(abandoned.id))" class="form-check-input" type="checkbox" [id]="4" [value]="4">
+                        <label class="form-check-label" for="abandoned">Abandoned</label>
+                    </div>
+                    <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(status.id)"></i>
                 </div>
             </div>
         </div>
     </div>
-    <h4 class="m-1">Search Results:</h4>
-    <div class="container ms-4 p-0">
+    <div class="d-flex">
+        <div>
+            <h4 class="text-start m-1">Search Results:</h4>
+        </div>
+        <div class="ms-auto">
+            <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#filters">
+                Filters
+            </button>
+        </div>
+    </div>
+
+    <div class="offcanvas offcanvas-end p-0" id="filters">
+        <div class="offcanvas-header p-2">
+            <h5 class="offcanvas-title">Filters:</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="input-group">
+                        <span class="input-group-text" id="serTitle">Serial title:</span>
+                        <input type="text" class="form-control" placeholder="Title" [(ngModel)]="newFilters.ser">
+                    </div>  
+                </li>
+                <li class="list-group-item">
+                    <div class="input-group">
+                        <span class="input-group-text" id="auName">Author name:</span>
+                        <input type="text" class="form-control" placeholder="Author" [(ngModel)]="newFilters.au">
+                    </div>  
+                </li>
+                <li class="list-group-item">
+                    <div class="accordion" id="filtersAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                    Number of Chapters
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#filtersAccordion">
+                                 <div class="accordion-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input #chnum1 class="form-check-input me-1" type="radio" name="chNum" (click)="clearChNumSelection(chnum1.checked)" [(ngModel)]="selectedChNum" [value]="{from:0, to:100}" id="firstRadio">
+                                                <label class="form-check-label user-select-none" for="firstRadio">0 - 100</label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input #chnum2 class="form-check-input me-1" type="radio" name="chNum" (click)="clearChNumSelection(chnum2.checked)" [(ngModel)]="selectedChNum" [value]="{from:101, to:300}" id="secondRadio">
+                                                <label class="form-check-label user-select-none" for="secondRadio">101 - 300</label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input #chnum3 class="form-check-input me-1" type="radio" name="chNum"(click)="clearChNumSelection(chnum3.checked)" [(ngModel)]="selectedChNum" [value]="{from:301, to:600}" id="thirdRadio">
+                                                <label class="form-check-label user-select-none" for="thirdRadio">301 - 600</label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input #chnum4 class="form-check-input me-1" type="radio" name="chNum" (click)="clearChNumSelection(chnum4.checked)" [(ngModel)]="selectedChNum" [value]="{from:601, to:1000}" id="fourthRadio">
+                                                <label class="form-check-label user-select-none" for="fourthRadio">601 - 1000</label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input #chnum5 class="form-check-input me-1" type="radio" name="chNum" (click)="clearChNumSelection(chnum5.checked)" [(ngModel)]="selectedChNum" [value]="{from:1001, to:null}" id="fifthRadio">
+                                                <label class="form-check-label user-select-none" for="fifthRadio">1000+</label>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="form-check">
+                                                <input #chNum6 class="form-check-input me-1" type="radio" name="chNum" (click)="clearChNumSelection(chNum6.checked)" id="customRadio">
+                                                <label class="form-check-label mb-1 user-select-none" for="customRadio">Custom:</label>
+                                            </div>
+                                            <div class="input-group input-group-sm mb-1">
+                                                <span class="input-group-text user-select-none" id="inputGroup-sizing-sm">From:</span>
+                                                <input #from type="number" [(ngModel)]="newFilters.chNum.from" class="form-control">
+                                            </div>
+                                            <div class="input-group input-group-sm mb-1">
+                                                <span class="input-group-text user-select-none" id="inputGroup-sizing-sm">To:</span>
+                                                <input #to type="number" [(ngModel)]="newFilters.chNum.to" (blur)="to.value < from.value ? to.value = from.value : null" class="form-control">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                    Serial Status
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#filtersAccordion">
+                                <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input #status1 class="form-check-input" (change)="selectedStatuses[0] = status1.checked ? 1 : null" type="checkbox" value="1" id="completed">
+                                        <label class="form-check-label" for="flexCheckDefault">Completed</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input #status2 class="form-check-input" (change)="selectedStatuses[1] = status2.checked ? 2 : null" type="checkbox" value="2" id="ongoing">
+                                        <label class="form-check-label" for="flexCheckChecked">Ongoing</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input #status3 class="form-check-input" (change)="selectedStatuses[2] = status3.checked ? 3 : null" type="checkbox" value="3" id="hiatus">
+                                        <label class="form-check-label" for="flexCheckChecked">Hiatus</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input #status4 class="form-check-input" (change)="selectedStatuses[3] = status4.checked ? 4 : null" type="checkbox" value="4" id="abandones">
+                                        <label class="form-check-label" for="flexCheckChecked">Abandoned</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="btn btn-secondary rounded-4" (click)="applyNewFilters()" data-bs-dismiss="offcanvas">Apply Filters</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container-fluid p-0">
         <div class="row">
-            <div class="col-sm-4 m-2" *ngFor="let serial of filteredSerials">
+            <div class="cardWrapper col-lg-4 ms-2 mt-2 mb-2 me-0 p-0" *ngFor="let serial of filteredSerials">
                 <div class="card overflow-hidden border border-4 rounded-4">
-                    <div class="row h-100 pt-0">
+                    <div class="row pt-0">
                         <div class="col-auto p-0">
                             <img src="assets/img/twigheader5.png" class="clickable cardCover card-img-top" [alt]="serial.title">
                         </div>
-                        <div class="col h-100 m-0 p-0 ps-1 overflow-hidden">
-                            <div class="cardBody p-0 mb-0 h-100 w-100 card-body">
+                        <div class="col m-0 p-0 ps-1 overflow-hidden">
+                            <div class="cardBody p-0 mb-0 card-body">
                                 <h5 class="card-title">{{serial.title}}</h5>
                                 <small>By {{serial.author.name}}</small>
                                 <div class="cardText card-text text-break">{{serial.description}}</div>
@@ -59,7 +191,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
 </div>

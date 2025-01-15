@@ -14,7 +14,7 @@ export class FilterService {
   //filter:
   filterSerials(filters:any, tbFilteredSerials:any){
     let filteredSerials:any = null
-    if(filters.ser != undefined){
+    if(filters.ser != null){
       if(filteredSerials == null){
         filteredSerials = this.serTitleFil(filters.ser, tbFilteredSerials as Array<{}>)
       }
@@ -22,7 +22,7 @@ export class FilterService {
         filteredSerials = this.serTitleFil(filters.ser, filteredSerials as Array<{}>)
       }
     }
-    if(filters.au != undefined){
+    if(filters.au != null){
       if(filteredSerials == null){
         filteredSerials = this.auNameFil(filters.au, tbFilteredSerials)
       }
@@ -30,7 +30,7 @@ export class FilterService {
         filteredSerials = this.auNameFil(filters.au, filteredSerials)
       }
     }
-    if(filters.status !== undefined){
+    if(filters.status != null){
       if(filteredSerials == null){
         filteredSerials = this.statusFil(filters.status, tbFilteredSerials)
       }
@@ -38,7 +38,7 @@ export class FilterService {
         filteredSerials = this.statusFil(filters.status, filteredSerials)
       }
     }
-    if(filters.chNum !== undefined){
+    if(filters.chNum.from != null || filters.chNum.to != null){
       if(filteredSerials == null){
         filteredSerials = this.chNumFil(tbFilteredSerials, filters.chNum.from, filters.chNum.to)
       }
@@ -58,28 +58,31 @@ export class FilterService {
 
   private statusFil(statusNum:number[], serialArray:any){
     let filteredSer:any = []
-    statusNum.forEach(
-      (serStat:number) => {
-        filteredSer = filteredSer.concat(serialArray.filter((serial:any) => serial.status == serStat))
-      }
-    )
+    if(statusNum != null){
+      statusNum.forEach(
+        (serStat:number) => {
+          filteredSer = filteredSer.concat(serialArray.filter((serial:any) => serial.status == serStat))
+        }
+      )
+    }
     return filteredSer
   }
 
   private chNumFil(serialArray:any, from?:number, to?:number){
-    let filteredSer = serialArray.filter(
+    let filteredSer:any = []
+    serialArray.forEach(
       (serial:any) => {
-        if(from != undefined && to == undefined){
+        if(from != null && to == null){
           if(serial.chapters.length >= from){
             filteredSer.push(serial)
           }
         }
-        else if (from == undefined && to != undefined){
+        else if (from == null && to != null){
           if(serial.chapters.length <= to){
             filteredSer.push(serial)
           }
         }
-        else if(from != undefined && to != undefined){
+        else if(from != null && to != null){
           if(serial.chapters.length >= from && serial.chapters.length <= to){
             filteredSer.push(serial)
           }
@@ -92,7 +95,7 @@ export class FilterService {
   private auNameFil(name:any, serialArray:any){
     let filteredSer = serialArray.filter(
       (serial:any) => {
-        serial.author.name.toLowerCase().includes(name.toLowerCase())
+        return serial.author.name.toLowerCase().includes(name.toLowerCase())
       }
     )
     return filteredSer
@@ -107,37 +110,4 @@ export class FilterService {
     });
     return filteredSer
   }
-
-  // auSerials(auId:any){
-  //   let serials = this.reviewedSerials.filter((ser:any) => ser.author.id == auId)
-  //   return serials
-  // }
-
-  // emptyResults(){
-  //   this.serResults.next([])
-  //   this.chResults.next([])
-  //   this.auResults.next({})
-  // }
-  
-  // searchSerial(serTitle:any){
-  //   let normalisedTitle = serTitle.trim().toLowerCase()
-  //   let results = this.reviewedSerials.filter((ser:any) => ser.title.toLowerCase().includes(normalisedTitle))
-  //   this.serResults.next(results)
-  // }
-
-  // searchChapter(chTitle:any){
-  //   let normalisedTitle = chTitle.trim().toLowerCase()
-  //   let results = this.reviewedSerialChapters.filter((ch:any) => ch.title.toLowerCase().includes(normalisedTitle))
-  //   this.chResults.next(results)
-  // }
-
-  // searchAuthor(auName:any){
-  //   let normalisedName = auName.trim().toLowerCase()
-  //   let results:any[] = this.authors.filter((au:any) => au.name.toLowerCase().includes(normalisedName))
-  //   let fullResults:any = []
-  //   results.forEach((au:any) => {
-  //     fullResults[au.name] = this.auSerials(au.id)
-  //   });
-  //   this.auResults.next(fullResults)
-  // }
 }

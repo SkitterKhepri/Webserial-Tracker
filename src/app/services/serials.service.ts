@@ -83,7 +83,7 @@ export class SerialsService {
   }
 
   isLiked(serId:any){
-    return this.storage.getItem("likes").contains(serId)
+    return this.storage.getItem("likes")?.contains(serId)
   }
 
 }
