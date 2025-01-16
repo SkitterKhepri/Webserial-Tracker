@@ -1,7 +1,7 @@
 <div class="container p-2 mt-5">
     <div id="title">
         <h2>{{serial.title}}</h2>
-        <p>By - {{serial.author.name}}</p>
+        <p>By - <a class="text-decoration-none" [routerLink]="['/results']" [queryParams]="{au: serial.author.name}">{{serial.author.name}}</a></p>
     </div>
     <div class="broad p-2 container m-1">
         <div class="row">

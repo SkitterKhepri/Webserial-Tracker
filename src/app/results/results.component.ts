@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FilterService } from '../services/filter.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { SerialsService } from '../services/serials.service';
 import { Filters } from '../models/filters';
-import { filter } from 'rxjs';
 
 
 @Component({
@@ -14,38 +14,49 @@ import { filter } from 'rxjs';
 })
 export class ResultsComponent implements OnInit, OnDestroy{
 
+  // @ViewChild('main', {static:false}) mainDiv?:ElementRef
+
   reviewedSerials:any[] = []
   authors:any[] = []
   reviewedSerialChapters:any[] = []
   filteredSerials:any[] = []
 
-  newFilters:Filters = new Filters()
   currentFilters:any = null
-  selectedChNum?:any = null
+  selectedChNum:any = {from : null, to : null, custom : false}
   selectedStatuses:any = []
+  newFilters:any = {ser:null, au:null}
 
   routerSubscription:any
-  
 
-  constructor(private serServ:SerialsService, private filterServ:FilterService, private storage:StorageService, private router:Router){
-
-  }
-
+  constructor(private serServ:SerialsService, private filterServ:FilterService, private storage:StorageService, private router:Router,
+    private route:ActivatedRoute, private location:Location, private changer:ChangeDetectorRef){}
 
   ngOnInit(): void {
-    this.currentFilters = this.storage.getItem("filters")
     this.getData()
+    let params = this.route.snapshot.queryParamMap
+    if(params.get('au')){
+      let filters = new Filters()
+      filters.au = params.get('au')
+      this.storage.setItem('filters', filters)
+    }
     this.routerSubscription = this.router.events.subscribe((event:any) => {
-      if (event instanceof NavigationEnd && event.url === '/results') {
+      if (event instanceof NavigationEnd && event.url === "/results") {
         this.refreshResults();
       }
     });
-    console.log(this.currentFilters)
+    this.getCurrentFilters()
+    if(params.get('updateO')){
+      this.updateRecencyOrder((params.get('updateO') as unknown) as boolean)
+    }
+    if(params.get('addedO')){
+      this.updateRecencyOrder((params.get('addedO') as unknown) as boolean)
+    }
+    //reset url
+    this.location.replaceState('/results')
   }
 
   ngOnDestroy(): void {
-      //TODO need
-      // this.clearFilters()
+      this.clearFilters()
   }
 
   getData(){
@@ -67,36 +78,38 @@ export class ResultsComponent implements OnInit, OnDestroy{
   }
 
   private refreshResults(): void {
-    this.currentFilters = this.storage.getItem("filters")
     this.filterSerials()
+    this.getCurrentFilters()
   }
 
   filterSerials(){
-    const filters = this.storage.getItem("filters")
+    let filters = this.storage.getItem("filters")
     this.filteredSerials = this.filterServ.filterSerials(filters, this.reviewedSerials)
-    // if(updateO !== undefined){
-    //   this.updateRecencyOrder(updateO)
-    // }
-    // if(serialO !== undefined){
-    //   this.serialAddedRecencyOrder(serialO)
-    // }
-    // if(chO !== undefined){
-    //   this.chNumOrder(chO)
-    // }
-    this.currentFilters = filters
   }
 
 
+    
   applyNewFilters(){
-    if(this.selectedChNum){
-      this.newFilters.chNum = this.selectedChNum
+    this.currentFilters.ser = this.newFilters.ser
+    this.currentFilters.au = this.newFilters.au
+    if(this.selectedChNum.from || this.selectedChNum.to){
+      //in case somehow from is larger than to
+      if(this.selectedChNum.from && this.selectedChNum.to && (this.selectedChNum.from > this.selectedChNum.to)){
+        let temp = this.selectedChNum.from
+        this.selectedChNum.from = this.selectedChNum.to
+        this.selectedChNum.to = temp
+      }
+      //in case either is negative
+      this.selectedChNum.from = this.selectedChNum.from < 0 ? this.selectedChNum.from = 0 : this.selectedChNum.from
+      this.selectedChNum.to = this.selectedChNum.to < 0 ? this.selectedChNum.to = 0 : this.selectedChNum.to
+      this.currentFilters.chNum = { ...this.selectedChNum }
     }
-    this.newFilters.status = this.selectedStatuses
-    this.storage.setItem("filters", this.newFilters)
+    this.currentFilters.status = [...this.selectedStatuses]
+    this.storage.setItem("filters", this.currentFilters)
     this.filterSerials()
+
+    this.getCurrentFilters()
   }
-
-
 
   //order-bys
   updateRecencyOrder(ascending:boolean){
@@ -129,24 +142,68 @@ export class ResultsComponent implements OnInit, OnDestroy{
     return this.currentFilters.status.includes(parseInt(statusValue))
   }
 
+  removeSelectedStatus(status:number){
+    this.selectedStatuses = this.selectedStatuses.filter((num:number) => num !== status)
+  }
+
   parseNum(string:string){
     return parseInt(string)
   }
 
   removeFilter(filterName:string){
     let filters = this.storage.getItem("filters")
-    filterName != "chNum" ? filters[filterName] = null : ( filters[filterName].from = null, filters[filterName].to = null)
+    if(filterName == "chNum"){
+      filters[filterName].from = null
+      filters[filterName].to = null
+      filters[filterName].custom = false
+    }
+    else if(filterName == "status"){
+      filters[filterName] = []
+    }
+    else{
+      filters[filterName] = null
+    }
     this.storage.setItem("filters", filters)
     this.filterSerials()
+    this.getCurrentFilters()
   }
 
-  clearChNumSelection(value:any){
-    if(value){
-      this.selectedChNum = null
-    }
+  setChNumSelection(value:string){
+    this.selectedChNum = JSON.stringify(this.selectedChNum) == value ? {from : null, to : null, custom : false} : JSON.parse(value)
+  }
+
+  clearChNumSelection(value?:any){
+    console.log(this.selectedChNum)
+    this.selectedChNum.from = null
+    this.selectedChNum.to = null
+    this.selectedChNum.custom = false
+  }
+
+  chNumFilterEquivalency(filterChNum:any){ 
+    return JSON.stringify(this.selectedChNum) == filterChNum
+  }
+
+  getCurrentFilters(){
+    this.currentFilters = this.storage.getItem("filters")
+    this.selectedChNum = { ...this.currentFilters.chNum }
+    this.selectedStatuses = [...this.currentFilters.status]
+    this.changer.detectChanges()
   }
 
   clearFilters(){
+    // console.log("selected statii -- ")
+    // console.log(this.selectedStatuses)
+    // console.log("current filters -- ")
+    // console.log(this.currentFilters)
     this.storage.setItem("filters", new Filters())
+  }
+
+  // emitFiltersApplied(){
+  //   let filtersApplied = new CustomEvent('filtersApplied')
+  //   this.mainDiv?.nativeElement.dispatchEvent(filtersApplied)
+  // }
+
+  debug(any:any){
+    console.log(any)
   }
 }

@@ -7,7 +7,7 @@ export class Filters{
     constructor(){
         this.ser = null
         this.au = null
-        this.chNum = { from : null, to : null }
-        this.status = null
+        this.chNum = { from : null, to : null, custom : false}
+        this.status = []
     }
 }

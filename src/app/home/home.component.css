@@ -2,3 +2,10 @@
   flex: 0 0 20%;
   max-width: 20%;
 }
+
+.clickable{
+  cursor: pointer;
+}
+.clickable:hover{
+  opacity: .75 !important;
+}

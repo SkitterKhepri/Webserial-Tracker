@@ -30,7 +30,7 @@ export class FilterService {
         filteredSerials = this.auNameFil(filters.au, filteredSerials)
       }
     }
-    if(filters.status != null){
+    if(filters.status.length != 0){
       if(filteredSerials == null){
         filteredSerials = this.statusFil(filters.status, tbFilteredSerials)
       }

@@ -27,13 +27,16 @@
                             <a class="link-opacity-50-hover" [routerLink]="['/serialDetails/' + serial.id]">
                               <h6 class="">{{serial.title}}</h6>
                             </a>
-                            <p class="">by {{serial.author.name}}</p>
+                            <p class="">by <a class="clickable text-decoration-none" [routerLink]="['/results']" [queryParams]="{au: serial.author.name}">
+                              {{serial.author.name}}</a>
+                            </p>
                           </ng-container>
                         </div>
                       </div>
                     </div>
                 </div>
             </div>
+            <a class="" [routerLink]="['/results']" [queryParams]="{updateO: false}">More New Releases...</a>
         </div>
         <h4 class="ms-5 my-3">Recently Added</h4>
         <div class="recentlyAdded ms-5 me-5 border border-secondary-subtle border-3 rounded-4 p-2">
@@ -45,8 +48,13 @@
                           <div class="card-body">
                             <h5 class="card-title">
                               <a class="link-opacity-75-hover" [routerLink]="['/serialDetails/' + serial.id]">{{serial.title}}</a>
-                              <p class="">by {{serial.author.name}}</p>
                             </h5>
+                            <h6>
+                              <p class="">by <a class="clickable text-decoration-none" [routerLink]="['/results']" [queryParams]="{au: serial.author.name}">
+                                  {{serial.author.name}}
+                                </a>
+                              </p>
+                            </h6>
                             <ng-container *ngIf="getSerialChaptersCount(serial.id) as chNum">
                                 <p>with {{chNum}} chapters</p>
                             </ng-container>
@@ -58,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            <a class="" [routerLink]="['/results']" [queryParams]="{addedO: true}">More Recently Added...</a>
         </div>
     </div>
 </div>
