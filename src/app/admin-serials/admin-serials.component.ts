@@ -11,7 +11,7 @@ import { NavBarComponent } from "../nav-bar/nav-bar.component";
 })
 export class AdminSerialsComponent implements AfterViewInit {
 
-  serials:any = []
+  // serials:any = []
   unReviewedSerials:any = []
   reviewedSerials:any = []
 
@@ -21,11 +21,13 @@ export class AdminSerialsComponent implements AfterViewInit {
   deleting:boolean = false
   loadingSerials:boolean = false
 
+  imageDataUri:any
+
   ngAfterViewInit() {
     this.changeDT.detectChanges();
   }
 
-  constructor(private serServ:SerialsService, private authorServ:AuthorsService, private changeDT: ChangeDetectorRef){
+  constructor(private serServ:SerialsService, private changeDT: ChangeDetectorRef){
     this.getSerials()
   }
 
@@ -61,8 +63,20 @@ export class AdminSerialsComponent implements AfterViewInit {
     if(serial.reviewStatus == false){
       needsScraping = true
     }
+    let formData = new FormData()
+    formData.append("title", serial.title)
+    formData.append("status", serial.status)
+    formData.append("firstCh", serial.firstCh)
+    formData.append("home", serial.home)
+    formData.append("nextChLinkXPath", serial.nextChLinkXPath)
+    formData.append("secondaryNextChLinkXPath", serial.secondaryNextChLinkXPath)
+    formData.append("otherNextChLinkXPaths", serial.otherNextChLinkXPaths)
+    formData.append("titleXPath", serial.titleXPath)
+    formData.append("description", serial.description)
     serial.reviewStatus = true
-    return this.serServ.putSerial(serial.id, serial).subscribe({
+    formData.append("reviewStatus", serial.reviewStatus)
+    formData.append("bannerUpload", this.imageDataUri)
+    return this.serServ.putSerial(serial.id, formData).subscribe({
       next: () => {
         this.getSerials()
         if(needsScraping){
@@ -72,7 +86,10 @@ export class AdminSerialsComponent implements AfterViewInit {
         this.addingChs = false
         this.modifying = false
       },
-      error: (res:any) => console.log(res),
+      error: (res:any) => {
+        console.log(res)
+        this.modifying = false
+      },
       complete: () => this.modifying = false
     })
   }
@@ -108,7 +125,74 @@ export class AdminSerialsComponent implements AfterViewInit {
     })
   }
 
-  test(a:any){
-    console.log(a)
+  //image handling
+
+  fileSelect(event:any, serialId:any, reviewed:boolean){
+    if (event.target != null){
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
+      reader.onloadend = (ev:any) => {
+        let imgDisplay = document.getElementById("imageDisplay") as HTMLImageElement
+        this.resizeImg(ev.target["result"]).then(
+          (resizedImg:any) => {
+            reader.readAsDataURL(resizedImg)
+            reader.onloadend = (evi:any) => {
+              let result = evi.target["result"]
+              if(reviewed){
+                this.reviewedSerials.find((ser:any) => ser.id == serialId).bannerUpload = result
+              }
+              else{
+                this.unReviewedSerials.find((ser:any) => ser.id == serialId).bannerUpload = result
+              }
+              imgDisplay.src = result
+              this.imageDataUri = result
+            }
+          }
+        )
+      }
+    }
+  }
+
+  resizeImg(imageDataUri:any) : Promise<File | null>{
+    return new Promise((resolve) => {
+      let img = new Image()
+      img.src = imageDataUri
+      
+      let canvas = document.createElement("canvas")
+      let context = canvas.getContext("2d")
+  
+      img.onload = () => {
+        let newW
+        let newH
+        if(img.width >= img.height){
+          let resizeVal = 700 / img.width
+          newW = 700
+          newH = img.height * resizeVal
+        }
+        else{
+          let resizeVal = 700 / img.height
+          newH = 700
+          newW = img.width * resizeVal
+        }
+        canvas.width = newW
+        canvas.height = newH
+  
+        context?.drawImage(img, 0, 0, newW, newH)
+        canvas.toBlob((blob: Blob | null) => {
+          if (blob) {
+            const returnFile = new File([blob], "uploadImg", { type: "image/png" });
+            // console.log(returnFile);
+            resolve(returnFile)
+          }
+          else{
+            console.log("fucky")
+            resolve(null)
+          }
+        }, "image/png")}
+    })
+  }
+
+  edbug(sm:any){
+    console.log(sm)
   }
 }

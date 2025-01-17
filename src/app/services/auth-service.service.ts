@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -13,6 +14,8 @@ export class AuthService {
   private seessionTime = 10800000 //3 * 60 * 60 * 1000 -- 3 hours in miliseconds
 
   private readonly apiUrl = 'https://localhost:7286/api/'
+
+  loginEvent = new BehaviorSubject<any>(null)
 
   constructor(private http : HttpClient, private storage:StorageService, private router : Router, private userServ : UsersService) { }
 

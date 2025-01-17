@@ -46,6 +46,14 @@ export class FilterService {
         filteredSerials = this.chNumFil(filteredSerials, filters.chNum.from, filters.chNum.to)
       }
     }
+    if(filters.liked){
+      if(filteredSerials == null){
+        filteredSerials = this.likedFilter(tbFilteredSerials)
+      }
+      else{
+        filteredSerials = this.likedFilter(filteredSerials)
+      }
+    }
 
     if(filteredSerials == null){
       return tbFilteredSerials
@@ -109,5 +117,13 @@ export class FilterService {
       }
     });
     return filteredSer
+  }
+
+  private likedFilter(tbFiltered:any){
+    let filteredSerials:any[] = []
+    filteredSerials = tbFiltered.filter((serial:any)=>{
+      return serial.liked
+    })
+    return filteredSerials
   }
 }

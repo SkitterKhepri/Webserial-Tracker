@@ -36,11 +36,14 @@
                     <a [href]="serial.home">Start Reading!</a>
                 </div>
                 <div class="row">
-                    <div *ngIf="!liked">
+                    <div *ngIf="!liked && !liking">
                         <i class="bi bi-star border border-warning bg-warning-subtle rounded-3 text-warning clickable" (click)="likeSerial(serial.id)"><span class="text-body"> Follow serial!</span></i>
                     </div>
-                    <div *ngIf="liked">
+                    <div *ngIf="liked && !liking">
                         <i class="bi bi-star-fill border border-warning bg-warning-subtle rounded-3 text-warning clickable" (click)="likeSerial(serial.id)"><span class="text-body"> Unfollow serial!</span></i>
+                    </div>
+                    <div *ngIf="liking">
+                        <div class="spinner-border text-warning spinner-border-sm"></div>
                     </div>
                 </div>
             </div>

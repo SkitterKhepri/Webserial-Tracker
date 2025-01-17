@@ -71,19 +71,19 @@ export class SerialsService {
   likeSerial(id:any){
     if(this.authServ.getCurrentUser() != null){
       const token = this.storage.getItem("token")
-    const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
-    return this.http.post(this.apiUrl + "like", like, {headers})
+      const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
+      let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
+      return this.http.post(this.apiUrl + "like", like, {headers})
     }
     else{
-      this.userServ.justReg.next("reg")
+      this.userServ.justReg.next("like")
       this.router.navigate(['/login'])
       return null
     }
   }
 
   isLiked(serId:any){
-    return this.storage.getItem("likes")?.contains(serId)
+    return this.storage.getItem("likes")?.includes(serId)
   }
 
 }

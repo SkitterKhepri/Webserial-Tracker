@@ -36,12 +36,11 @@ export class AdminNewserialComponent {
     formData.append("titleXPath", this.newSerial.titleXPath)
     formData.append("description", this.newSerial.description)
     formData.append("reviewStatus", "true")
-    // formData.append("serial", this.newSerial)
     if(this.newSerial.authorName == ""){
       this.newSerial.authorName = "unknown"
     }
     formData.append("authorName", this.newSerial.authorName)
-    console.log(formData)
+    // console.log(formData)
     this.serServ.addSerial(formData).subscribe({
       next: () => {
         this.isAdding = false

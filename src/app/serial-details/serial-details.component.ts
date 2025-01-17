@@ -22,6 +22,8 @@ export class SerialDetailsComponent {
 
   liked:boolean = false
 
+  liking:boolean = false
+
   constructor(private serServ:SerialsService, private route:ActivatedRoute){
     this.getSerial(route.snapshot.paramMap.get("id"))
   }
@@ -57,10 +59,12 @@ export class SerialDetailsComponent {
   }
 
   likeSerial(id:any){
+    this.liking = true
     this.serServ.likeSerial(id)?.subscribe({
-      error: ()=> {},
+      error: ()=> { this.liking = false},
       complete: ()=> {
         this.liked = !this.liked
+        this.liking = false
       }
     })
   }

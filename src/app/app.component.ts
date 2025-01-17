@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Webserial_tracker';
 
-  eventFuck(sent:any){
-    console.log(sent)
-  }
+  constructor(){}
+
 }

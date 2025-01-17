@@ -42,6 +42,13 @@
                     </div>
                     <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(status.id)"></i>
                 </div>
+                <div *ngIf="currentFilters.liked" #liked id="liked" class="d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
+                    <div class="form-check form-switch ms-1 me-1">
+                        <input class="form-check-input" type="checkbox" disabled checked id="followedCurr">
+                        <label class="form-check-label" for="followedCurr">Followed serials</label>
+                    </div>
+                    <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter('liked')"></i>
+                </div>
             </div>
         </div>
     </div>
@@ -153,7 +160,7 @@
                                     Serial Status
                                 </button>
                             </h2>
-                            <div id="collapseTwo" class="accordion-collapse" data-bs-parent="#filtersAccordion">
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#filtersAccordion">
                                 <div class="accordion-body">
                                     <div class="form-check">
                                         <input #status1 class="form-check-input" [checked]="selectedStatuses.includes(parseNum(status1.id))" (change)="status1.checked ? selectedStatuses.push(1) : removeSelectedStatus(1)" type="checkbox" value="1" [id]="1">
@@ -177,8 +184,19 @@
                     </div>
                 </li>
                 <li class="list-group-item">
+                    <div *ngIf="loggedin; else notLogged">
+                        <div class="form-check form-switch ms-1">
+                            <input class="form-check-input" type="checkbox" #followed (change)="likedFilter = followed.checked" id="followed">
+                            <label class="form-check-label" for="followed">Followed serials</label>
+                        </div>  
+                    </div>
+                    <ng-template #notLogged>
+                        <small>Login to filter for your followed serials!</small>
+                    </ng-template>
+                </li>
+                <li class="list-group-item">
                     <div class="btn btn-secondary rounded-4 me-4" (click)="applyNewFilters()" data-bs-dismiss="offcanvas">Apply Filters</div>
-                    <div class="btn btn-warning  rounded-4 ms-4" (click)="clearFilters()">Reset Filters</div>
+                    <div class="btn btn-warning  rounded-4 ms-4 user-select-none" (click)="clearFilters()">Reset Filters</div>
                 </li>
             </ul>
         </div>

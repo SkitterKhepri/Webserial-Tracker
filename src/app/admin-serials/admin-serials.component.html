@@ -96,17 +96,47 @@
                                     </div>
                                     <div class="col-md-8 flex-grow-1">
                                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" autocomplete="off" #complete [(ngModel)]="serial.status" [value]="1">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" (click)="serial.status = completeU.value" #completeU [checked]="serial.status == completeU.value" [value]="1">
                                             <label class="btn btn-outline-primary" for="completed-{{serial.id}}">Completed</label>
                                         
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" autocomplete="off" #ongoing [(ngModel)]="serial.status" [value]="2">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" (click)="serial.status = ongoingU.value" #ongoingU [checked]="serial.status == ongoingU.value" [value]="2">
                                             <label class="btn btn-outline-primary" for="ongoing-{{serial.id}}">Ongoing</label>
                                         
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" autocomplete="off" #hiatus [(ngModel)]="serial.status" [value]="3">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" (click)="serial.status = hiatusU.value" #hiatusU [checked]="serial.status == hiatusU.value" [value]="3">
                                             <label class="btn btn-outline-primary" for="hiatus-{{serial.id}}">Hiatus</label>
                                         
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" autocomplete="off" #abandoned [(ngModel)]="serial.status" [value]="4">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" (click)="serial.status = abandonedU.value" #abandonedU [checked]="serial.status == abandonedU.value" [value]="4">
                                             <label class="btn btn-outline-primary" for="abandoned-{{serial.id}}">Abandoned</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-auto">
+                                        <div class="card bg-warning mw-100 overflow-hidden">
+                                            <div class="card-header mt-1">
+                                                <strong class="text-primary">Upload cover/banner image:</strong>
+                                            </div>
+                                            <div class="card-body m-0 p-1">
+                                                <div class="input-group">
+                                                    <input #imageInput type="file" accept="image/*" (change)="fileSelect($event, serial.id, false)" class="form-control" id="fileInput">
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-2">
+                                                <div class="d-flex justify-content-center imgContainer">
+                                                    <img [src]="'https://localhost:7286/Serials/images/' + serial.title" #imageDisplay class="img-fluid imgPrev" alt="Loading cover image...">
+                                                </div>
+                                                <small class="text-center d-block mt-2">
+                                                    Uploaded images will be resized and saved in .png format.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col me-0 my-0 ms-2">
+                                        <div class="row">
+                                            <label class="mb-3 ps-0" for="desc">Description/Blurb:</label>
+                                        </div>
+                                        <div class="row pe-2">
+                                            <textarea name="description" id="desc" [(ngModel)]="serial.description" class="form-control mh-100" rows="15"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -241,24 +271,54 @@
                                     </div>
                                     <div class="col-md-8 flex-grow-1">
                                         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" autocomplete="off" #complete [(ngModel)]="serial.status" [value]="1">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="completed-{{serial.id}}" (click)="serial.status = completeR.value"  #completeR [checked]="serial.status == completeR.value" [value]="1">
                                             <label class="btn btn-outline-primary" for="completed-{{serial.id}}">Completed</label>
                                         
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" autocomplete="off" #ongoing [(ngModel)]="serial.status" [value]="2">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="ongoing-{{serial.id}}" (click)="serial.status = ongoingR.value"  #ongoingR [checked]="serial.status == ongoingR.value" [value]="2">
                                             <label class="btn btn-outline-primary" for="ongoing-{{serial.id}}">Ongoing</label>
                                         
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" autocomplete="off" #hiatus [(ngModel)]="serial.status" [value]="3">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="hiatus-{{serial.id}}" (click)="serial.status = hiatusR.value"  #hiatusR [checked]="serial.status == hiatusR.value" [value]="3">
                                             <label class="btn btn-outline-primary" for="hiatus-{{serial.id}}">Hiatus</label>
                                             
-                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" autocomplete="off" #abandoned [(ngModel)]="serial.status" [value]="4">
+                                            <input type="radio" class="btn-check" [name]="'radio' + serial.id" id="abandoned-{{serial.id}}" (click)="serial.status = abandonedR.value"  #abandonedR [checked]="serial.status == abandonedR.value" [value]="4">
                                             <label class="btn btn-outline-primary" for="abandoned-{{serial.id}}">Abandoned</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row my-1">
+                                    <div class="col-auto">
+                                        <div class="card bg-warning mw-100">
+                                            <div class="card-header mt-1">
+                                                <strong class="text-primary">Upload cover/banner image:</strong>
+                                            </div>
+                                            <div class="card-body m-0 p-1">
+                                                <div class="input-group">
+                                                    <input #imageInput type="file" accept="image/*" (change)="fileSelect($event, serial.id, true)" class="form-control" id="fileInput">
+                                                </div>
+                                            </div>
+                                            <div class="card-body p-2">
+                                                <div class="d-flex justify-content-center">
+                                                    <img [src]="'https://localhost:7286/Serials/images/' + serial.title" id="imageDisplay" class="img-fluid imgPrev" alt="Loading cover image...">
+                                                </div>
+                                                <small class="text-center d-block mt-2">
+                                                    Uploaded images will be resized and saved in .png format.
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col m-0">
+                                        <div class="row">
+                                            <label class="mb-3 ps-0" for="desc">Description/Blurb:</label>
+                                        </div>
+                                        <div class="row pe-2">
+                                            <textarea name="description" id="desc" [(ngModel)]="serial.description" class="form-control" rows="14"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row my-1 align-items-center">
                                     <div *ngIf="!deleting && !modifying && !approving">
                                         <div class="col  my-1">
-                                            <button class="btn btn-success form-control" (click)="approveSerial(serial.id, true)">Approve</button>
+                                            <button class="btn btn-danger form-control" (click)="approveSerial(serial.id, false)">Revoke Approval</button>
                                         </div>
                                         <div class="col my-1">
                                             <button class="btn btn-warning form-control" (click)="modifySerial(serial)">Modify</button>

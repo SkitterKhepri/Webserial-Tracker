@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { BaseService } from '../services/base.service';
-import { Subject } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+
 import { UsersService } from '../services/users.service';
 import { SerialsService } from '../services/serials.service';
 import { ChaptersService } from '../services/chapters.service';
 import { AuthorsService } from '../services/authors.service';
-import { Author, Chapter, Serial } from '../models';
+import { Chapter, Serial } from '../models';
+import { StorageService } from '../services/storage.service';
+import { AuthService } from '../services/auth-service.service';
 
 interface Banners {
   serTitle : string,
@@ -21,7 +22,7 @@ interface Banners {
 
 export class HomeComponent {
 
-  reviewedSerials:Serial[] = []
+  reviewedSerials:any[] = []
   newChapters:any[] = []
   // reviewedSerialTitles:any = []
   reviewedSerialChapters:Chapter[] = []
@@ -32,29 +33,37 @@ export class HomeComponent {
     }
   ]
 
+  loggedin:boolean = false
+
+  //TODO maybe make it so in html not all stars start spinning, just the one clicked on? maybe.
+  liking:boolean = false
   isUpdating:boolean = false
 
-  constructor(private userServ:UsersService, private http:HttpClient, private serServ:SerialsService,
-    private chServ:ChaptersService, private authorServ:AuthorsService){
+  constructor(private userServ:UsersService, private serServ:SerialsService, private storage:StorageService, private authServ:AuthService){
     this.getSerials()
+    authServ.loginEvent.subscribe((event:any) => this.loggedin = event)
   }
 
 
   getSerials(){
     this.reviewedSerials = []
-    // this.reviewedSerialTitles = []
     this.serServ.getSerials().subscribe({
       next: (serials:any) => {
         serials.forEach((serial:any) => {
           if(serial.reviewStatus){
-            // this.reviewedSerialTitles.push(serial.title)
+            let likedSerials = this.storage.getItem("likes")
+            if(likedSerials && this.authServ.getCurrentUser()){
+              if(!likedSerials.includes(serial.id)){
+                serial.liked = true
+              }
+            }
+            else { serial.liked = false }
             this.reviewedSerials.push(serial)
             serial.chapters.forEach((ch:any) => {
               this.reviewedSerialChapters.push(ch)
             });
           }  
         });
-        // this.getImages(this.reviewedSerialTitles)
       },
       error: (response:any) => {
         console.log("shits fucked: " + response)
@@ -93,29 +102,15 @@ export class HomeComponent {
     })
   }
 
-  // getImages(serialTitles:any){
-  //   serialTitles.forEach((serialTitle:string) => {
-  //     this.serServ.getImage(serialTitle).subscribe({
-  //       next: (response:HttpResponse<Blob>) => {
-  //         let imgBlob = response.body
-  //         this.banners.push({serTitle : serialTitle, image : imgBlob})
-  //       },
-  //       error: () => {}
-  //     })
-  //   });
-  // }
-
-  // displayImg(serialTitle:string){
-  //   let url:any
-  //   try {
-  //     url = URL.createObjectURL(this.banners.find((banner:any) => banner.serTitle == serialTitle)?.image)
-  //   } catch (error) {
-      
-  //   }
-  //   return url
-  // }
-
-  // normalizeSerTit(serialTitle:string){
-  //   return serialTitle.trim().replaceAll(' ', '_').replaceAll(':', '_').replaceAll('-', '_').toLowerCase()
-  // }
+  likeSerial(id:any){
+    this.liking = true
+    let serial = this.reviewedSerials.find((ser:any) => ser.id == id)
+    this.serServ.likeSerial(id)?.subscribe({
+      error: ()=> { this.liking = false},
+      complete: ()=> {
+        serial.liked = !serial.liked
+        this.liking = false
+      }
+    })
+  }
 }

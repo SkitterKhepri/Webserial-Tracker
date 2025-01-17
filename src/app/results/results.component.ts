@@ -5,6 +5,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 import { SerialsService } from '../services/serials.service';
 import { Filters } from '../models/filters';
+import { AuthService } from '../services/auth-service.service';
 
 
 @Component({
@@ -14,8 +15,6 @@ import { Filters } from '../models/filters';
 })
 export class ResultsComponent implements OnInit, OnDestroy{
 
-  // @ViewChild('main', {static:false}) mainDiv?:ElementRef
-
   reviewedSerials:any[] = []
   authors:any[] = []
   reviewedSerialChapters:any[] = []
@@ -24,19 +23,27 @@ export class ResultsComponent implements OnInit, OnDestroy{
   currentFilters:any = null
   selectedChNum:any = {from : null, to : null, custom : false}
   selectedStatuses:any = []
+  likedFilter:boolean = false
   newFilters:any = {ser:null, au:null}
+
+  loggedin:boolean = false
 
   routerSubscription:any
 
   constructor(private serServ:SerialsService, private filterServ:FilterService, private storage:StorageService, private router:Router,
-    private route:ActivatedRoute, private location:Location, private changer:ChangeDetectorRef){}
+    private route:ActivatedRoute, private location:Location, private changer:ChangeDetectorRef, private authServ:AuthService){}
 
   ngOnInit(): void {
+    this.authServ.loginEvent.subscribe((result:any) => this.loggedin = result)
     this.getData()
     let params = this.route.snapshot.queryParamMap
+    let filters = new Filters()
     if(params.get('au')){
-      let filters = new Filters()
       filters.au = params.get('au')
+      this.storage.setItem('filters', filters)
+    }
+    if(params.get('liked')){
+      filters.liked = true
       this.storage.setItem('filters', filters)
     }
     this.routerSubscription = this.router.events.subscribe((event:any) => {
@@ -71,6 +78,15 @@ export class ResultsComponent implements OnInit, OnDestroy{
               this.reviewedSerialChapters.push(ch)
             });
           }
+          let likedSerials = this.storage.getItem("likes")
+          this.reviewedSerials.forEach((ser:any) => {
+            if(likedSerials && this.authServ.getCurrentUser()){
+              if(!likedSerials.includes(ser.id)){
+                ser.liked = true
+              }
+            }
+            else { ser.liked = false }
+          })
         })
         this.filterSerials()
       }
@@ -105,6 +121,7 @@ export class ResultsComponent implements OnInit, OnDestroy{
       this.currentFilters.chNum = { ...this.selectedChNum }
     }
     this.currentFilters.status = [...this.selectedStatuses]
+    this.currentFilters.liked = this.likedFilter
     this.storage.setItem("filters", this.currentFilters)
     this.filterSerials()
 
@@ -160,6 +177,9 @@ export class ResultsComponent implements OnInit, OnDestroy{
     else if(filterName == "status"){
       filters[filterName] = []
     }
+    else if(filterName == "liked"){
+      filters[filterName] = false
+    }
     else{
       filters[filterName] = null
     }
@@ -187,22 +207,15 @@ export class ResultsComponent implements OnInit, OnDestroy{
     this.currentFilters = this.storage.getItem("filters")
     this.selectedChNum = { ...this.currentFilters.chNum }
     this.selectedStatuses = [...this.currentFilters.status]
+    this.likedFilter = this.currentFilters.liked
     this.changer.detectChanges()
   }
 
   clearFilters(){
-    // console.log("selected statii -- ")
-    // console.log(this.selectedStatuses)
-    // console.log("current filters -- ")
-    // console.log(this.currentFilters)
     this.storage.setItem("filters", new Filters())
   }
 
-  // emitFiltersApplied(){
-  //   let filtersApplied = new CustomEvent('filtersApplied')
-  //   this.mainDiv?.nativeElement.dispatchEvent(filtersApplied)
-  // }
-
+  //TODO del
   debug(any:any){
     console.log(any)
   }

@@ -5,6 +5,7 @@ import { UsersService } from '../services/users.service';
 import { StorageService } from '../services/storage.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth-service.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-log-in',
@@ -47,6 +48,7 @@ export class LogInComponent implements OnDestroy {
       },
       complete: () => {
         this.isLoading = false
+        this.authServ.loginEvent.next(true)
       }
       
     })
@@ -64,6 +66,6 @@ export class LogInComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.userServ.justReg.next(false)
+      this.userServ.justReg.next("")
   }
 }
