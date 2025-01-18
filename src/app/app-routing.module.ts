@@ -16,23 +16,25 @@ import { LikedSerialsComponent } from './liked-serials/liked-serials.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { SerialDetailsComponent } from './serial-details/serial-details.component';
 
+
+//TODO delete, and fix
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LogInComponent},
   {path: 'register', component: RegistrationComponent},
-  // {path: 'adminSerials', canActivate: [authGuard, adminGuard], component: AdminSerialsComponent},
-  {path: 'adminSerials', component: AdminSerialsComponent},
-  // {path: 'adminUsers', canActivate: [authGuard, adminGuard], component: AdminUsersComponent},
-  {path: 'adminUsers', component: AdminUsersComponent},
-  // {path: 'adminChapters', canActivate: [authGuard, adminGuard], component: AdminChaptersComponent},
-  {path: 'adminChapters', component: AdminChaptersComponent},
+  {path: 'adminSerials', canActivate: [authGuard, adminGuard], component: AdminSerialsComponent},
+  // {path: 'adminSerials', component: AdminSerialsComponent},
+  {path: 'adminUsers', canActivate: [authGuard, adminGuard], component: AdminUsersComponent},
+  // {path: 'adminUsers', component: AdminUsersComponent},
+  {path: 'adminChapters', canActivate: [authGuard, adminGuard], component: AdminChaptersComponent},
+  // {path: 'adminChapters', component: AdminChaptersComponent},
   {path: 'results', component: ResultsComponent},
   {path: 'likedSer', component: LikedSerialsComponent},
   // {path: 'search', component: SearchComponent},
-  // {path: 'newSerial', canActivate: [authGuard], component: NewSerialComponent},
-  {path: 'newSerial', component: NewSerialComponent},
-  // {path: 'adminNewSerial', canActivate: [authGuard, adminGuard], component: AdminNewserialComponent},
-  {path: 'adminNewSerial', component: AdminNewserialComponent},
+  {path: 'newSerial', canActivate: [authGuard], component: NewSerialComponent},
+  // {path: 'newSerial', component: NewSerialComponent},
+  {path: 'adminNewSerial', canActivate: [authGuard, adminGuard], component: AdminNewserialComponent},
+  // {path: 'adminNewSerial', component: AdminNewserialComponent},
   {path: 'resetPassword', component: PasswordResetComponent},
   {path: 'serialDetails/:id', component: SerialDetailsComponent},
   {path: '', component: HomeComponent}

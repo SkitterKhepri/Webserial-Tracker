@@ -38,6 +38,7 @@ export class LogInComponent implements OnDestroy {
         this.storage.setItem("userClaims", loggedUser.roles)
         this.storage.setItem("user", loggedUser.user)
         this.storage.setItem("loginTime", new Date().getTime())
+        console.log(loggedUser.likes)
         this.storage.setItem("likes", loggedUser.likes)
         this.isLoading = false
         this.router.navigate(['/home'])

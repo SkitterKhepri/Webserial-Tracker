@@ -20,7 +20,7 @@ export class AuthService {
   constructor(private http : HttpClient, private storage:StorageService, private router : Router, private userServ : UsersService) { }
 
   getCurrentClaims(){
-    return JSON.parse(this.storage.getItem("userClaims"))
+    return this.storage.getItem("userClaims")
   }
 
   getCurrentUser(){

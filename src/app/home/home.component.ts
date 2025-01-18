@@ -26,22 +26,18 @@ export class HomeComponent {
   newChapters:any[] = []
   // reviewedSerialTitles:any = []
   reviewedSerialChapters:Chapter[] = []
-  banners:Banners[] = [
-    {
-      serTitle : "placeholder",
-      image : {}
-    }
-  ]
+  likedSerials:any[] = []
 
-  loggedin:boolean = false
+  loggedin:any
 
   //TODO maybe make it so in html not all stars start spinning, just the one clicked on? maybe.
   liking:boolean = false
   isUpdating:boolean = false
 
-  constructor(private userServ:UsersService, private serServ:SerialsService, private storage:StorageService, private authServ:AuthService){
+  constructor(private serServ:SerialsService, private storage:StorageService, private authServ:AuthService){
     this.getSerials()
     authServ.loginEvent.subscribe((event:any) => this.loggedin = event)
+    this.loggedin = authServ.getCurrentUser() != null
   }
 
 
@@ -51,10 +47,11 @@ export class HomeComponent {
       next: (serials:any) => {
         serials.forEach((serial:any) => {
           if(serial.reviewStatus){
-            let likedSerials = this.storage.getItem("likes")
-            if(likedSerials && this.authServ.getCurrentUser()){
-              if(!likedSerials.includes(serial.id)){
+            if(this.authServ.getCurrentUser()){
+              let likesArr = this.storage.getItem("likes")
+              if(likesArr.includes(serial.id)){
                 serial.liked = true
+                this.likedSerials.push(serial)
               }
             }
             else { serial.liked = false }
@@ -62,7 +59,7 @@ export class HomeComponent {
             serial.chapters.forEach((ch:any) => {
               this.reviewedSerialChapters.push(ch)
             });
-          }  
+          }
         });
       },
       error: (response:any) => {
@@ -102,12 +99,23 @@ export class HomeComponent {
     })
   }
 
-  likeSerial(id:any){
+  likeSerial(serial:any){
     this.liking = true
-    let serial = this.reviewedSerials.find((ser:any) => ser.id == id)
-    this.serServ.likeSerial(id)?.subscribe({
+    this.serServ.likeSerial(serial.id)?.subscribe({
       error: ()=> { this.liking = false},
       complete: ()=> {
+        if(!serial.liked){
+          this.likedSerials.push(serial)
+          let likes = this.storage.getItem("likes")
+          likes.push(serial.id)
+          this.storage.setItem("likes", likes)
+        }
+        else{
+          this.likedSerials = this.likedSerials.filter((ser:any)=> ser.id != serial.id)
+          let likes = this.storage.getItem("likes")
+          likes = likes.filter((serId:any)=> serId != serial.id)
+          this.storage.setItem("likes", likes)
+        }
         serial.liked = !serial.liked
         this.liking = false
       }

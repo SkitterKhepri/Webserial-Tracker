@@ -16,10 +16,9 @@ export class SerialsService {
 
   readonly apiUrl = 'https://localhost:7286/Serials/'
 
-  //TODO undo this
   getSerials() : Observable<any>{
-    return this.http.get("/assets/test_serial.json")
-    // return this.http.get(this.apiUrl)
+    // return this.http.get("/assets/test_serial.json")
+    return this.http.get(this.apiUrl)
   }
 
   getSerial(id:any){
@@ -72,7 +71,7 @@ export class SerialsService {
     if(this.authServ.getCurrentUser() != null){
       const token = this.storage.getItem("token")
       const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-      let like = {"userId" : this.authServ.getCurrentUser().Id, "serId" : id}
+      let like = {"userId" : this.authServ.getCurrentUser().id, "serialId" : id}
       return this.http.post(this.apiUrl + "like", like, {headers})
     }
     else{

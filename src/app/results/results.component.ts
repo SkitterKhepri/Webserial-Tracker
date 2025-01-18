@@ -26,6 +26,8 @@ export class ResultsComponent implements OnInit, OnDestroy{
   likedFilter:boolean = false
   newFilters:any = {ser:null, au:null}
 
+  order:string = ""
+
   loggedin:boolean = false
 
   routerSubscription:any
@@ -34,7 +36,7 @@ export class ResultsComponent implements OnInit, OnDestroy{
     private route:ActivatedRoute, private location:Location, private changer:ChangeDetectorRef, private authServ:AuthService){}
 
   ngOnInit(): void {
-    this.authServ.loginEvent.subscribe((result:any) => this.loggedin = result)
+    this.loggedin = this.authServ.getCurrentUser() ? true : false
     this.getData()
     let params = this.route.snapshot.queryParamMap
     let filters = new Filters()
@@ -78,10 +80,10 @@ export class ResultsComponent implements OnInit, OnDestroy{
               this.reviewedSerialChapters.push(ch)
             });
           }
-          let likedSerials = this.storage.getItem("likes")
+          let likes = this.storage.getItem("likes")
           this.reviewedSerials.forEach((ser:any) => {
-            if(likedSerials && this.authServ.getCurrentUser()){
-              if(!likedSerials.includes(ser.id)){
+            if(likes && this.authServ.getCurrentUser()){
+              if(likes.includes(ser.id)){
                 ser.liked = true
               }
             }
@@ -89,6 +91,7 @@ export class ResultsComponent implements OnInit, OnDestroy{
           })
         })
         this.filterSerials()
+        this.serialAddedRecencyOrder(false)
       }
     )
   }
@@ -129,6 +132,7 @@ export class ResultsComponent implements OnInit, OnDestroy{
   }
 
   //order-bys
+
   updateRecencyOrder(ascending:boolean){
     this.filteredSerials.sort((a:any, b:any) =>{
       let maxX = Math.max(...a.chapters.map((chapter:any) => chapter.id));
@@ -138,6 +142,7 @@ export class ResultsComponent implements OnInit, OnDestroy{
   }
 
   serialAddedRecencyOrder(ascending:boolean){
+    console.log("aaa")
     this.filteredSerials.sort((a:any, b:any) =>{
       return ascending ? a.id - b.id : b.id - a.id
     })

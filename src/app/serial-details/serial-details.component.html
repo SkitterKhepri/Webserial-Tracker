@@ -6,16 +6,20 @@
     <div class="broad p-2 container m-1">
         <div class="row">
             <div class="col-sm-auto d-flex justify-content-center">
-                <div id="imageDisplay" class="border border-primary">
-                    <img [src]="'https://localhost:7286/Serials/images/' + serial.title" alt="placeholder">
+                <div id="imageDisplay" class="">
+                    <img class="img-fluid" [src]="'https://localhost:7286/Serials/images/' + serial.title" alt="placeholder">
                 </div>
             </div>
-            <div class="col p-2 align-self-end">
+            <div class="col p-2 d-flex border border-secondary border-3 rounded-2 flex-column justify-content-between">
                 <div id="description" class="row">
-                    {{ descExpanded ? serial.description : (serial.description | slice:0:1550) + '...' }}
+                    <p [class.text-center]="serial.description == null">
+                        {{ serial.description != null ? (descExpanded ? serial.description : (serial.description | slice:0:descDisplayLength) + '...') : "--- No description ---" }}
+                    </p>
                 </div>
-                <div class="row m-0">
-                    <a (click)="toggleDesc()" class="clickable text-end text-decoration-none pe-3">{{ descExpanded ? "Show Less..." : "Show More..." }}</a>
+                <div *ngIf="longDesc">
+                    <div class="row">
+                        <a (click)="toggleDesc()" class="clickable text-end text-decoration-none pe-3">{{ descExpanded ? "Show Less..." : "Show More..." }}</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,7 +37,10 @@
             </div>
             <div class="col-sm-auto">
                 <div class="row mb-3">
-                    <a [href]="serial.home">Start Reading!</a>
+                    <a [href]="serial.home">Serial Homepage</a>
+                </div>
+                <div class="row mb-3">
+                    <a [href]="serial.firstCh">Start Reading!</a>
                 </div>
                 <div class="row">
                     <div *ngIf="!liked && !liking">

@@ -109,7 +109,7 @@ export class AdminNewserialComponent {
         canvas.toBlob((blob: Blob | null) => {
           if (blob) {
             const returnFile = new File([blob], "uploadImg", { type: "image/png" });
-            console.log(returnFile);
+            // console.log(returnFile);
             resolve(returnFile)
           }
           else{

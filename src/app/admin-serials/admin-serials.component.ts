@@ -192,6 +192,7 @@ export class AdminSerialsComponent implements AfterViewInit {
     })
   }
 
+  //TODO del
   edbug(sm:any){
     console.log(sm)
   }

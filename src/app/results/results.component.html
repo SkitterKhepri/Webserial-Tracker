@@ -3,21 +3,21 @@
         <div class="bg-secondary-subtle m-2 pt-1 pb-2 pe-2 text-end rounded-5">
             <div class="d-flex flex-wrap align-items-center">
                 <div class="d-flex align-items-center">
-                    <div class="p-2 text-nowrap">Current filters:</div>
+                    <div class="p-2 text-nowrap user-select-none">Current filters:</div>
                 </div>
                 <div class="vr"></div>
                 <div *ngIf="currentFilters?.ser" #ser id="ser" class="d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
-                    <span class="text-nowrap">Serial title</span>
+                    <span class="text-nowrap user-select-none">Serial title</span>
                     <input disabled readonly class="titleInput form-control form-control-sm ms-1" type="text" [value]="currentFilters.ser">
                     <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(ser.id)"></i>
                 </div>
                 <div *ngIf="currentFilters?.au" #au id="au" class="p-2 d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
-                    <span class="text-nowrap">Author name:</span>
+                    <span class="text-nowrap user-select-none">Author name:</span>
                     <input disabled readonly class="auInput form-control form-control-sm ms-1" type="text" [value]="currentFilters.au">
                     <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(au.id)"></i>
                 </div>
                 <div *ngIf="currentFilters?.chNum?.from || currentFilters?.chNum?.to" #chNum id="chNum" class="p-2 d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
-                    <span class="text-nowrap">Chapters:</span>
+                    <span class="text-nowrap user-select-none">Chapters:</span>
                     <input disabled readonly class="filterInput form-control form-control-sm ms-1" type="text" 
                     [value]="currentFilters.chNum.from ? (currentFilters.chNum.to ? currentFilters.chNum.from + ' - ' + currentFilters.chNum.to : currentFilters.chNum.from + '+') : (currentFilters.chNum.to ? '0 - ' + currentFilters.chNum.to : 'bug...')">
                     <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(chNum.id)"></i>
@@ -26,26 +26,26 @@
                     <span class="me-2">Status:</span>
                     <div class="form-check form-check-inline align-self-center">
                         <input #completed disabled readonly [checked]="currentFilters.status?.includes(parseNum(completed.name))" class="form-check-input" type="checkbox" [name]="1" [value]="1">
-                        <label class="form-check-label" for="completed">Completed</label>
+                        <label class="form-check-label user-select-none" for="completed">Completed</label>
                     </div>
                     <div class="form-check form-check-inline align-self-center">
                         <input #ongoing disabled readonly [checked]="currentFilters.status?.includes(parseNum(ongoing.name))" class="form-check-input" type="checkbox" [name]="2" [value]="2">
-                        <label class="form-check-label" for="ongoing">Ongoing</label>
+                        <label class="form-check-label user-select-none" for="ongoing">Ongoing</label>
                     </div>
                     <div class="form-check form-check-inline align-self-center">
                         <input #hiatus disabled readonly [checked]="currentFilters.status.includes(parseNum(hiatus.name))" class="form-check-input" type="checkbox" [name]="3" [value]="3">
-                        <label class="form-check-label" for="hiatus">Hiatus</label>
+                        <label class="form-check-label user-select-none" for="hiatus">Hiatus</label>
                     </div>
                     <div class="form-check form-check-inline align-self-center">
                         <input #abandoned disabled readonly [checked]="currentFilters.status.includes(parseNum(abandoned.name))"  class="form-check-input" type="checkbox" [name]="4" [value]="4">
-                        <label class="form-check-label" for="abandoned">Abandoned</label>
+                        <label class="form-check-label user-select-none" for="abandoned">Abandoned</label>
                     </div>
                     <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter(status.id)"></i>
                 </div>
                 <div *ngIf="currentFilters.liked" #liked id="liked" class="d-flex align-items-center border-end border-secondary ms-1 pe-2 py-1 ps-1">
                     <div class="form-check form-switch ms-1 me-1">
                         <input class="form-check-input" type="checkbox" disabled checked id="followedCurr">
-                        <label class="form-check-label" for="followedCurr">Followed serials</label>
+                        <label class="form-check-label user-select-none" for="followedCurr">Followed serials</label>
                     </div>
                     <i class="clickable bi bi-x-circle ms-1" (click)="removeFilter('liked')"></i>
                 </div>
@@ -60,10 +60,10 @@
         <div class="d-flex align-items-center ms-auto">
             <label for="sortSelect" class="text-nowrap">Sort by:</label>
             <select class="form-select ms-2" id="sortSelect">
-                <option (click)="serialAddedRecencyOrder(true)" value="1">Recently Added (Serials - newest to oldest)</option>
-                <option (click)="serialAddedRecencyOrder(false)" value="2">Reverse Recently Added (Serials - oldest to newest)</option>
-                <option (click)="updateRecencyOrder(true)" value="3">Recently Updated (Latest chapter - newest to oldest)</option>
-                <option (click)="updateRecencyOrder(false)" value="4">Reverse Recently Updated (Latest chapter - oldest to newest) </option>
+                <option (click)="serialAddedRecencyOrder(false)" value="1">Recently Added (Serials - newest to oldest)</option>
+                <option (click)="serialAddedRecencyOrder(true)" value="2">Reverse Recently Added (Serials - oldest to newest)</option>
+                <option (click)="updateRecencyOrder(false)" value="3">Recently Updated (Chapter release - newest to oldest)</option>
+                <option (click)="updateRecencyOrder(true)" value="4">Reverse Recently Updated (Chapter release - oldest to newest) </option>
                 <option (click)="chNumOrder(false)" value="5">Chapter Amount (Most to least)</option>
                 <option (click)="chNumOrder(true)" value="6">Reverse Chapter Amount (Least to most)</option>
               </select>
@@ -208,7 +208,7 @@
                 <div class="card overflow-hidden border border-4 rounded-4">
                     <div class="row pt-0">
                         <div class="col-auto p-0">
-                            <img src="assets/img/twigheader5.png" [routerLink]="['/serialDetails/' + serial.id]" class="clickable cardCover card-img-top" [alt]="serial.title">
+                            <img [src]="'https://localhost:7286/Serials/images/' + serial.title" [routerLink]="['/serialDetails/' + serial.id]" class="clickable cardCover card-img-top" [alt]="serial.title">
                         </div>
                         <div class="col m-0 p-0 ps-1 overflow-hidden">
                             <div class="cardBody p-0 mb-0 card-body">

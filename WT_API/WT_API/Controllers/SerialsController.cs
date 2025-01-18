@@ -118,7 +118,7 @@ namespace WT_API.Controllers
 
 
     [HttpPut("{id}")]
-    //[Authorize(Roles = "SAdmin,Admin")] //TODO need
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> PutSerial(int id, [FromForm] CompleteSerial compSerial)
     {
       if (id != compSerial.id)
@@ -389,19 +389,19 @@ namespace WT_API.Controllers
 
     [HttpPost("/Serials/like")]
     //[Authorize] //TODO need
-    public async Task<IActionResult> LikeUnLike(string userId, int serId)
+    public async Task<IActionResult> LikeUnLike(LikedSerial likeReq)
     {
-      if(!SerialExists(serId) || !UserExists(userId))
+      if(!SerialExists(likeReq.serialId) || !UserExists(likeReq.userId))
       {
         return NotFound("Serial or user not found, dumbass");
       }
 
-      LikedSerial? like = await _context.LikedSerials.FindAsync(userId, serId);
+      LikedSerial? like = await _context.LikedSerials.FindAsync(likeReq.userId, likeReq.serialId);
 
       if (like == null) {
         like = new LikedSerial();
-        like.serialId = serId;
-        like.userId = userId;
+        like.serialId = likeReq.serialId;
+        like.userId = likeReq.userId;
         _context.LikedSerials.Add(like);
       }
       else

@@ -13,11 +13,8 @@ import { Filters } from '../models/filters';
 export class NavBarComponent {
 
   selectedSearch:any = "ser"
-  // lastSearched:string = ""
 
-  constructor(private filter:FilterService, private router:Router, private authServ : AuthService, private storage:StorageService){
-    // this.lastSearched = storage.getItem("filters")[this.selectedSearch] ? storage.getItem("filters")[this.selectedSearch] : ""
-  }
+  constructor(private filter:FilterService, private router:Router, private authServ : AuthService, private storage:StorageService){}
 
   search(searchType:any, input:any){
     let searchKey = searchType as keyof Filters
