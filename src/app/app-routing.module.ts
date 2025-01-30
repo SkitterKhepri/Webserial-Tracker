@@ -6,7 +6,6 @@ import { RegistrationComponent } from './registration/registration.component';
 import { AdminSerialsComponent } from './admin-serials/admin-serials.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
 import { ResultsComponent } from './results/results.component';
-import { SearchComponent } from './search/search.component';
 import { NewSerialComponent } from './new-serial/new-serial.component';
 import { AdminChaptersComponent } from './admin-chapters/admin-chapters.component';
 import { authGuard } from './guard/authen.guard';
@@ -15,6 +14,7 @@ import { AdminNewserialComponent } from './admin-newserial/admin-newserial.compo
 import { LikedSerialsComponent } from './liked-serials/liked-serials.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { SerialDetailsComponent } from './serial-details/serial-details.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 //TODO delete, and fix
@@ -36,6 +36,7 @@ const routes: Routes = [
   {path: 'adminNewSerial', canActivate: [authGuard, adminGuard], component: AdminNewserialComponent},
   // {path: 'adminNewSerial', component: AdminNewserialComponent},
   {path: 'resetPassword', component: PasswordResetComponent},
+  {path: 'changePassword', component: ChangePasswordComponent},
   {path: 'serialDetails/:id', component: SerialDetailsComponent},
   {path: '', component: HomeComponent}
 ];

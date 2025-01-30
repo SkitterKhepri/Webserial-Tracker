@@ -25,6 +25,13 @@
         <div id="loggedout" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() != null">
             <div class="nav-item">
                 <a class="nav-link mx-2">Welcome, {{getCurrentUser().userName}}</a>
+                <div class="dropdown">
+                    <a class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" href="#">getCurrentUser</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="." [routerLink]="['/changePassword']">Change Password</a></li>
+                        <li><a class="dropdown-item" (click)="logOut()" href=".">Log Out</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="nav-item">
                 <a class="nav-link mx-2" (click)="logOut()" href=".">Log Out</a>

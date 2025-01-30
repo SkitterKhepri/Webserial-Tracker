@@ -33,6 +33,7 @@ export class HomeComponent {
   //TODO maybe make it so in html not all stars start spinning, just the one clicked on? maybe.
   liking:boolean = false
   isUpdating:boolean = false
+  loadingSer:boolean = false
 
   constructor(private serServ:SerialsService, private storage:StorageService, private authServ:AuthService){
     this.getSerials()
@@ -42,6 +43,7 @@ export class HomeComponent {
 
 
   getSerials(){
+    this.loadingSer = true
     this.reviewedSerials = []
     this.serServ.getSerials().subscribe({
       next: (serials:any) => {
@@ -64,7 +66,9 @@ export class HomeComponent {
       },
       error: (response:any) => {
         console.log("shits fucked: " + response)
-      }
+        this.loadingSer = false
+      },
+      complete: () => this.loadingSer = false
     })
   }
 
