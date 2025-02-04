@@ -30,10 +30,10 @@ export class UsersService {
     return this.http.post(this.apiUrl + 'Authentication/login', user).pipe(catchError(this.handleError))
   }
 
-  changeMyPassword(user:any){
+  changePassword(user:any){
     const token = this.storage.getItem("token")
     const headers = new HttpHeaders({ "Authorization" : `Bearer ${token}`})
-    return this.http.put(this.apiUrl + 'user/changeMyPassword', user, {headers})
+    return this.http.put(this.apiUrl + 'user/changePassword', user, {headers})
   }
 
   updateUser(user:any){

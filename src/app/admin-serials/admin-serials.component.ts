@@ -1,8 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component } from '@angular/core';
 import { SerialsService } from '../services/serials.service';
-import { AuthorsService } from '../services/authors.service';
-import { SerialStatuses } from '../enums/serial-statuses.enum';
-import { NavBarComponent } from "../nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-admin-serials',
@@ -11,7 +8,6 @@ import { NavBarComponent } from "../nav-bar/nav-bar.component";
 })
 export class AdminSerialsComponent implements AfterViewInit {
 
-  // serials:any = []
   unReviewedSerials:any = []
   reviewedSerials:any = []
 

@@ -1,18 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
-import { UsersService } from '../services/users.service';
 import { SerialsService } from '../services/serials.service';
-import { ChaptersService } from '../services/chapters.service';
-import { AuthorsService } from '../services/authors.service';
-import { Chapter, Serial } from '../models';
+import { Chapter } from '../models';
 import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth-service.service';
-
-interface Banners {
-  serTitle : string,
-  image : any
-}
 
 @Component({
   selector: 'app-home',

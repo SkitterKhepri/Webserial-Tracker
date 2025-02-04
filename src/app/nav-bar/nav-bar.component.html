@@ -14,7 +14,7 @@
                 <button class="btn btn-outline-success mx-2" type="submit" [routerLink]="['/results']" (click)="search(selectedSearch, searchInput.value)">Search</button>
             </div>
         </div>
-        <div id="loggedin" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() == null">
+        <div id="loggedout" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() == null">
             <div class="nav-item">
                 <a class="nav-link mx-2" [routerLink]="['/login']">Login</a>
             </div>
@@ -22,13 +22,12 @@
                 <a class="nav-link mx-2" [routerLink]="['/register']">Register</a>
             </div>
         </div>
-        <div id="loggedout" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() != null">
+        <div id="loggedin" class="nav-item d-flex align-items-center" *ngIf="getCurrentUser() != null">
             <div class="nav-item">
-                <a class="nav-link mx-2">Welcome, {{getCurrentUser().userName}}</a>
                 <div class="dropdown">
-                    <a class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" href="#">getCurrentUser</a>
+                    <a class="btn btn-sm btn-outline-dark" data-bs-toggle="dropdown" href="#">{{getCurrentUser().userName}}</a>
                     <ul class="dropdown-menu">
-                        <li><a href="." [routerLink]="['/changePassword']">Change Password</a></li>
+                        <li><a class="dropdown-item" href="." [routerLink]="['/changePassword']">Change Password</a></li>
                         <li><a class="dropdown-item" (click)="logOut()" href=".">Log Out</a></li>
                     </ul>
                 </div>
@@ -49,9 +48,6 @@
                     <div class="nav-item my-3 p-1">
                         <a class="m-3 navbar-text" [routerLink]="['/newSerial']">Propose Serial</a>
                     </div>
-                    <!-- <div class="nav-item my-3 p-1">
-                        <a class="m-3 navbar-text" [routerLink]="['/likedSer']">Liked Serials</a>
-                    </div> -->
                 </div>
                 <div *ngIf="getCurrentUserClaims()?.includes('Admin') || getCurrentUserClaims()?.includes('SAdmin')">
                     <div class="nav-item my-3 p-1" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="offcanvasNavbar">

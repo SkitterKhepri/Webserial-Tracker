@@ -114,41 +114,6 @@ namespace WT_API.Controllers
         return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
       }
     }
-    //Dont need? TODO delete
-    //[HttpPut]
-    //[Route("changePassword/{id}")]
-    //[Authorize(Roles = "SAdmin,Admin")]
-    //public async Task<IActionResult> ChangePassword(ChangePasswordModel model, string id)
-    //{
-    //    try
-    //    {
-    //        if (!ModelState.IsValid)
-    //            return BadRequest("Invalid payload");
-    //        var currentUserName = HttpContext.User.Identity.Name;
-
-    //        var user = await _userManager.FindByIdAsync(id);
-    //        var currentUser = await _userManager.FindByNameAsync(currentUserName);
-    //        var roles = await _userManager.GetRolesAsync(currentUser);
-    //        if (user.UserName.Equals(currentUserName) || roles.IndexOf("SAdmin") != -1)
-    //        {
-
-    //            var (status, message) =
-    //            await _authService.ChangePassword(model);
-    //            if (status == 0)
-    //            {
-    //                return BadRequest(message);
-    //            }
-    //            return Ok(message);
-    //        }
-    //        return BadRequest("Unauthorized");
-
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        _logger.LogError(ex.Message);
-    //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-    //    }
-    //}
 
     [HttpHead]
     [Route("password/resetReq/{email}")]
@@ -200,7 +165,7 @@ namespace WT_API.Controllers
     }
 
     [HttpPut]
-    [Route("changeMyPassword")]
+    [Route("changePassword")]
     [Authorize]
     public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
     {
@@ -220,9 +185,9 @@ namespace WT_API.Controllers
           await _authService.ChangePassword(model);
           if (status == 0)
           {
-            return BadRequest(message);
+            return BadRequest(new { message = $"{message}" });
           }
-          return Ok(message);
+          return Ok(new { message = $"{message}" });
         }
         return BadRequest("Unauthorized");
 

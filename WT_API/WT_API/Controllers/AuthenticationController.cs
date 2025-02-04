@@ -39,6 +39,7 @@ namespace WT_API.Controllers
           return BadRequest(message);
         var (success, rolesList) = await _authService.UserClaim(user.Id);
         string[] roles = rolesList.ToArray();
+
         int[] likes = _context.LikedSerials.Where(l => l.userId == user.Id).Select(l => l.serialId).ToArray();
         return Ok(new LoggedUser(user, message, roles, likes));
       }
