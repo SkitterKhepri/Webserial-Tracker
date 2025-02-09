@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import { AuthorsService } from '../services/authors.service';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
 import { SerialsService } from '../services/serials.service';
-import { SerialStatuses } from '../enums/serial-statuses.enum';
-import { UsersService } from '../services/users.service';
-import { AuthService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-new-serial',

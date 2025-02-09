@@ -121,12 +121,6 @@ namespace WT_API.Services
       if (!createUserResult.Succeeded)
         return (0, "User creation failed! Please check user details and try again.");
 
-      /*if (!await roleManager.RoleExistsAsync(role))
-          await roleManager.CreateAsync(new IdentityRole(role));
-
-      if (await roleManager.RoleExistsAsync(role))
-          await userManager.AddToRoleAsync(user, role);*/
-
       if (user.UserName.Equals("Admin"))
       {
         if (!await roleManager.RoleExistsAsync(UserRoles.SAdmin))

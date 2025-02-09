@@ -33,30 +33,29 @@ namespace WT_API.Controllers
 
     [HttpGet]
     [Route("userlist")]
-    //TODO need this
-    //[Authorize(Roles = "SAdmin,Admin")]
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> Get()
     {
       var (status, message) = await _authService.UserList();
       return Ok(message);
     }
 
-    [HttpGet]
-    [Route("{id}")]
-    [Authorize(Roles = "SAdmin,Admin")]
-    public async Task<IActionResult> Get(string id)
-    {
-      var currentUser = await _userManager.FindByIdAsync(id);
-      var roles = await _userManager.GetRolesAsync(currentUser);
+    //[HttpGet]
+    //[Route("{id}")]
+    //[Authorize(Roles = "SAdmin,Admin")]
+    //public async Task<IActionResult> Get(string id)
+    //{
+    //  var currentUser = await _userManager.FindByIdAsync(id);
+    //  var roles = await _userManager.GetRolesAsync(currentUser);
 
-      UserWithClaims userWithClaims = new UserWithClaims();
-      var serialized = JsonConvert.SerializeObject(currentUser);
-      userWithClaims = JsonConvert.DeserializeObject<UserWithClaims>(serialized);
+    //  UserWithClaims userWithClaims = new UserWithClaims();
+    //  var serialized = JsonConvert.SerializeObject(currentUser);
+    //  userWithClaims = JsonConvert.DeserializeObject<UserWithClaims>(serialized);
 
-      userWithClaims.Claims = roles;
-      return Ok(userWithClaims);
+    //  userWithClaims.Claims = roles;
+    //  return Ok(userWithClaims);
 
-    }
+    //}
 
     [HttpDelete]
     [Route("{id}")]
@@ -67,7 +66,7 @@ namespace WT_API.Controllers
       var user = await _userManager.FindByIdAsync(id);
       var currentUser = await _userManager.FindByNameAsync(currentUserName);
       var roles = await _userManager.GetRolesAsync(currentUser);
-      if (!user.UserName.Equals(currentUserName))
+      if (user.UserName.Equals(currentUserName) || roles.Contains("SAdmin"))
       {
         var (status, message) =
          await _authService.DeleteUser(id);
@@ -78,12 +77,10 @@ namespace WT_API.Controllers
         return Ok(new { message });
       }
       return BadRequest("Unauthorized");
-
     }
     [HttpPut]
     [Route("{id}")]
-    //TODO need this
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> Update(UpdateModel model)
     {
       try
@@ -117,16 +114,13 @@ namespace WT_API.Controllers
 
     [HttpHead]
     [Route("password/resetReq/{email}")]
-    //TODO need this
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> ResetPasswordRequest(string email)
     {
       User currentUser = await _userManager.FindByEmailAsync(email);
       if (currentUser == null)
       {
-        //TODO have this, not reveal no email caveman
-        //return StatusCode(StatusCodes.Status500InternalServerError, "Email service couldn't send email");
-        return NotFound("User doesn't exist");
+        return StatusCode(StatusCodes.Status500InternalServerError, "Email service couldn't send email");
       }
 
       string urlToken = HttpUtility.UrlEncode(await _authService.GenerateResetToken(currentUser));
@@ -146,14 +140,13 @@ namespace WT_API.Controllers
 
     [HttpPost]
     [Route("password/reset/{id}")]
-    //TODO need this
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> ResetPassword(ResetPassDTO resetDTO, string id)
     {
       User currentUser = await _userManager.FindByIdAsync(id);
       if (currentUser == null)
       {
-        return NotFound("Invalid user id");
+        return BadRequest("wrong");
       }
       var (result, message) = await _authService.ResetPassword(currentUser, resetDTO);
 

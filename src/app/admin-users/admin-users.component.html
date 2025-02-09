@@ -7,7 +7,7 @@
         <div class="accordion" id="usersAccordion">
             <div class="accordion-item p-2" *ngFor="let user of users">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed bg-primary-subtle" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + user.id" aria-expanded="false" [attr.aria-controls]="'user' + user.id">
+                    <button class="accordion-button collapsed bg-primary-subtle" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#user' + user.id" aria-expanded="false" [attr.aria-controls]="'user' + user.id">
                         {{user.userName}}
                     </button>
                 </h2>
@@ -41,7 +41,7 @@
                                     <label for="claims">Claims:</label>
                                 </div>
                                 <div class="col flex-grow-1" *ngFor="let claim of user.claims; let i = index">
-                                    <input type="text" id="claims{{i}}" class="form-control" [(ngModel)]="user.claims[i]">
+                                    <span type="text" id="claims{{i}}" class="form-control">{{user.claims[i]}} </span>
                                 </div>
                             </div>
                             <div class="row my-1 align-items-center">

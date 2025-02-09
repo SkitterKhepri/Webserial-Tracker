@@ -66,6 +66,7 @@ namespace WT_API.Controllers
           Console.WriteLine(BadRequest(message));
           return BadRequest(message);
         }
+
         if (model.Username != "Admin")
         {
           await _authService.SetClaims(new RolesModel(message, new string[] { UserRoles.User }));

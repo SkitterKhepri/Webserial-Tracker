@@ -48,9 +48,6 @@ namespace WT_API.Services
       string currentUrl = redirectedLink == null ? startUrl : redirectedLink;
       string? prevUrl = prevChURL == null ? null : prevChURL;
 
-      //TODO delete
-      prevUrl = "https://twigserial.wordpress.com/2015/05/28/lips-sealed-3-4/";
-
       string? prev2Url = null;
       string? prev3Url = null;
       bool firstLoop = true;

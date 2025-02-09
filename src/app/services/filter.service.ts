@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SerialsService } from './serials.service';
-import { ChaptersService } from './chapters.service';
-import { AuthorsService } from './authors.service';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

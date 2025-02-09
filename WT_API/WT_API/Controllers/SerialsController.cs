@@ -1,22 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using HtmlAgilityPack;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WT_API.Data;
 using WT_API.Models;
-using System.Text;
 using WT_API.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
-using System.IO;
 
 namespace WT_API.Controllers
 {
@@ -193,12 +184,12 @@ namespace WT_API.Controllers
     }
 
     [HttpPost("/Serials/addSerial")]
-    //[Authorize(Roles = "SAdmin,Admin")] //TODO need
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<ActionResult<Serial>> AddSerial([FromForm] CompleteSerial newSerial)
     {
       if (_context.Serials == null)
       {
-        return Problem("Entity set 'Context.Serials'  is null. korte");
+        return NotFound("Entity set 'Context.Serials'  is null. korte");
       }
       if (_context.Serials.Where(ser => ser.title == newSerial.title).Any())
       {
@@ -262,7 +253,7 @@ namespace WT_API.Controllers
 
 
     [HttpPost("/Serials/proposeSerial")]
-    //[Authorize] //TODO need
+    [Authorize]
     public async Task<ActionResult<Serial>> ProposeSerial([FromForm] ProposedSerial newSerial)
     {
       if (_context.Serials == null)
@@ -326,7 +317,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Serials/5
     [HttpDelete("{id}")]
-    //[Authorize(Roles = "SAdmin,Admin")] //TODO need
+    [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> DeleteSerial(int id)
     {
       if (_context.Serials == null)
@@ -369,7 +360,7 @@ namespace WT_API.Controllers
 
 
     [HttpPatch("{id}/approve")]
-    //[Authorize(Roles = "SAdmin, Admin")] //TODO need
+    [Authorize(Roles = "SAdmin, Admin")]
     public async Task<IActionResult> Approve(int id, Review review)
     {
       Serial serial = await _context.Serials.FindAsync(id);
@@ -385,7 +376,7 @@ namespace WT_API.Controllers
     }
 
     [HttpPost("/Serials/like")]
-    [Authorize] //TODO need
+    [Authorize]
     public async Task<IActionResult> LikeUnLike(LikedSerial likeReq)
     {
       if(!SerialExists(likeReq.serialId) || !UserExists(likeReq.userId))
@@ -440,31 +431,6 @@ namespace WT_API.Controllers
       Response.Headers["Response-Type"] = "blob";
 
       return File(image, mimeType);
-    }
-
-    //TEST TODO delete
-    [HttpPost("images/")]
-    public IActionResult SaveImage([FromForm] ProposedSerial serial)
-    {
-      if (serial.bannerUpload != null)
-      {
-        IFormFile banner = serial.bannerUpload;
-        string path = @"..\img";
-        string imgPath = Path.Combine(path, NormaliseSerialTitle(serial.title) + ".png");
-
-        Directory.CreateDirectory(path);
-
-        using (Stream fileStream = banner.OpenReadStream())
-        {
-          using (Image image = Image.Load(fileStream))
-          {
-            image.Save(imgPath, new PngEncoder());
-          }
-        }
-        return Ok();
-      }
-      return StatusCode(405);
-
     }
 
     private string GetMimeType(string fileName)

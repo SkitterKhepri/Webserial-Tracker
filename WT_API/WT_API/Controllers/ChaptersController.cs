@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -25,30 +19,23 @@ namespace WT_API.Controllers
 
     [HttpPut("{id}")]
     [Authorize(Roles = "SAdmin,Admin")]
-    public async Task<IActionResult> PutChapter(int id, Chapter chapter)
+    public async Task<IActionResult> PutChapter(int id, Chapter modChapter)
     {
-      if (id != chapter.id)
+      if (id != modChapter.id)
       {
         return BadRequest();
       }
 
-      _context.Entry(chapter).State = EntityState.Modified;
+      Chapter? chapter = await _context.Chapters.FindAsync(id);
 
-      try
+      if(chapter == null)
       {
-        await _context.SaveChangesAsync();
+        return NotFound();
       }
-      catch (DbUpdateConcurrencyException)
-      {
-        if (!ChapterExists(id))
-        {
-          return NotFound();
-        }
-        else
-        {
-          throw;
-        }
-      }
+
+      _context.Entry(chapter).CurrentValues.SetValues(modChapter);
+
+      await _context.SaveChangesAsync();
 
       return NoContent();
     }
@@ -76,6 +63,7 @@ namespace WT_API.Controllers
 
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "SAdmin, Admin")]
     public async Task<IActionResult> DeleteChapter(int id)
     {
       var chapter = await _context.Chapters.FindAsync(id);
