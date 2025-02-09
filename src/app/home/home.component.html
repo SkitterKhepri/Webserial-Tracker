@@ -1,4 +1,4 @@
-<div class="conatiner main">
+<div class="conatiner main mt-5">
     <div class="home">
         <div class="d-flex justify-content-between align-items-end">
           <div>
@@ -15,18 +15,18 @@
         <div class="newReleases ms-5 me-5 border border-secondary-subtle border-3 rounded-4 p-2">
           <div *ngIf="!loadingSer else loading">
             <div *ngIf="reviewedSerials.length != 0; else noSerials">
-              <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col-5" *ngFor="let chapter of reviewedSerialChapters | slice:-5">
+              <div class="row row-cols-5 row-cols-md-6 g-4">
+                <div class="col" *ngFor="let chapter of reviewedSerialChapters | slice:-6">
                   <div class="col">
-                    <div class="card p-1 h-100 w-100">
-                      <img [src]="'https://localhost:7286/Serials/images/' + getSerial(chapter.serialId)!.title" class="card-img-top">
+                    <div class="card p-1 w-100">
+                      <img [src]="'https://localhost:7286/Serials/images/' + getSerial(chapter.serialId)!.title" class="coverImg card-img-top">
                       <div class="card-body">
-                        <h5 class="card-title">
-                            <a class="link-opacity-75-hover" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
+                        <h5 class="card-title text-truncate mb-0">
+                            <a class="link-opacity-75-hover text-decoration-none" href="{{chapter.link}}" target="_blank">{{chapter.title}}</a>
                         </h5>
-                        <p>--------------</p>
+                        <hr class="bg-secondary border-3 border-top border-primary" />
                         <ng-container *ngIf="getSerial(chapter?.serialId) as serial">
-                          <h6 class=""><a class="link-opacity-50-hover me-2" [routerLink]="['/serialDetails/' + serial.id]">{{serial.title}}</a>
+                          <h6 class=""><a class="link-opacity-50-hover me-2 text-decoration-none mt-0" [routerLink]="['/serialDetails/' + serial.id]">{{serial.title}}</a>
                             <div *ngIf="!serial.liked && !liking">
                               <i class="bi bi-star rounded-3 text-warning clickable" (click)="likeSerial(serial)" ngbTooltip="Follow serial!"></i>
                             </div>
@@ -37,7 +37,7 @@
                               <div class="spinner-border text-warning spinner-border-sm"></div>
                             </div>
                           </h6>
-                          <p class="">by <a class="clickable text-decoration-none" [routerLink]="['/results']" [queryParams]="{au: serial.author.name}">
+                          <p class="mb-1">by <a class="clickable text-decoration-none" [routerLink]="['/results']" [queryParams]="{au: serial.author.name}">
                             {{serial.author.name}}</a>
                           </p>
                         </ng-container>
@@ -61,14 +61,14 @@
             </div>
           </ng-template>
         </div>
-        <h4 class="ms-5 my-3 text-center">Recently Added</h4>
-        <div class="recentlyAdded ms-5 me-5 mb-5 border border-secondary-subtle border-3 rounded-4 p-2">
+        <h4 class="ms-5 my-3 text-start">Recently Added</h4>
+        <div class="recentlyAdded ms-5 me-5 mb-3 border border-secondary-subtle border-3 rounded-4 p-2">
           <div *ngIf="!loadingSer else loading2">
             <div *ngIf="reviewedSerials.length != 0; else noSerials2">
-              <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col-5" *ngFor="let serial of reviewedSerials | slice:-5">
+              <div class="row row-cols-3 row-cols-md-6 g-3">
+                <div class="col mw-25" *ngFor="let serial of reviewedSerials | slice:-6">
                   <div class="col">
-                      <div class="card p-1 h-100 w-100">
+                      <div class="card p-1">
                         <img [src]="'https://localhost:7286/Serials/images/' + serial.title" class="card-img-top">
                         <div class="card-body">
                           <h5 class="card-title">
@@ -90,7 +90,7 @@
                             </p>
                           </h6>
                           <ng-container *ngIf="getSerialChaptersCount(serial.id) as chNum">
-                              <p>with {{chNum}} chapters</p>
+                              <small>with {{chNum}} chapters</small>
                           </ng-container>
                           <div class="card-link">
                             <a href="{{serial.firstCh}}" target="_blank">Start Reading</a>
@@ -115,14 +115,14 @@
             </div>
           </ng-template>
         </div>
-        <h4 class="ms-5 my-3 text-center">Followed Serials</h4>
+        <h4 class="ms-5 mb-3 mt-0 text-start">Followed Serials</h4>
         <div *ngIf="loggedin; else notLogged">
           <div class="followed ms-5 me-5 mb-5 border border-secondary-subtle border-3 rounded-4 p-2">
             <div *ngIf="likedSerials.length != 0; else goAndLike">
-              <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col-5" *ngFor="let serial of likedSerials | slice:-5">
+              <div class="row row-cols-3 row-cols-md-6 g-4">
+                <div class="col-5" *ngFor="let serial of likedSerials | slice:-6">
                   <div class="col">
-                    <div class="card p-1 h-100 w-100">
+                    <div class="card p-1">
                       <img [src]="'https://localhost:7286/Serials/images/' + serial.title" class="card-img-top">
                       <div class="card-body">
                         <h5 class="card-title">
@@ -154,7 +154,7 @@
               <a class="" [routerLink]="['/results']" [queryParams]="{liked: true}">All Followed Serials...</a>
             </div>
             <ng-template #goAndLike>
-              <p class="text-center">Follow serials for them to show up on your home page!</p>
+              <p class="text-center mb-0">Follow serials for them to show up on your home page!</p>
             </ng-template>
           </div>
         </div>

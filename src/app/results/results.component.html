@@ -214,9 +214,9 @@
                             <div class="cardBody p-0 mb-0 card-body">
                                 <h5 class="card-title clickable" [routerLink]="['/serialDetails/' + serial.id]">{{serial.title}}</h5>
                                 <small>By {{serial.author.name}}</small>
-                                <div class="cardText card-text text-break">{{serial.description}}</div>
+                                <div class="cardText card-text text-break me-2">{{serial.description}}</div>
                                 <div>
-                                    <a class="clickable link-opacity-75-hover" [href]="serial.home" >Start reading!</a>
+                                    <a class="clickable link-opacity-75-hover" [href]="serial.home">Start reading!</a>
                                     <a class="clickable float-end link-opacity-75-hover pe-3" [routerLink]="['/serialDetails/' + serial.id]">More...</a>
                                 </div>
                             </div>

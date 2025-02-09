@@ -33,11 +33,6 @@ export class SerialDetailsComponent {
   }
 
   getSerial(id:any){
-    // this.serServ.getSerials().subscribe((serial:any) => {
-    //   this.serial = serial[id-1]
-    //   this.pageNum = this.serial.chapters.length % this.chPerPage != 0 ? Math.floor(this.serial.chapters.length / this.chPerPage) + 1 : this.serial.chapters.length / this.chPerPage
-    //   this.liked = this.serServ.isLiked(this.serial.id)
-    // })
     this.serServ.getSerial(id).subscribe((serial:any) => {
       this.serial = serial
       this.pageNum = this.serial.chapters.length % this.chPerPage != 0 ? Math.floor(this.serial.chapters.length / this.chPerPage) + 1 : this.serial.chapters.length / this.chPerPage

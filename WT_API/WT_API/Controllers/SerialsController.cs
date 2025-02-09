@@ -121,11 +121,6 @@ namespace WT_API.Controllers
     [Authorize(Roles = "SAdmin,Admin")]
     public async Task<IActionResult> PutSerial(int id, [FromForm] CompleteSerial compSerial)
     {
-      if (id != compSerial.id)
-      {
-        return BadRequest();
-      }
-
       Serial serial = await _context.Serials.FindAsync(id);
 
       if (serial == null)
@@ -175,6 +170,8 @@ namespace WT_API.Controllers
       }
 
       serial.CompleteSerialMapper(compSerial);
+      Console.WriteLine(serial.description);
+      _context.Entry(serial).State = EntityState.Modified;
 
       try
       {
@@ -388,7 +385,7 @@ namespace WT_API.Controllers
     }
 
     [HttpPost("/Serials/like")]
-    //[Authorize] //TODO need
+    [Authorize] //TODO need
     public async Task<IActionResult> LikeUnLike(LikedSerial likeReq)
     {
       if(!SerialExists(likeReq.serialId) || !UserExists(likeReq.userId))

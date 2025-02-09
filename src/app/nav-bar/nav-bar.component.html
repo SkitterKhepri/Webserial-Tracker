@@ -65,14 +65,17 @@
                     <div class="nav-item my-3 p-1" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="offcanvasNavbar">
                         <a class="m-3 navbar-text" [routerLink]="['/adminChapters']">Manage Chapters</a>
                     </div>
-                    <div class="nav-item my-3 p-1" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="offcanvasNavbar">
-                        <a class="m-3 navbar-text" [routerLink]="['/likedSer']">Liked Serials</a>
+                </div>
+                <ng-template *ngIf="getCurrentUser() != null; else login">
+                    <div class="nav-item mt-auto" >
+                        <a class="nav-link" href="#" (click)="logOut()">Log Out</a>
                     </div>
-                </div>
-                <!-- <div class="nav-item navbar-text">Followed Works:</div> -->
-                <div class="nav-item mt-auto" >
-                    <a class="nav-link" href="#" (click)="logOut()">Log Out</a>
-                </div>
+                </ng-template>
+                <ng-template #login>
+                    <div class="nav-item mt-auto" >
+                        <a class="nav-link" [routerLink]="['/login']">Login</a>
+                    </div>
+                </ng-template>
             </div>
         </div>
     </div>

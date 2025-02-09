@@ -10,7 +10,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
     return false
   }
 
-  console.log("admin guard")
   if(authServ.getCurrentClaims().includes('Admin') || authServ.getCurrentClaims().includes('SAdmin')){
     return true
   }

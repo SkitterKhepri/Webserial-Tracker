@@ -24,6 +24,7 @@ namespace WT_API.Models
       this.otherNextChLinkXPaths = serial.otherNextChLinkXPaths;
       this.titleXPath = serial.titleXPath;
       this.reviewStatus = serial.reviewStatus;
+      this.description = serial.description;
     }
 
   }

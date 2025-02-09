@@ -29,7 +29,8 @@ export class AdminUsersComponent {
       error: (response:any) => {
         console.log("Error loading user data " + response)
         this.gettingUsers = false
-      }
+      },
+      complete: () => this.gettingUsers = false
     })
   }
 

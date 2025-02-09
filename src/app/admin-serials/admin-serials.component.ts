@@ -69,6 +69,7 @@ export class AdminSerialsComponent implements AfterViewInit {
     formData.append("otherNextChLinkXPaths", serial.otherNextChLinkXPaths)
     formData.append("titleXPath", serial.titleXPath)
     formData.append("description", serial.description)
+    formData.append("authorName", serial.author.name)
     serial.reviewStatus = true
     formData.append("reviewStatus", serial.reviewStatus)
     formData.append("bannerUpload", this.imageDataUri)

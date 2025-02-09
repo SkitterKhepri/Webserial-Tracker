@@ -13,7 +13,7 @@
             <div class="col p-2 d-flex border border-secondary border-3 rounded-2 flex-column justify-content-between">
                 <div id="description" class="row">
                     <p [class.text-center]="serial.description == null">
-                        {{ serial.description != null ? (descExpanded ? serial.description : (serial.description | slice:0:descDisplayLength) + '...') : "--- No description ---" }}
+                        {{ serial.description != null ? (!longDesc ? serial.description : (serial.description | slice:0:descDisplayLength) + '...') : "--- No description ---" }}
                     </p>
                 </div>
                 <div *ngIf="longDesc">
@@ -32,7 +32,7 @@
                     Number of chapters: {{serial.chapters.length}}
                 </div>
                 <div class="row">
-                    Status: {{serial.status == "1" ? "Ongoing" : serial.status == "2" ? "Completed" : serial.status == "3" ? "Hiatus" : serial.status == "4" ? "Abandoned" : "Unknown"}}
+                    Status: {{serial.status == "1" ? "Completed" : serial.status == "2" ? "Ongoing" : serial.status == "3" ? "Hiatus" : serial.status == "4" ? "Abandoned" : "Unknown"}}
                 </div>
             </div>
             <div class="col-sm-auto">

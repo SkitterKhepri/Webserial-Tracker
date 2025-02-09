@@ -73,6 +73,7 @@ export class ResultsComponent implements OnInit, OnDestroy{
     this.serServ.getSerials().subscribe(
       (serials:any)=> {
         serials.forEach((serial:any) => {
+          console.log(serial.description)
           if(serial.reviewStatus){
             this.reviewedSerials.push(serial)
             this.authors.push(serial.author)
@@ -142,7 +143,6 @@ export class ResultsComponent implements OnInit, OnDestroy{
   }
 
   serialAddedRecencyOrder(ascending:boolean){
-    console.log("aaa")
     this.filteredSerials.sort((a:any, b:any) =>{
       return ascending ? a.id - b.id : b.id - a.id
     })
@@ -217,6 +217,10 @@ export class ResultsComponent implements OnInit, OnDestroy{
   }
 
   clearFilters(){
+    this.selectedChNum = {from : null, to : null, custom : false}
+    this.selectedStatuses = []
+    this.likedFilter = false
+    this.newFilters = {ser:null, au:null}
     this.storage.setItem("filters", new Filters())
   }
 

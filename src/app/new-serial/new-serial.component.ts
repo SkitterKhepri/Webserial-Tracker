@@ -40,6 +40,11 @@ export class NewSerialComponent {
     formData.append("home", this.newSerial.home)
     formData.append("firstCh", this.newSerial.firstCh)
     formData.append("status", this.newSerial.status)
+    this.resizeImg(this.imageDataUri).then(
+      (resImage:any) => {
+        formData.append("bannerUpload", resImage)
+      }
+    )
     this.serServ.proposeSerial(formData).subscribe({
       next: () => {
         this.isProposing = false
@@ -62,9 +67,16 @@ export class NewSerialComponent {
       const reader = new FileReader()
       reader.readAsDataURL(event.target.files[0])
       reader.onloadend = (ev:any) => {
-        this.imagePath = ev.target["result"]
-        this.imageDataUri = ev.target["result"]
-        this.image = displayedImage
+        this.resizeImg(ev.target["result"]).then(
+          (resized:any) => {
+            reader.readAsDataURL(resized)
+            reader.onloadend = (ev:any) => {
+              this.imagePath = ev.target["result"]
+              this.imageDataUri = ev.target["result"]
+              this.image = displayedImage
+            }
+          }
+        )
       }
     }
   }
@@ -81,13 +93,13 @@ export class NewSerialComponent {
         let newW
         let newH
         if(img.width >= img.height){
-          let resizeVal = 700 / img.width
-          newW = 700
+          let resizeVal = 600 / img.width
+          newW = 600
           newH = img.height * resizeVal
         }
         else{
-          let resizeVal = 700 / img.height
-          newH = 700
+          let resizeVal = 600 / img.height
+          newH = 600
           newW = img.width * resizeVal
         }
         canvas.width = newW

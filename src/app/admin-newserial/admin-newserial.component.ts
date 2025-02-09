@@ -40,6 +40,11 @@ export class AdminNewserialComponent {
       this.newSerial.authorName = "unknown"
     }
     formData.append("authorName", this.newSerial.authorName)
+    this.resizeImg(this.imageDataUri).then(
+      (resImage:any) => {
+        formData.append("bannerUpload", resImage)
+      }
+    )
     // console.log(formData)
     this.serServ.addSerial(formData).subscribe({
       next: () => {
@@ -73,10 +78,17 @@ export class AdminNewserialComponent {
     if (event.target != null){
       const reader = new FileReader()
       reader.readAsDataURL(event.target.files[0])
-      reader.onloadend = (ev:any) => {
-        this.imagePath = ev.target["result"]
-        this.imageDataUri = ev.target["result"]
-        this.image = displayedImage
+      reader.onloadend = (loadedEv:any) => {
+        this.resizeImg(loadedEv.target["result"]).then(
+          (resized:any) => {
+            reader.readAsDataURL(resized)
+            reader.onloadend = (ev:any) => {
+              this.imagePath = ev.target["result"]
+              this.imageDataUri = ev.target["result"]
+              this.image = displayedImage
+            }
+          }
+        )
       }
     }
   }
@@ -93,13 +105,13 @@ export class AdminNewserialComponent {
         let newW
         let newH
         if(img.width >= img.height){
-          let resizeVal = 700 / img.width
-          newW = 700
+          let resizeVal = 600 / img.width
+          newW = 600
           newH = img.height * resizeVal
         }
         else{
-          let resizeVal = 700 / img.height
-          newH = 700
+          let resizeVal = 600 / img.height
+          newH = 600
           newW = img.width * resizeVal
         }
         canvas.width = newW
