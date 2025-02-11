@@ -184,7 +184,7 @@ namespace WT_API.Controllers
     }
 
     [HttpPost("/Serials/addSerial")]
-    [Authorize(Roles = "SAdmin,Admin")]
+    //[Authorize(Roles = "SAdmin,Admin")] TODO
     public async Task<ActionResult<Serial>> AddSerial([FromForm] CompleteSerial newSerial)
     {
       if (_context.Serials == null)
@@ -317,7 +317,7 @@ namespace WT_API.Controllers
 
     // DELETE: api/Serials/5
     [HttpDelete("{id}")]
-    [Authorize(Roles = "SAdmin,Admin")]
+    //[Authorize(Roles = "SAdmin,Admin")] TODO
     public async Task<IActionResult> DeleteSerial(int id)
     {
       if (_context.Serials == null)

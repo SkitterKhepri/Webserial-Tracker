@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenQA.Selenium.DevTools.V123.WebAudio;
 using System.Collections;
 using System.Net;
+using System.Web;
 using WT_API.Data;
 using WT_API.Models;
 
@@ -143,7 +144,7 @@ namespace WT_API.Services
                       if (nextCH.Attributes["href"].Value != prevUrl && nextCH.Attributes["href"].Value != prev2Url && nextCH.Attributes["href"].Value != prev3Url &&
                       nextCH.Attributes["href"].Value != currentUrl)
                       {
-                        Console.WriteLine($"Found next ch in otherXpaths, leads to: {nextCH.Attributes["href"].Value}");
+                        Console.WriteLine($"Found next ch in otherXpaths, leads to: {HttpUtility.UrlDecode(nextCH.Attributes["href"].Value)}");
                         break;
                       }
                     }
@@ -202,7 +203,7 @@ namespace WT_API.Services
         //retriveing next chapter page
         try
         {
-          nextCHURL = nextCH.Attributes["href"].Value;
+          nextCHURL = HttpUtility.UrlDecode(nextCH.Attributes["href"].Value);
         }
         catch (NullReferenceException)
         {
@@ -223,8 +224,8 @@ namespace WT_API.Services
         }
 
         (pageContent, redirectedLink) = await CheckUrl(response, nextFullUrl);
-        nextFullUrl = redirectedLink ?? nextFullUrl;
-        if(redirectedLink == nextFullUrl) { Console.WriteLine("Redirect happened"); }
+        nextFullUrl = redirectedLink != null ? redirectedLink : nextFullUrl;
+        if(redirectedLink != null) { Console.WriteLine("Redirect happened"); }
         //After the first loop, adding current chapter
         if (!firstLoop)
         {
@@ -353,6 +354,10 @@ namespace WT_API.Services
         }
       }
       client2.Dispose();
+      if(redirectLink != null)
+      {
+        Console.WriteLine("redirect happened!");
+      }
       return (pageContent, redirectLink);
     }
 
